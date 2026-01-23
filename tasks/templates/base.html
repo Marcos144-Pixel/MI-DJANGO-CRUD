@@ -1,261 +1,379 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CV - Marcos Luis Campozano Mendoza</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: #1a1a1a;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
         }
 
-        .nav-link {
-            position: relative;
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-hover {
             transition: all 0.3s ease;
         }
 
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -2px;
-            left: 0;
-            background-color: #000;
-            transition: width 0.3s ease;
+        .card-hover:hover {
+            transform: translateY(-5px);
         }
 
-        .nav-link:hover::after {
-            width: 100%;
+        .skill-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
         }
 
-        .section-title {
-            letter-spacing: -0.02em;
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #6366f1, #ec4899);
+            border-radius: 999px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
         }
     </style>
 </head>
-
-<body class="antialiased selection:bg-slate-900 selection:text-white">
+<body>
 
     <!-- NAVEGACIÓN -->
-    <header class="border-b border-slate-100 sticky top-0 bg-white/90 backdrop-blur-md z-50">
-        <nav class="max-w-5xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 bg-slate-900 rounded flex items-center justify-center text-white text-xs font-bold">
-                    MC</div>
-                <span class="font-bold tracking-tighter text-lg">PORTFOLIO</span>
+    <header class="sticky top-0 bg-white shadow-lg z-50">
+        <nav class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-xl flex items-center justify-center text-white font-bold floating">MC</div>
+                <span class="font-black text-xl gradient-text">PORTFOLIO</span>
             </div>
-
-            <div class="flex items-center gap-8">
-                <div class="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
-                    <a href="#inicio" class="nav-link text-slate-900 hover:text-black transition-colors">Inicio</a>
-                    <a href="#educacion" class="nav-link hover:text-black transition-colors">Educación</a>
-                    <a href="#habilidades" class="nav-link hover:text-black transition-colors">Habilidades</a>
-                </div>
+            <div class="hidden md:flex gap-6 text-xs font-bold uppercase">
+                <a href="#inicio" class="text-slate-700 hover:text-indigo-600">Inicio</a>
+                <a href="#experiencia" class="text-slate-700 hover:text-indigo-600">Experiencia</a>
+                <a href="#educacion" class="text-slate-700 hover:text-indigo-600">Educación</a>
+                <a href="#habilidades" class="text-slate-700 hover:text-indigo-600">Habilidades</a>
             </div>
         </nav>
     </header>
 
-    <main class="max-w-5xl mx-auto px-6 py-16">
+    <main class="max-w-6xl mx-auto px-6 py-12">
 
-        <!-- HEADER / PORTADA -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-20" id="inicio">
-            <!-- Izquierda: Foto y Nombre -->
-            <div class="lg:col-span-8 flex flex-col md:flex-row items-center md:items-center gap-8">
-                <!-- Contenedor de Imagen -->
-                <div
-                    class="w-32 h-32 md:w-44 md:h-44 bg-slate-100 rounded-2xl shrink-0 overflow-hidden border border-slate-100 shadow-sm">
-                    <img src="foto-marcos.jpeg" alt="Marcos Luis Campozano Mendoza" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-slate-200\'><i data-lucide=\'user\' class=\'w-16 h-16 text-slate-400\'></i></div>'; lucide.createIcons();">
-                </div>
-
-                <!-- Nombre y Rol -->
-                <div class="text-center md:text-left">
-                    <p class="text-xs font-bold text-slate-400 uppercase tracking-[0.3em] mb-4">Estudiante de Tecnología de la Información
-                    </p>
-                    <h1 class="text-4xl md:text-5xl font-black tracking-tighter text-slate-900 leading-[1.1]">
-                        CAMPOZANO MENDOZA <br> MARCOS LUIS
+        <!-- HEADER -->
+        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 mb-8" id="inicio">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                <div class="flex flex-col items-center text-center lg:col-span-2">
+                    <div class="w-40 h-40 bg-gradient-to-br from-indigo-200 to-pink-200 rounded-3xl mb-6 flex items-center justify-center overflow-hidden">
+                        <img src="foto-marcos.jpeg" alt="Marcos" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<i data-lucide=\'user\' class=\'w-20 h-20 text-indigo-600\'></i>'; lucide.createIcons();">
+                    </div>
+                    <div class="mb-4 px-4 py-2 bg-green-100 rounded-full inline-flex items-center gap-2">
+                        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                        <span class="text-xs font-bold text-green-700">Disponible para colaborar</span>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-black mb-2">
+                        <span class="gradient-text">CAMPOZANO MENDOZA</span><br>
+                        <span class="text-slate-900">MARCOS LUIS</span>
                     </h1>
+                    <p class="text-lg text-slate-600">Estudiante de Tecnología de la Información</p>
                 </div>
-            </div>
-
-            <!-- Derecha: Información de contacto -->
-            <div class="lg:col-span-4 lg:text-right space-y-4">
-                <div class="text-sm font-medium text-slate-500 space-y-1">
-                    <p class="flex items-center lg:justify-end gap-2"><i data-lucide="mail"
-                            class="w-4 h-4 text-slate-400"></i> campozanomendoza@gmail.com</p>
-                    <p class="flex items-center lg:justify-end gap-2"><i data-lucide="phone"
-                            class="w-4 h-4 text-slate-400"></i> +593 098 526 00</p>
-                    <p class="flex items-center lg:justify-end gap-2 text-slate-900 font-bold"><i data-lucide="map-pin"
-                            class="w-4 h-4 text-slate-400"></i> Jipijapa, Ecuador</p>
+                
+                <div class="bg-gradient-to-br from-indigo-50 to-pink-50 p-6 rounded-2xl">
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
+                                <i data-lucide="mail" class="w-5 h-5 text-indigo-500"></i>
+                            </div>
+                            <span class="text-sm">campozanomendoza@gmail.com</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
+                                <i data-lucide="phone" class="w-5 h-5 text-indigo-500"></i>
+                            </div>
+                            <span class="text-sm">+593 098 500 26 00</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-pink-500"></i>
+                            </div>
+                            <span class="text-sm font-bold">Jipijapa, Ecuador</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- CONTENIDO -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <!-- RESUMEN -->
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl">
+                    ✨
+                </div>
+                <h2 class="text-sm font-black uppercase text-slate-400">Resumen Profesional</h2>
+            </div>
+            <p class="text-xl text-slate-700 leading-relaxed">
+                Estudiante apasionado por la <span class="gradient-text font-bold">Tecnología de la Información</span>, 
+                comprometido con el aprendizaje continuo y el desarrollo de soluciones innovadoras.
+            </p>
+        </div>
 
-            <!-- RESUMEN -->
-            <div class="lg:col-span-12">
-                <div class="bg-slate-50 p-8 md:p-10 rounded-3xl border border-slate-100">
-                    <h2 class="text-xs font-black uppercase tracking-[0.4em] text-slate-400 mb-6">Resumen Profesional
-                    </h2>
-                    <p class="text-xl md:text-2xl font-medium tracking-tight text-slate-800 leading-tight">
-                        Estudiante apasionado por la <span class="text-black font-bold">Tecnología de la Información</span>, 
-                        comprometido con el aprendizaje continuo y el desarrollo de soluciones innovadoras. 
-                        Enfocado en construir bases sólidas en desarrollo web, gestión de sistemas y tecnologías emergentes 
-                        que impulsen la transformación digital.
+        <!-- EXPERIENCIA -->
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="experiencia">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center text-2xl">
+                    💼
+                </div>
+                <h2 class="text-sm font-black uppercase text-slate-400">Experiencia Laboral</h2>
+            </div>
+
+            <div class="space-y-6">
+                <div class="card-hover bg-gradient-to-br from-indigo-50 to-pink-50 p-6 rounded-2xl border-2 border-indigo-100">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="font-bold text-xl text-slate-900">Desarrollador Web Junior</h3>
+                        <span class="px-3 py-1 bg-indigo-500 text-white rounded-full text-xs font-bold">2024 - Presente</span>
+                    </div>
+                    <p class="text-indigo-600 font-semibold mb-3">Proyectos Académicos • ULEAM</p>
+                    <p class="text-slate-600 mb-4">
+                        Desarrollo de aplicaciones web responsivas utilizando HTML, CSS y JavaScript.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-xs font-bold">HTML/CSS</span>
+                        <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-xs font-bold">JavaScript</span>
+                        <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-xs font-bold">Git</span>
+                    </div>
+                </div>
+
+                <div class="card-hover bg-gradient-to-br from-teal-50 to-cyan-50 p-6 rounded-2xl border-2 border-teal-100">
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="font-bold text-xl text-slate-900">Asistente de Tecnología</h3>
+                        <span class="px-3 py-1 bg-teal-500 text-white rounded-full text-xs font-bold">2023 - 2024</span>
+                    </div>
+                    <p class="text-teal-600 font-semibold mb-3">Voluntariado Comunitario</p>
+                    <p class="text-slate-600 mb-4">
+                        Soporte técnico básico y capacitación en herramientas digitales.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white text-teal-600 rounded-full text-xs font-bold">Soporte Técnico</span>
+                        <span class="px-3 py-1 bg-white text-teal-600 rounded-full text-xs font-bold">Microsoft Office</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EDUCACIÓN Y OBJETIVOS -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div class="bg-white rounded-3xl shadow-2xl p-8" id="educacion">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl">
+                        🎓
+                    </div>
+                    <h2 class="text-sm font-black uppercase text-slate-400">Educación</h2>
+                </div>
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-2xl border-2 border-purple-100">
+                    <h3 class="font-bold text-lg text-slate-900 mb-2">Tecnología de la Información</h3>
+                    <p class="text-purple-600 font-semibold text-sm mb-2">Universidad Laica Eloy Alfaro de Manabí</p>
+                    <span class="inline-block px-3 py-1 bg-white text-purple-600 rounded-full text-xs font-bold mb-3">En curso</span>
+                    <p class="text-slate-600 text-sm">
+                        Formación en desarrollo de software, administración de sistemas y redes.
                     </p>
                 </div>
             </div>
 
-            <!-- COLUMNA IZQUIERDA: Educación -->
-            <div class="lg:col-span-7 space-y-16">
-                <!-- EDUCACIÓN -->
-                <section id="educacion">
-                    <div class="flex items-center gap-4 mb-10">
-                        <h2 class="text-sm font-black uppercase tracking-[0.3em] text-black">Educación</h2>
-                        <div class="h-px flex-grow bg-slate-100"></div>
+            <div class="bg-white rounded-3xl shadow-2xl p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center text-2xl">
+                        🎯
                     </div>
-
-                    <div class="space-y-8 text-sm">
-                        <div class="relative pl-8 border-l-2 border-slate-100">
-                            <div class="absolute w-3 h-3 bg-black rounded-full -left-[7px] top-1.5"></div>
-                            <h3 class="font-bold text-lg tracking-tight">Tecnología de la Información</h3>
-                            <p class="text-slate-500 mt-1">Universidad Laica Eloy Alfaro de Manabí (ULEAM) • En curso</p>
-                            <p class="text-slate-600 leading-relaxed mt-3">
-                                Formación integral en desarrollo de software, administración de sistemas, 
-                                redes de computadoras y gestión de tecnologías de la información.
-                            </p>
-                        </div>
+                    <h2 class="text-sm font-black uppercase text-slate-400">Objetivos</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-gradient-to-br from-orange-50 to-red-50 p-5 rounded-2xl border-2 border-orange-100">
+                        <h4 class="font-bold text-sm mb-2">Desarrollo Profesional</h4>
+                        <p class="text-slate-600 text-sm">
+                            Convertirme en un profesional integral de TI, dominando desarrollo web y sistemas.
+                        </p>
                     </div>
-                </section>
-
-                <!-- OBJETIVOS -->
-                <section>
-                    <div class="flex items-center gap-4 mb-10">
-                        <h2 class="text-sm font-black uppercase tracking-[0.3em] text-black">Objetivos</h2>
-                        <div class="h-px flex-grow bg-slate-100"></div>
+                    <div class="bg-gradient-to-br from-yellow-50 to-orange-50 p-5 rounded-2xl border-2 border-yellow-100">
+                        <h4 class="font-bold text-sm mb-2">Innovación Tecnológica</h4>
+                        <p class="text-slate-600 text-sm">
+                            Contribuir con soluciones tecnológicas que generen impacto positivo.
+                        </p>
                     </div>
-
-                    <div class="space-y-4">
-                        <div class="p-5 bg-slate-50 border border-slate-100 rounded-2xl">
-                            <h4 class="font-bold text-sm mb-2 flex items-center gap-2">
-                                <i data-lucide="target" class="w-4 h-4 text-slate-400"></i>
-                                Desarrollo Profesional
-                            </h4>
-                            <p class="text-slate-600 text-sm leading-relaxed">
-                                Convertirme en un profesional integral de TI, dominando tanto desarrollo web 
-                                como administración de sistemas y bases de datos.
-                            </p>
-                        </div>
-                        <div class="p-5 bg-slate-50 border border-slate-100 rounded-2xl">
-                            <h4 class="font-bold text-sm mb-2 flex items-center gap-2">
-                                <i data-lucide="lightbulb" class="w-4 h-4 text-slate-400"></i>
-                                Innovación Tecnológica
-                            </h4>
-                            <p class="text-slate-600 text-sm leading-relaxed">
-                                Contribuir con soluciones tecnológicas innovadoras que generen impacto 
-                                positivo en mi comunidad y en el sector empresarial.
-                            </p>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <!-- COLUMNA DERECHA: Habilidades e Idiomas -->
-            <div class="lg:col-span-5 space-y-16">
-                <!-- HABILIDADES -->
-                <section id="habilidades">
-                    <div class="flex items-center gap-4 mb-10">
-                        <h2 class="text-sm font-black uppercase tracking-[0.3em] text-black">Habilidades</h2>
-                        <div class="h-px flex-grow bg-slate-100"></div>
-                    </div>
-
-                    <div class="space-y-8">
-                        <div>
-                            <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">Tecnologías
-                            </h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span
-                                    class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-full text-[11px] font-bold">HTML</span>
-                                <span
-                                    class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-full text-[11px] font-bold">CSS</span>
-                                <span
-                                    class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-full text-[11px] font-bold">JavaScript</span>
-                                <span
-                                    class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-full text-[11px] font-bold">Git</span>
-                                <span
-                                    class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-full text-[11px] font-bold">GitHub</span>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">Herramientas
-                            </h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1.5 bg-black text-white rounded-full text-[11px] font-bold">VS Code</span>
-                                <span
-                                    class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-full text-[11px] font-bold">Render</span>
-                                <span
-                                    class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-full text-[11px] font-bold">Microsoft Office</span>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h4 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">
-                                Habilidades Blandas</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span
-                                    class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-full text-[11px] font-bold">Trabajo en Equipo</span>
-                                <span
-                                    class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-full text-[11px] font-bold">Resolución de Problemas</span>
-                                <span
-                                    class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-full text-[11px] font-bold">Adaptabilidad</span>
-                                <span
-                                    class="px-3 py-1.5 bg-slate-50 border border-slate-100 rounded-full text-[11px] font-bold">Aprendizaje Continuo</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- IDIOMAS -->
-                <section>
-                    <div class="flex items-center gap-4 mb-10">
-                        <h2 class="text-sm font-black uppercase tracking-[0.3em] text-black">Idiomas</h2>
-                        <div class="h-px flex-grow bg-slate-100"></div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4 text-sm">
-                        <div class="p-4 border border-slate-100 rounded-2xl">
-                            <p class="font-bold">Español</p>
-                            <p class="text-[10px] text-slate-400 uppercase tracking-widest">Nativo</p>
-                        </div>
-                        <div class="p-4 border border-slate-100 rounded-2xl">
-                            <p class="font-bold">Inglés</p>
-                            <p class="text-[10px] text-slate-400 uppercase tracking-widest">Básico</p>
-                        </div>
-                    </div>
-                </section>
+                </div>
             </div>
         </div>
+
+        <!-- HABILIDADES -->
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="habilidades">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center text-2xl">
+                    💻
+                </div>
+                <h2 class="text-sm font-black uppercase text-slate-400">Habilidades Técnicas</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-bold">HTML & CSS</span>
+                            <span class="text-xs font-bold text-indigo-600">85%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 85%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-bold">JavaScript</span>
+                            <span class="text-xs font-bold text-indigo-600">70%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 70%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-bold">Git & GitHub</span>
+                            <span class="text-xs font-bold text-indigo-600">75%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 75%"></div></div>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-bold">Microsoft Office</span>
+                            <span class="text-xs font-bold text-indigo-600">90%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-bold">VS Code</span>
+                            <span class="text-xs font-bold text-indigo-600">80%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 80%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-sm font-bold">Responsive Design</span>
+                            <span class="text-xs font-bold text-indigo-600">78%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width: 78%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-xs font-black uppercase text-slate-400 mb-4">Habilidades Blandas</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="card-hover bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-2xl text-center border-2 border-blue-100">
+                    <p class="text-sm font-bold">Trabajo en Equipo</p>
+                </div>
+                <div class="card-hover bg-gradient-to-br from-purple-50 to-pink-50 p-5 rounded-2xl text-center border-2 border-purple-100">
+                    <p class="text-sm font-bold">Resolución de Problemas</p>
+                </div>
+                <div class="card-hover bg-gradient-to-br from-teal-50 to-cyan-50 p-5 rounded-2xl text-center border-2 border-teal-100">
+                    <p class="text-sm font-bold">Adaptabilidad</p>
+                </div>
+                <div class="card-hover bg-gradient-to-br from-orange-50 to-red-50 p-5 rounded-2xl text-center border-2 border-orange-100">
+                    <p class="text-sm font-bold">Aprendizaje Continuo</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROYECTOS E IDIOMAS -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-white rounded-3xl shadow-2xl p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center text-2xl">
+                        🚀
+                    </div>
+                    <h2 class="text-sm font-black uppercase text-slate-400">Proyectos</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="card-hover bg-gradient-to-br from-green-50 to-teal-50 p-5 rounded-2xl border-2 border-green-100">
+                        <h3 class="font-bold mb-2">Portfolio Interactivo</h3>
+                        <p class="text-sm text-slate-600 mb-3">Portafolio personal con diseño moderno y responsivo.</p>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-white text-green-600 rounded text-xs font-semibold">HTML</span>
+                            <span class="px-2 py-1 bg-white text-green-600 rounded text-xs font-semibold">CSS</span>
+                            <span class="px-2 py-1 bg-white text-green-600 rounded text-xs font-semibold">JS</span>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-2xl border-2 border-blue-100">
+                        <h3 class="font-bold mb-2">Sistema de Gestión</h3>
+                        <p class="text-sm text-slate-600 mb-3">Aplicación web para gestión de inventario.</p>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-white text-blue-600 rounded text-xs font-semibold">JavaScript</span>
+                            <span class="px-2 py-1 bg-white text-blue-600 rounded text-xs font-semibold">JSON</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-2xl p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-rose-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl">
+                        🌍
+                    </div>
+                    <h2 class="text-sm font-black uppercase text-slate-400">Idiomas</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-gradient-to-br from-rose-50 to-pink-50 p-5 rounded-2xl border-2 border-rose-100">
+                        <div class="flex justify-between mb-3">
+                            <h3 class="font-bold">Español</h3>
+                            <span class="px-3 py-1 bg-rose-500 text-white rounded-full text-xs font-bold">Nativo</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 100%; background: linear-gradient(90deg, #f43f5e, #ec4899);"></div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-2xl border-2 border-blue-100">
+                        <div class="flex justify-between mb-3">
+                            <h3 class="font-bold">Inglés</h3>
+                            <span class="px-3 py-1 bg-blue-500 text-white rounded-full text-xs font-bold">Básico</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 40%; background: linear-gradient(90deg, #3b82f6, #6366f1);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
 
-    <footer class="py-20 border-t border-slate-50 text-center">
-        <p class="text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 italic">Campozano Mendoza Marcos Luis &copy; 2026</p>
+    <footer class="py-12 text-center">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="bg-white rounded-3xl shadow-2xl p-8">
+                <div class="flex justify-center items-center gap-3 mb-4">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-xl flex items-center justify-center text-white font-bold">MC</div>
+                    <span class="font-black text-xl gradient-text">PORTFOLIO</span>
+                </div>
+                <p class="text-sm text-slate-600 mb-4">Construyendo el futuro, una línea de código a la vez</p>
+                <p class="text-xs font-bold uppercase text-slate-400">Campozano Mendoza Marcos Luis © 2026</p>
+            </div>
+        </div>
     </footer>
 
-    <script>
-        // Inicializar iconos
-        lucide.createIcons();
-    </script>
+    <script>lucide.createIcons();</script>
 </body>
-
 </html>
