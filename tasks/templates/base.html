@@ -60,6 +60,43 @@
         .btn-download:hover {
             transform: scale(1.05);
         }
+
+        /* Estilos para elementos editables */
+        .editable {
+            cursor: text;
+            position: relative;
+            transition: background-color 0.2s;
+        }
+
+        .editable:hover {
+            background-color: rgba(99, 102, 241, 0.05);
+            border-radius: 4px;
+        }
+
+        .editable.editing {
+            background-color: rgba(99, 102, 241, 0.1);
+            outline: 2px solid #6366f1;
+            border-radius: 4px;
+            padding: 2px 4px;
+        }
+
+        .edit-hint {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-size: 14px;
+            z-index: 40;
+            animation: fadeInOut 4s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            10%, 90% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
@@ -77,6 +114,9 @@
                     <a href="#habilidades" class="text-slate-700 hover:text-indigo-600">Habilidades</a>
                     <a href="#proyectos" class="text-slate-700 hover:text-indigo-600">Proyectos</a>
                 </div>
+                <button onclick="toggleEditMode()" id="editBtn" class="bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-4 py-2 rounded-full text-sm font-bold hover:scale-105 transition-transform">
+                    ✏️ Modo Edición
+                </button>
                 <button onclick="downloadPDF()" class="btn-download text-white px-6 py-2.5 rounded-full text-sm font-bold flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
@@ -102,10 +142,10 @@
                         <span class="text-xs font-bold text-green-700">Disponible para colaborar</span>
                     </div>
                     <h1 class="text-4xl md:text-5xl font-black mb-2">
-                        <span class="gradient-text">CAMPOZANO MENDOZA</span><br>
-                        <span class="text-slate-900">MARCOS LUIS</span>
+                        <span class="gradient-text editable" contenteditable="false" data-field="apellido">CAMPOZANO MENDOZA</span><br>
+                        <span class="text-slate-900 editable" contenteditable="false" data-field="nombre">MARCOS LUIS</span>
                     </h1>
-                    <p class="text-lg text-slate-600 mb-4">Estudiante de Tecnología de la Información</p>
+                    <p class="text-lg text-slate-600 mb-4 editable" contenteditable="false" data-field="titulo">Estudiante de Tecnología de la Información</p>
                     
                     <div class="flex gap-3">
                         <a href="mailto:campozanomendoza@gmail.com" class="w-10 h-10 bg-gradient-to-br from-indigo-100 to-pink-100 rounded-xl flex items-center justify-center hover:scale-110 transition-transform">
@@ -134,7 +174,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                 </svg>
                             </div>
-                            <span class="text-sm">campozanomendoza@gmail.com</span>
+                            <span class="text-sm editable" contenteditable="false" data-field="email">campozanomendoza@gmail.com</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
@@ -142,7 +182,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
                                 </svg>
                             </div>
-                            <span class="text-sm">+593 098 500 26 00</span>
+                            <span class="text-sm editable" contenteditable="false" data-field="telefono">+593 098 500 26 00</span>
                         </div>
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center">
@@ -151,7 +191,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                 </svg>
                             </div>
-                            <span class="text-sm font-bold">Jipijapa, Ecuador</span>
+                            <span class="text-sm font-bold editable" contenteditable="false" data-field="ubicacion">Jipijapa, Ecuador</span>
                         </div>
                     </div>
                 </div>
@@ -163,7 +203,7 @@
                 <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl">✨</div>
                 <h2 class="text-sm font-black uppercase text-slate-400">Resumen Profesional</h2>
             </div>
-            <p class="text-xl text-slate-700 leading-relaxed">
+            <p class="text-xl text-slate-700 leading-relaxed editable" contenteditable="false" data-field="resumen">
                 Estudiante apasionado por la <span class="gradient-text font-bold">Tecnología de la Información</span>, 
                 comprometido con el aprendizaje continuo y el desarrollo de soluciones innovadoras.
             </p>
@@ -177,11 +217,11 @@
             <div class="space-y-6">
                 <div class="card-hover bg-gradient-to-br from-indigo-50 to-pink-50 p-6 rounded-2xl border-2 border-indigo-100">
                     <div class="flex justify-between items-start mb-3">
-                        <h3 class="font-bold text-xl text-slate-900">Desarrollador Web Junior</h3>
-                        <span class="px-3 py-1 bg-indigo-500 text-white rounded-full text-xs font-bold">2024 - Presente</span>
+                        <h3 class="font-bold text-xl text-slate-900 editable" contenteditable="false" data-field="exp1-titulo">Desarrollador Web Junior</h3>
+                        <span class="px-3 py-1 bg-indigo-500 text-white rounded-full text-xs font-bold editable" contenteditable="false" data-field="exp1-fecha">2024 - Presente</span>
                     </div>
-                    <p class="text-indigo-600 font-semibold mb-3">Proyectos Académicos • ULEAM</p>
-                    <p class="text-slate-600 mb-4">Desarrollo de aplicaciones web responsivas utilizando HTML, CSS y JavaScript.</p>
+                    <p class="text-indigo-600 font-semibold mb-3 editable" contenteditable="false" data-field="exp1-empresa">Proyectos Académicos • ULEAM</p>
+                    <p class="text-slate-600 mb-4 editable" contenteditable="false" data-field="exp1-descripcion">Desarrollo de aplicaciones web responsivas utilizando HTML, CSS y JavaScript.</p>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-xs font-bold">HTML/CSS</span>
                         <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-xs font-bold">JavaScript</span>
@@ -190,11 +230,11 @@
                 </div>
                 <div class="card-hover bg-gradient-to-br from-teal-50 to-cyan-50 p-6 rounded-2xl border-2 border-teal-100">
                     <div class="flex justify-between items-start mb-3">
-                        <h3 class="font-bold text-xl text-slate-900">Asistente de Tecnología</h3>
-                        <span class="px-3 py-1 bg-teal-500 text-white rounded-full text-xs font-bold">2023 - 2024</span>
+                        <h3 class="font-bold text-xl text-slate-900 editable" contenteditable="false" data-field="exp2-titulo">Asistente de Tecnología</h3>
+                        <span class="px-3 py-1 bg-teal-500 text-white rounded-full text-xs font-bold editable" contenteditable="false" data-field="exp2-fecha">2023 - 2024</span>
                     </div>
-                    <p class="text-teal-600 font-semibold mb-3">Voluntariado Comunitario</p>
-                    <p class="text-slate-600 mb-4">Soporte técnico básico y capacitación en herramientas digitales.</p>
+                    <p class="text-teal-600 font-semibold mb-3 editable" contenteditable="false" data-field="exp2-empresa">Voluntariado Comunitario</p>
+                    <p class="text-slate-600 mb-4 editable" contenteditable="false" data-field="exp2-descripcion">Soporte técnico básico y capacitación en herramientas digitales.</p>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white text-teal-600 rounded-full text-xs font-bold">Soporte Técnico</span>
                         <span class="px-3 py-1 bg-white text-teal-600 rounded-full text-xs font-bold">Microsoft Office</span>
@@ -210,10 +250,10 @@
                     <h2 class="text-sm font-black uppercase text-slate-400">Educación</h2>
                 </div>
                 <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-2xl border-2 border-purple-100">
-                    <h3 class="font-bold text-lg text-slate-900 mb-2">Tecnología de la Información</h3>
-                    <p class="text-purple-600 font-semibold text-sm mb-2">Universidad Laica Eloy Alfaro de Manabí</p>
-                    <span class="inline-block px-3 py-1 bg-white text-purple-600 rounded-full text-xs font-bold mb-3">En curso</span>
-                    <p class="text-slate-600 text-sm">Formación en desarrollo de software, administración de sistemas y redes.</p>
+                    <h3 class="font-bold text-lg text-slate-900 mb-2 editable" contenteditable="false" data-field="edu-titulo">Tecnología de la Información</h3>
+                    <p class="text-purple-600 font-semibold text-sm mb-2 editable" contenteditable="false" data-field="edu-institucion">Universidad Laica Eloy Alfaro de Manabí</p>
+                    <span class="inline-block px-3 py-1 bg-white text-purple-600 rounded-full text-xs font-bold mb-3 editable" contenteditable="false" data-field="edu-estado">En curso</span>
+                    <p class="text-slate-600 text-sm editable" contenteditable="false" data-field="edu-descripcion">Formación en desarrollo de software, administración de sistemas y redes.</p>
                 </div>
             </div>
             <div class="bg-white rounded-3xl shadow-2xl p-8">
@@ -223,12 +263,12 @@
                 </div>
                 <div class="space-y-4">
                     <div class="bg-gradient-to-br from-orange-50 to-red-50 p-5 rounded-2xl border-2 border-orange-100 card-hover">
-                        <h4 class="font-bold text-sm mb-2">Desarrollo Profesional</h4>
-                        <p class="text-slate-600 text-sm">Convertirme en un profesional integral de TI, dominando desarrollo web y sistemas.</p>
+                        <h4 class="font-bold text-sm mb-2 editable" contenteditable="false" data-field="obj1-titulo">Desarrollo Profesional</h4>
+                        <p class="text-slate-600 text-sm editable" contenteditable="false" data-field="obj1-descripcion">Convertirme en un profesional integral de TI, dominando desarrollo web y sistemas.</p>
                     </div>
                     <div class="bg-gradient-to-br from-yellow-50 to-orange-50 p-5 rounded-2xl border-2 border-yellow-100 card-hover">
-                        <h4 class="font-bold text-sm mb-2">Innovación Tecnológica</h4>
-                        <p class="text-slate-600 text-sm">Contribuir con soluciones tecnológicas que generen impacto positivo.</p>
+                        <h4 class="font-bold text-sm mb-2 editable" contenteditable="false" data-field="obj2-titulo">Innovación Tecnológica</h4>
+                        <p class="text-slate-600 text-sm editable" contenteditable="false" data-field="obj2-descripcion">Contribuir con soluciones tecnológicas que generen impacto positivo.</p>
                     </div>
                 </div>
             </div>
@@ -312,8 +352,8 @@
                 </div>
                 <div class="space-y-4">
                     <div class="card-hover bg-gradient-to-br from-green-50 to-teal-50 p-5 rounded-2xl border-2 border-green-100">
-                        <h3 class="font-bold mb-2">Portfolio Interactivo</h3>
-                        <p class="text-sm text-slate-600 mb-3">Portafolio personal con diseño moderno y responsivo.</p>
+                        <h3 class="font-bold mb-2 editable" contenteditable="false" data-field="proy1-titulo">Portfolio Interactivo</h3>
+                        <p class="text-sm text-slate-600 mb-3 editable" contenteditable="false" data-field="proy1-descripcion">Portafolio personal con diseño moderno y responsivo.</p>
                         <div class="flex gap-2">
                             <span class="px-2 py-1 bg-white text-green-600 rounded text-xs font-semibold">HTML</span>
                             <span class="px-2 py-1 bg-white text-green-600 rounded text-xs font-semibold">CSS</span>
@@ -321,8 +361,8 @@
                         </div>
                     </div>
                     <div class="card-hover bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-2xl border-2 border-blue-100">
-                        <h3 class="font-bold mb-2">Sistema de Gestión</h3>
-                        <p class="text-sm text-slate-600 mb-3">Aplicación web para gestión de inventario.</p>
+                        <h3 class="font-bold mb-2 editable" contenteditable="false" data-field="proy2-titulo">Sistema de Gestión</h3>
+                        <p class="text-sm text-slate-600 mb-3 editable" contenteditable="false" data-field="proy2-descripcion">Aplicación web para gestión de inventario.</p>
                         <div class="flex gap-2">
                             <span class="px-2 py-1 bg-white text-blue-600 rounded text-xs font-semibold">JavaScript</span>
                             <span class="px-2 py-1 bg-white text-blue-600 rounded text-xs font-semibold">JSON</span>
@@ -378,6 +418,9 @@
     </footer>
 
     <script>
+        // Variable para modo de edición
+        let editMode = false;
+
         // Animación de barras de habilidades
         window.addEventListener('load', function() {
             const skillBars = document.querySelectorAll('.skill-progress');
@@ -389,10 +432,105 @@
                     }
                 });
             }, 500);
+
+            // Mostrar hint de edición
+            showEditHint();
         });
+
+        // Función para mostrar hint de edición
+        function showEditHint() {
+            const hint = document.createElement('div');
+            hint.className = 'edit-hint';
+            hint.innerHTML = '💡 Haz doble clic en cualquier texto para editarlo';
+            document.body.appendChild(hint);
+            
+            setTimeout(() => {
+                hint.remove();
+            }, 4000);
+        }
+
+        // Función para activar/desactivar modo edición
+        function toggleEditMode() {
+            editMode = !editMode;
+            const editables = document.querySelectorAll('.editable');
+            const editBtn = document.getElementById('editBtn');
+            
+            editables.forEach(el => {
+                el.contentEditable = editMode;
+                if (editMode) {
+                    el.classList.add('editing');
+                } else {
+                    el.classList.remove('editing');
+                }
+            });
+
+            if (editMode) {
+                editBtn.innerHTML = '💾 Guardar Cambios';
+                editBtn.className = 'bg-gradient-to-r from-green-500 to-teal-500 text-white px-4 py-2 rounded-full text-sm font-bold hover:scale-105 transition-transform';
+                
+                // Mostrar mensaje
+                const msg = document.createElement('div');
+                msg.className = 'edit-hint';
+                msg.innerHTML = '✏️ Modo edición activado. Haz click en cualquier texto para editarlo.';
+                document.body.appendChild(msg);
+                setTimeout(() => msg.remove(), 3000);
+            } else {
+                editBtn.innerHTML = '✏️ Modo Edición';
+                editBtn.className = 'bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-4 py-2 rounded-full text-sm font-bold hover:scale-105 transition-transform';
+                
+                // Guardar cambios en localStorage
+                saveChanges();
+                
+                // Mostrar mensaje de guardado
+                const msg = document.createElement('div');
+                msg.className = 'edit-hint';
+                msg.innerHTML = '✅ Cambios guardados correctamente';
+                document.body.appendChild(msg);
+                setTimeout(() => msg.remove(), 3000);
+            }
+        }
+
+        // Función para guardar cambios en localStorage
+        function saveChanges() {
+            const editables = document.querySelectorAll('.editable');
+            const data = {};
+            
+            editables.forEach(el => {
+                const field = el.getAttribute('data-field');
+                if (field) {
+                    data[field] = el.textContent;
+                }
+            });
+            
+            localStorage.setItem('cvData', JSON.stringify(data));
+        }
+
+        // Función para cargar datos guardados
+        function loadSavedData() {
+            const savedData = localStorage.getItem('cvData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const editables = document.querySelectorAll('.editable');
+                
+                editables.forEach(el => {
+                    const field = el.getAttribute('data-field');
+                    if (field && data[field]) {
+                        el.textContent = data[field];
+                    }
+                });
+            }
+        }
+
+        // Cargar datos al inicio
+        window.addEventListener('DOMContentLoaded', loadSavedData);
 
         // Función para descargar PDF
         function downloadPDF() {
+            // Desactivar modo edición antes de generar PDF
+            if (editMode) {
+                toggleEditMode();
+            }
+
             const element = document.getElementById('cv-content');
             const opt = {
                 margin: 0.5,
@@ -413,6 +551,20 @@
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
+        });
+
+        // Atajos de teclado
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+E o Cmd+E para activar modo edición
+            if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+                e.preventDefault();
+                toggleEditMode();
+            }
+            // Ctrl+S o Cmd+S para guardar
+            if ((e.ctrlKey || e.metaKey) && e.key === 's' && editMode) {
+                e.preventDefault();
+                toggleEditMode();
+            }
         });
     </script>
 
