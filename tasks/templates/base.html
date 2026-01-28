@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
@@ -9,12 +10,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -25,15 +20,14 @@
             background: linear-gradient(135deg, #6366f1, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .card-hover {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s ease;
         }
 
         .card-hover:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-8px);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
 
@@ -41,14 +35,13 @@
             height: 8px;
             background: #e2e8f0;
             border-radius: 999px;
-            overflow: hidden;
         }
 
         .skill-progress {
             height: 100%;
             background: linear-gradient(90deg, #6366f1, #ec4899);
             border-radius: 999px;
-            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: width 2s ease;
         }
 
         @keyframes float {
@@ -60,30 +53,6 @@
             animation: float 3s ease-in-out infinite;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        .pulse-slow {
-            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
         .btn-download {
             background: linear-gradient(135deg, #6366f1, #ec4899);
             transition: all 0.3s ease;
@@ -91,43 +60,12 @@
 
         .btn-download:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.5);
-        }
-
-        .tooltip {
-            position: relative;
-        }
-
-        .tooltip:hover::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1e293b;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.75rem;
-            white-space: nowrap;
-            margin-bottom: 0.5rem;
-            z-index: 1000;
-        }
-
-        @media print {
-            body {
-                background: white;
-            }
-            .no-print {
-                display: none !important;
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVEGACIÓN -->
-    <header class="sticky top-0 bg-white shadow-lg z-50 no-print">
+    <header class="sticky top-0 bg-white shadow-lg z-50">
         <nav class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-xl flex items-center justify-center text-white font-bold floating">MC</div>
@@ -135,10 +73,10 @@
             </div>
             <div class="flex items-center gap-4">
                 <div class="hidden md:flex gap-6 text-xs font-bold uppercase">
-                    <a href="#inicio" class="text-slate-700 hover:text-indigo-600 transition-colors">Inicio</a>
-                    <a href="#experiencia" class="text-slate-700 hover:text-indigo-600 transition-colors">Experiencia</a>
-                    <a href="#habilidades" class="text-slate-700 hover:text-indigo-600 transition-colors">Habilidades</a>
-                    <a href="#proyectos" class="text-slate-700 hover:text-indigo-600 transition-colors">Proyectos</a>
+                    <a href="#inicio" class="text-slate-700 hover:text-indigo-600">Inicio</a>
+                    <a href="#experiencia" class="text-slate-700 hover:text-indigo-600">Experiencia</a>
+                    <a href="#habilidades" class="text-slate-700 hover:text-indigo-600">Habilidades</a>
+                    <a href="#proyectos" class="text-slate-700 hover:text-indigo-600">Proyectos</a>
                 </div>
                 <button onclick="downloadPDF()" class="btn-download text-white px-6 py-2.5 rounded-full text-sm font-bold flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -152,20 +90,16 @@
 
     <main class="max-w-6xl mx-auto px-6 py-12" id="cv-content">
 
-        <!-- HEADER -->
-        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 mb-8 fade-in" id="inicio">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 mb-8" id="inicio">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
                 <div class="flex flex-col items-center text-center lg:col-span-2">
-                    <!-- Iniciales MC -->
-                    <div class="relative group mb-6">
-                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity"></div>
-                        <div class="relative w-40 h-40 rounded-3xl flex items-center justify-center overflow-hidden border-4 border-white shadow-xl bg-gradient-to-br from-indigo-500 to-pink-500">
+                    <div class="relative mb-6">
+                        <div class="w-40 h-40 rounded-3xl flex items-center justify-center border-4 border-white shadow-xl bg-gradient-to-br from-indigo-500 to-pink-500">
                             <span class="text-6xl font-black text-white">MC</span>
                         </div>
                     </div>
-
                     <div class="mb-4 px-4 py-2 bg-green-100 rounded-full inline-flex items-center gap-2">
-                        <span class="w-2 h-2 bg-green-500 rounded-full pulse-slow"></span>
+                        <span class="w-2 h-2 bg-green-500 rounded-full"></span>
                         <span class="text-xs font-bold text-green-700">Disponible para colaborar</span>
                     </div>
                     <h1 class="text-4xl md:text-5xl font-black mb-2">
@@ -174,19 +108,18 @@
                     </h1>
                     <p class="text-lg text-slate-600 mb-4">Estudiante de Tecnología de la Información</p>
                     
-                    <!-- Redes Sociales -->
-                    <div class="flex gap-3 no-print">
-                        <a href="mailto:campozanomendoza@gmail.com" class="w-10 h-10 bg-gradient-to-br from-indigo-100 to-pink-100 rounded-xl flex items-center justify-center hover:scale-110 transition-transform tooltip" data-tooltip="Email">
+                    <div class="flex gap-3">
+                        <a href="mailto:campozanomendoza@gmail.com" class="w-10 h-10 bg-gradient-to-br from-indigo-100 to-pink-100 rounded-xl flex items-center justify-center hover:scale-110 transition-transform">
                             <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                             </svg>
                         </a>
-                        <a href="https://github.com" target="_blank" class="w-10 h-10 bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl flex items-center justify-center hover:scale-110 transition-transform tooltip" data-tooltip="GitHub">
+                        <a href="https://github.com" target="_blank" class="w-10 h-10 bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl flex items-center justify-center hover:scale-110 transition-transform">
                             <svg class="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                             </svg>
                         </a>
-                        <a href="https://linkedin.com" target="_blank" class="w-10 h-10 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center hover:scale-110 transition-transform tooltip" data-tooltip="LinkedIn">
+                        <a href="https://linkedin.com" target="_blank" class="w-10 h-10 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center hover:scale-110 transition-transform">
                             <svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                             </svg>
@@ -194,7 +127,6 @@
                     </div>
                 </div>
                 
-                <!-- Información de contacto -->
                 <div class="bg-gradient-to-br from-indigo-50 to-pink-50 p-6 rounded-2xl">
                     <div class="space-y-3">
                         <div class="flex items-center gap-3">
@@ -227,12 +159,9 @@
             </div>
         </div>
 
-        <!-- RESUMEN -->
-        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8 fade-in">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8">
             <div class="flex items-center gap-3 mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl">
-                    ✨
-                </div>
+                <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl">✨</div>
                 <h2 class="text-sm font-black uppercase text-slate-400">Resumen Profesional</h2>
             </div>
             <p class="text-xl text-slate-700 leading-relaxed">
@@ -241,15 +170,11 @@
             </p>
         </div>
 
-        <!-- EXPERIENCIA -->
-        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8 fade-in" id="experiencia">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="experiencia">
             <div class="flex items-center gap-3 mb-6">
-                <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center text-2xl">
-                    💼
-                </div>
+                <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-2xl flex items-center justify-center text-2xl">💼</div>
                 <h2 class="text-sm font-black uppercase text-slate-400">Experiencia Laboral</h2>
             </div>
-
             <div class="space-y-6">
                 <div class="card-hover bg-gradient-to-br from-indigo-50 to-pink-50 p-6 rounded-2xl border-2 border-indigo-100">
                     <div class="flex justify-between items-start mb-3">
@@ -257,25 +182,20 @@
                         <span class="px-3 py-1 bg-indigo-500 text-white rounded-full text-xs font-bold">2024 - Presente</span>
                     </div>
                     <p class="text-indigo-600 font-semibold mb-3">Proyectos Académicos • ULEAM</p>
-                    <p class="text-slate-600 mb-4">
-                        Desarrollo de aplicaciones web responsivas utilizando HTML, CSS y JavaScript.
-                    </p>
+                    <p class="text-slate-600 mb-4">Desarrollo de aplicaciones web responsivas utilizando HTML, CSS y JavaScript.</p>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-xs font-bold">HTML/CSS</span>
                         <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-xs font-bold">JavaScript</span>
                         <span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-xs font-bold">Git</span>
                     </div>
                 </div>
-
                 <div class="card-hover bg-gradient-to-br from-teal-50 to-cyan-50 p-6 rounded-2xl border-2 border-teal-100">
                     <div class="flex justify-between items-start mb-3">
                         <h3 class="font-bold text-xl text-slate-900">Asistente de Tecnología</h3>
                         <span class="px-3 py-1 bg-teal-500 text-white rounded-full text-xs font-bold">2023 - 2024</span>
                     </div>
                     <p class="text-teal-600 font-semibold mb-3">Voluntariado Comunitario</p>
-                    <p class="text-slate-600 mb-4">
-                        Soporte técnico básico y capacitación en herramientas digitales.
-                    </p>
+                    <p class="text-slate-600 mb-4">Soporte técnico básico y capacitación en herramientas digitales.</p>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white text-teal-600 rounded-full text-xs font-bold">Soporte Técnico</span>
                         <span class="px-3 py-1 bg-white text-teal-600 rounded-full text-xs font-bold">Microsoft Office</span>
@@ -284,75 +204,59 @@
             </div>
         </div>
 
-        <!-- EDUCACIÓN Y OBJETIVOS -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            <div class="bg-white rounded-3xl shadow-2xl p-8 fade-in" id="educacion">
+            <div class="bg-white rounded-3xl shadow-2xl p-8" id="educacion">
                 <div class="flex items-center gap-3 mb-6">
-                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl">
-                        🎓
-                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl">🎓</div>
                     <h2 class="text-sm font-black uppercase text-slate-400">Educación</h2>
                 </div>
                 <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-2xl border-2 border-purple-100">
                     <h3 class="font-bold text-lg text-slate-900 mb-2">Tecnología de la Información</h3>
                     <p class="text-purple-600 font-semibold text-sm mb-2">Universidad Laica Eloy Alfaro de Manabí</p>
                     <span class="inline-block px-3 py-1 bg-white text-purple-600 rounded-full text-xs font-bold mb-3">En curso</span>
-                    <p class="text-slate-600 text-sm">
-                        Formación en desarrollo de software, administración de sistemas y redes.
-                    </p>
+                    <p class="text-slate-600 text-sm">Formación en desarrollo de software, administración de sistemas y redes.</p>
                 </div>
             </div>
-
-            <div class="bg-white rounded-3xl shadow-2xl p-8 fade-in">
+            <div class="bg-white rounded-3xl shadow-2xl p-8">
                 <div class="flex items-center gap-3 mb-6">
-                    <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center text-2xl">
-                        🎯
-                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center text-2xl">🎯</div>
                     <h2 class="text-sm font-black uppercase text-slate-400">Objetivos</h2>
                 </div>
                 <div class="space-y-4">
                     <div class="bg-gradient-to-br from-orange-50 to-red-50 p-5 rounded-2xl border-2 border-orange-100 card-hover">
                         <h4 class="font-bold text-sm mb-2">Desarrollo Profesional</h4>
-                        <p class="text-slate-600 text-sm">
-                            Convertirme en un profesional integral de TI, dominando desarrollo web y sistemas.
-                        </p>
+                        <p class="text-slate-600 text-sm">Convertirme en un profesional integral de TI, dominando desarrollo web y sistemas.</p>
                     </div>
                     <div class="bg-gradient-to-br from-yellow-50 to-orange-50 p-5 rounded-2xl border-2 border-yellow-100 card-hover">
                         <h4 class="font-bold text-sm mb-2">Innovación Tecnológica</h4>
-                        <p class="text-slate-600 text-sm">
-                            Contribuir con soluciones tecnológicas que generen impacto positivo.
-                        </p>
+                        <p class="text-slate-600 text-sm">Contribuir con soluciones tecnológicas que generen impacto positivo.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- HABILIDADES -->
-        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8 fade-in" id="habilidades">
+        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="habilidades">
             <div class="flex items-center gap-3 mb-6">
-                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center text-2xl">
-                    💻
-                </div>
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-2xl flex items-center justify-center text-2xl">💻</div>
                 <h2 class="text-sm font-black uppercase text-slate-400">Habilidades Técnicas</h2>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div class="space-y-4">
-                    <div class="skill-item">
+                    <div>
                         <div class="flex justify-between mb-2">
                             <span class="text-sm font-bold">HTML & CSS</span>
                             <span class="text-xs font-bold text-indigo-600">85%</span>
                         </div>
                         <div class="skill-bar"><div class="skill-progress" data-width="85" style="width: 0%"></div></div>
                     </div>
-                    <div class="skill-item">
+                    <div>
                         <div class="flex justify-between mb-2">
                             <span class="text-sm font-bold">JavaScript</span>
                             <span class="text-xs font-bold text-indigo-600">70%</span>
                         </div>
                         <div class="skill-bar"><div class="skill-progress" data-width="70" style="width: 0%"></div></div>
                     </div>
-                    <div class="skill-item">
+                    <div>
                         <div class="flex justify-between mb-2">
                             <span class="text-sm font-bold">Git & GitHub</span>
                             <span class="text-xs font-bold text-indigo-600">75%</span>
@@ -361,21 +265,21 @@
                     </div>
                 </div>
                 <div class="space-y-4">
-                    <div class="skill-item">
+                    <div>
                         <div class="flex justify-between mb-2">
                             <span class="text-sm font-bold">Microsoft Office</span>
                             <span class="text-xs font-bold text-indigo-600">90%</span>
                         </div>
                         <div class="skill-bar"><div class="skill-progress" data-width="90" style="width: 0%"></div></div>
                     </div>
-                    <div class="skill-item">
+                    <div>
                         <div class="flex justify-between mb-2">
                             <span class="text-sm font-bold">VS Code</span>
                             <span class="text-xs font-bold text-indigo-600">80%</span>
                         </div>
                         <div class="skill-bar"><div class="skill-progress" data-width="80" style="width: 0%"></div></div>
                     </div>
-                    <div class="skill-item">
+                    <div>
                         <div class="flex justify-between mb-2">
                             <span class="text-sm font-bold">Responsive Design</span>
                             <span class="text-xs font-bold text-indigo-600">78%</span>
@@ -384,7 +288,6 @@
                     </div>
                 </div>
             </div>
-
             <h3 class="text-xs font-black uppercase text-slate-400 mb-4">Habilidades Blandas</h3>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div class="card-hover bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-2xl text-center border-2 border-blue-100">
@@ -402,13 +305,10 @@
             </div>
         </div>
 
-        <!-- PROYECTOS E IDIOMAS -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-            <div class="bg-white rounded-3xl shadow-2xl p-8 fade-in" id="proyectos">
+            <div class="bg-white rounded-3xl shadow-2xl p-8" id="proyectos">
                 <div class="flex items-center gap-3 mb-6">
-                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center text-2xl">
-                        🚀
-                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-500 rounded-2xl flex items-center justify-center text-2xl">🚀</div>
                     <h2 class="text-sm font-black uppercase text-slate-400">Proyectos</h2>
                 </div>
                 <div class="space-y-4">
@@ -417,4 +317,105 @@
                         <p class="text-sm text-slate-600 mb-3">Portafolio personal con diseño moderno y responsivo.</p>
                         <div class="flex gap-2">
                             <span class="px-2 py-1 bg-white text-green-600 rounded text-xs font-semibold">HTML</span>
-                            <span class="
+                            <span class="px-2 py-1 bg-white text-green-600 rounded text-xs font-semibold">CSS</span>
+                            <span class="px-2 py-1 bg-white text-green-600 rounded text-xs font-semibold">JS</span>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-2xl border-2 border-blue-100">
+                        <h3 class="font-bold mb-2">Sistema de Gestión</h3>
+                        <p class="text-sm text-slate-600 mb-3">Aplicación web para gestión de inventario.</p>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-white text-blue-600 rounded text-xs font-semibold">JavaScript</span>
+                            <span class="px-2 py-1 bg-white text-blue-600 rounded text-xs font-semibold">JSON</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-3xl shadow-2xl p-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-rose-500 to-pink-500 rounded-2xl flex items-center justify-center text-2xl">🌍</div>
+                    <h2 class="text-sm font-black uppercase text-slate-400">Idiomas</h2>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-gradient-to-br from-rose-50 to-pink-50 p-5 rounded-2xl border-2 border-rose-100">
+                        <div class="flex justify-between mb-3">
+                            <h3 class="font-bold">Español</h3>
+                            <span class="px-3 py-1 bg-rose-500 text-white rounded-full text-xs font-bold">Nativo</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 100%; background: linear-gradient(90deg, #f43f5e, #ec4899);"></div>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-5 rounded-2xl border-2 border-blue-100">
+                        <div class="flex justify-between mb-3">
+                            <h3 class="font-bold">Inglés</h3>
+                            <span class="px-3 py-1 bg-blue-500 text-white rounded-full text-xs font-bold">Básico</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 40%; background: linear-gradient(90deg, #3b82f6, #6366f1);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-3xl shadow-2xl p-8 text-center">
+            <h2 class="text-2xl font-black mb-4 gradient-text">¡Trabajemos Juntos!</h2>
+            <p class="text-slate-600 mb-6">Estoy abierto a nuevas oportunidades y colaboraciones</p>
+            <a href="mailto:campozanomendoza@gmail.com" class="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-pink-500 text-white px-8 py-3 rounded-full font-bold hover:scale-105 transition-transform">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                Contáctame
+            </a>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-900 text-white py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <p class="text-sm">© 2024 Marcos Luis Campozano Mendoza. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Animación de barras de habilidades
+        window.addEventListener('load', function() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            setTimeout(() => {
+                skillBars.forEach(bar => {
+                    const width = bar.getAttribute('data-width');
+                    if (width) {
+                        bar.style.width = width + '%';
+                    }
+                });
+            }, 500);
+        });
+
+        // Función para descargar PDF
+        function downloadPDF() {
+            const element = document.getElementById('cv-content');
+            const opt = {
+                margin: 0.5,
+                filename: 'CV_Marcos_Campozano.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
+        // Smooth scroll para navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
