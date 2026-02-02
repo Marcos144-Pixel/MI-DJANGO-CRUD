@@ -25,6 +25,8 @@ html{scroll-behavior:smooth}
 .tab-btn{padding:12px 24px;border-radius:12px 12px 0 0;font-weight:700;cursor:pointer;transition:all .3s;border:2px solid white}
 .tab-btn.active{background:white;color:#6366f1}
 .tab-btn:not(.active){background:rgba(255,255,255,0.3);color:#1f2937}
+.producto-card{background:#f0f9ff;padding:20px;border-radius:16px;border:2px solid #bfdbfe;transition:all .3s}
+.producto-card:hover{transform:translateY(-5px);box-shadow:0 10px 25px rgba(0,0,0,0.1)}
 @media print{body{background:white}header,.btn-delete,.btn-edit{display:none!important}.modal{display:none!important}}
 </style>
 </head>
@@ -107,6 +109,8 @@ html{scroll-behavior:smooth}
 <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-cursos" class="w-5 h-5" checked><span class="font-semibold">Cursos</span></label>
 <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-reconocimientos" class="w-5 h-5" checked><span class="font-semibold">Reconocimientos</span></label>
 <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-idiomas" class="w-5 h-5" checked><span class="font-semibold">Idiomas</span></label>
+<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-productos-laborales" class="w-5 h-5" checked><span class="font-semibold">Productos Laborales</span></label>
+<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-productos-academicos" class="w-5 h-5" checked><span class="font-semibold">Productos Académicos</span></label>
 <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-garaje" class="w-5 h-5"><span class="font-semibold">Venta de Garaje</span></label>
 </div>
 <div class="mt-6 flex gap-3">
@@ -178,6 +182,58 @@ html{scroll-behavior:smooth}
 <input type="number" id="prod-cantidad" placeholder="Cantidad" class="w-full p-3 border rounded-lg mb-3" min="1" value="1">
 <button onclick="guardarProducto()" class="bg-orange-500 text-white px-6 py-2 rounded-full font-bold w-full" id="btn-prod">Agregar</button>
 </div>
+<div class="mb-6 p-6 bg-cyan-50 rounded-2xl">
+<h3 class="text-lg font-bold mb-4">💼 Producto Laboral</h3>
+<input type="hidden" id="laboral-edit-index" value="-1">
+<input type="text" id="laboral-nombre" placeholder="Nombre del sistema/proyecto" class="w-full p-3 border rounded-lg mb-3">
+<input type="text" id="laboral-empresa" placeholder="Empresa/Organización" class="w-full p-3 border rounded-lg mb-3">
+<div class="grid grid-cols-2 gap-3 mb-3">
+<input type="date" id="laboral-inicio" placeholder="Fecha inicio" class="p-3 border rounded-lg">
+<input type="date" id="laboral-fin" placeholder="Fecha fin" class="p-3 border rounded-lg">
+</div>
+<label class="flex items-center gap-2 mb-3 cursor-pointer">
+<input type="checkbox" id="laboral-actual" class="w-4 h-4" onchange="toggleFechaFinLaboral()">
+<span class="text-sm font-semibold">✅ Proyecto en curso</span>
+</label>
+<textarea id="laboral-descripcion" placeholder="Descripción del proyecto y tu participación" class="w-full p-3 border rounded-lg mb-3" rows="3"></textarea>
+<input type="text" id="laboral-tecnologias" placeholder="Tecnologías utilizadas (ej: React, Node.js, Python)" class="w-full p-3 border rounded-lg mb-3">
+<input type="text" id="laboral-rol" placeholder="Tu rol en el proyecto" class="w-full p-3 border rounded-lg mb-3">
+<input type="url" id="laboral-url" placeholder="URL del proyecto (opcional)" class="w-full p-3 border rounded-lg mb-3">
+<div class="mb-3">
+<label class="block text-sm font-semibold mb-2">📷 Imagen del proyecto (opcional)</label>
+<input type="file" id="laboral-imagen-file" accept="image/*" class="w-full p-3 border rounded-lg" onchange="cargarImagen(this, 'laboral')">
+<input type="hidden" id="laboral-imagen" value="">
+</div>
+<button onclick="guardarProductoLaboral()" class="bg-cyan-500 text-white px-6 py-2 rounded-full font-bold w-full" id="btn-laboral">Agregar</button>
+</div>
+<div class="p-6 bg-purple-50 rounded-2xl">
+<h3 class="text-lg font-bold mb-4">🎓 Producto Académico</h3>
+<input type="hidden" id="academico-edit-index" value="-1">
+<div class="mb-3">
+<label class="block text-sm font-semibold mb-2">Tipo de producto</label>
+<select id="academico-tipo" class="w-full p-3 border rounded-lg">
+<option value="Tesis">Tesis</option>
+<option value="Artículo">Artículo</option>
+<option value="Ponencia">Ponencia</option>
+<option value="Investigación">Investigación</option>
+<option value="Paper">Paper</option>
+<option value="Proyecto de grado">Proyecto de grado</option>
+</select>
+</div>
+<input type="text" id="academico-titulo" placeholder="Título del trabajo" class="w-full p-3 border rounded-lg mb-3">
+<input type="text" id="academico-institucion" placeholder="Institución" class="w-full p-3 border rounded-lg mb-3">
+<input type="date" id="academico-fecha" placeholder="Fecha de publicación/presentación" class="w-full p-3 border rounded-lg mb-3">
+<textarea id="academico-autores" placeholder="Autores (separados por comas)" class="w-full p-3 border rounded-lg mb-3" rows="2"></textarea>
+<textarea id="academico-resumen" placeholder="Resumen breve del trabajo" class="w-full p-3 border rounded-lg mb-3" rows="3"></textarea>
+<input type="text" id="academico-palabras" placeholder="Palabras clave (separadas por comas)" class="w-full p-3 border rounded-lg mb-3">
+<input type="url" id="academico-url" placeholder="URL/DOI (opcional)" class="w-full p-3 border rounded-lg mb-3">
+<div class="mb-3">
+<label class="block text-sm font-semibold mb-2">📄 Imagen/Portada (opcional)</label>
+<input type="file" id="academico-imagen-file" accept="image/*" class="w-full p-3 border rounded-lg" onchange="cargarImagen(this, 'academico')">
+<input type="hidden" id="academico-imagen" value="">
+</div>
+<button onclick="guardarProductoAcademico()" class="bg-purple-500 text-white px-6 py-2 rounded-full font-bold w-full" id="btn-academico">Agregar</button>
+</div>
 <button onclick="closeAdminModal()" class="mt-6 w-full px-6 py-3 border-2 rounded-full font-bold">Cerrar</button>
 </div></div>
 <header class="sticky top-0 bg-white shadow-lg z-50">
@@ -202,6 +258,8 @@ html{scroll-behavior:smooth}
 <a href="#section-cursos" class="nav-link">📚 Cursos</a>
 <a href="#section-reconocimientos" class="nav-link">🏆 Reconocimientos</a>
 <a href="#section-idiomas" class="nav-link">🌍 Idiomas</a>
+<a href="#section-productos-laborales" class="nav-link">💼 Proyectos</a>
+<a href="#section-productos-academicos" class="nav-link">🎓 Académico</a>
 <a href="#section-garaje" class="nav-link">🛒 Garaje</a>
 </div>
 </nav>
@@ -297,6 +355,18 @@ comprometido con el aprendizaje continuo y el desarrollo de soluciones innovador
 </div>
 </div>
 </div>
+<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-productos-laborales">
+<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
+<span class="text-3xl">💼</span> Productos Laborales
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="productos-laborales-list"></div>
+</div>
+<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-productos-academicos">
+<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
+<span class="text-3xl">🎓</span> Productos Académicos
+</h2>
+<div class="space-y-6" id="productos-academicos-list"></div>
+</div>
 <div class="bg-white rounded-3xl shadow-2xl p-8" id="section-garaje">
 <h2 class="text-2xl font-black mb-6 flex items-center gap-3">
 <span class="text-3xl">🛒</span> Venta de Garaje
@@ -309,6 +379,16 @@ let experiencias=[{puesto:'Desarrollador Web Junior',empresa:'Proyectos Académi
 let cursos=[{nombre:'Desarrollo Web Full Stack',institucion:'Platzi',inicio:'2024-01-15',duracion:'120 horas',imagen:''},{nombre:'JavaScript Avanzado',institucion:'Udemy',inicio:'2023-11-10',duracion:'40 horas',imagen:''},{nombre:'Git y GitHub',institucion:'EDteam',inicio:'2023-09-05',duracion:'20 horas',imagen:''},{nombre:'Python para Principiantes',institucion:'Coursera',inicio:'2023-06-20',duracion:'30 horas',imagen:''}];
 let reconocimientos=[{titulo:'Mejor Proyecto de Programación',otorgado:'Universidad ULEAM',inicio:'2024-01-20',descripcion:'Reconocimiento por el mejor proyecto del semestre.',imagen:''},{titulo:'Hackathon 2023',otorgado:'ULEAM Tech Week',inicio:'2023-11-15',descripcion:'Segundo lugar con app móvil educativa.',imagen:''},{titulo:'Estudiante Sobresaliente',otorgado:'Decanato de Tecnología',inicio:'2023-12-05',descripcion:'Promedio superior a 9.0.',imagen:''}];
 let productos=[{nombre:'Monitor 24" Full HD',imagen:'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400',precio:180,descripcion:'Panel IPS, 75Hz, HDMI.',estado:'Usado - Excelente',cantidad:2},{nombre:'Teclado Mecánico RGB',imagen:'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400',precio:85,descripcion:'Switches azules, RGB.',estado:'Como nuevo',cantidad:1},{nombre:'Mouse Gamer',imagen:'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400',precio:35,descripcion:'DPI ajustable, 6 botones.',estado:'Usado',cantidad:1},{nombre:'Webcam Logitech',imagen:'https://images.unsplash.com/photo-1589739900243-c842bf25e79c?w=400',precio:65,descripcion:'1080p Full HD.',estado:'Como nuevo',cantidad:1},{nombre:'Hub USB-C',imagen:'https://images.unsplash.com/photo-1625948515291-69613efd103f?w=400',precio:28,descripcion:'7 en 1, HDMI, USB 3.0.',estado:'Nuevo',cantidad:2}];
+
+let productosLaborales = [
+  {nombre:'Sistema de Gestión Académica',empresa:'ULEAM',inicio:'2024-03-01',fin:'',descripcion:'Sistema web para gestión de calificaciones y asistencia de estudiantes.',tecnologias:'PHP, MySQL, Bootstrap',rol:'Desarrollador Full Stack',url:'',imagen:''},
+  {nombre:'App Móvil de Delivery',empresa:'Proyecto Freelance',inicio:'2023-09-01',fin:'2024-01-15',descripcion:'Aplicación móvil para pedidos de comida a domicilio con geolocalización.',tecnologias:'React Native, Node.js, MongoDB',rol:'Desarrollador Frontend',url:'',imagen:''}
+];
+
+let productosAcademicos = [
+  {tipo:'Tesis',titulo:'Implementación de IA en Sistemas Educativos',institucion:'ULEAM',fecha:'2024-06-15',autores:'Marcos Campozano, Dr. Juan Pérez',resumen:'Investigación sobre la aplicación de inteligencia artificial para personalizar el aprendizaje en entornos educativos.',palabras:'IA, Educación, Machine Learning, Personalización',url:'',imagen:''},
+  {tipo:'Artículo',titulo:'Optimización de Algoritmos de Búsqueda',institucion:'ULEAM',fecha:'2023-11-20',autores:'Marcos Campozano, Dra. María González',resumen:'Análisis comparativo de algoritmos de búsqueda y propuesta de optimización para grandes volúmenes de datos.',palabras:'Algoritmos, Optimización, Big Data, Complejidad',url:'',imagen:''}
+];
 
 // Sistema de usuarios
 let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [
@@ -462,6 +542,7 @@ function closeAdminModal(){document.getElementById('adminModal').classList.remov
 function formatFecha(f){if(!f)return'Presente';const d=new Date(f+'T00:00:00');const m=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];return m[d.getMonth()]+' '+d.getFullYear()}
 function ordenar(arr){return arr.sort((a,b)=>{const fA=a.inicio?new Date(a.inicio):new Date();const fB=b.inicio?new Date(b.inicio):new Date();return fB-fA})}
 function toggleFechaFin(){const c=document.getElementById('exp-actual');const f=document.getElementById('exp-fin');if(c.checked){f.disabled=true;f.value=''}else{f.disabled=false}}
+function toggleFechaFinLaboral(){const c=document.getElementById('laboral-actual');const f=document.getElementById('laboral-fin');if(c.checked){f.disabled=true;f.value=''}else{f.disabled=false}}
 function cargarImagen(input,tipo){if(input.files&&input.files[0]){const reader=new FileReader();reader.onload=function(e){document.getElementById(tipo+'-imagen').value=e.target.result};reader.readAsDataURL(input.files[0])}}
 
 function renderExperiencias(){const l=document.getElementById('experiencia-list');if(experiencias.length===0){l.innerHTML='<p class="text-gray-500 italic">No hay experiencias.</p>';return}l.innerHTML='';ordenar(experiencias).forEach((e,i)=>{l.innerHTML+=`<div class="bg-indigo-50 p-6 rounded-2xl border-2 border-indigo-100"><div class="flex justify-between items-start mb-3"><h3 class="font-bold text-xl">${e.puesto}</h3><div class="flex items-center gap-2"><span class="px-3 py-1 bg-indigo-500 text-white rounded-full text-xs font-bold whitespace-nowrap">${formatFecha(e.inicio)} - ${formatFecha(e.fin)}</span><button onclick="editarExperiencia(${i})" class="btn-edit">✏️</button><button onclick="eliminarExperiencia(${i})" class="btn-delete">🗑️</button></div></div><p class="text-indigo-600 font-semibold mb-3">${e.empresa}</p><p class="text-slate-600">${e.descripcion}</p></div>`})}
@@ -492,11 +573,36 @@ function editarProducto(i){if(!verificarSesion()){alert('❌ Debes iniciar sesi�
 function limpiarFormProd(){document.getElementById('prod-edit-index').value='-1';document.getElementById('prod-nombre').value='';document.getElementById('prod-imagen').value='';document.getElementById('prod-imagen-file').value='';document.getElementById('prod-precio').value='';document.getElementById('prod-descripcion').value='';document.getElementById('prod-estado').value='';document.getElementById('prod-cantidad').value='1';document.getElementById('btn-prod').textContent='Agregar'}
 function eliminarProducto(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar?')){productos.splice(i,1);renderProductos()}}
 
-function imprimir(){const s=['header','resumen','experiencia','educacion','habilidades','cursos','reconocimientos','idiomas','garaje'];const d=document.querySelectorAll('.btn-delete,.btn-edit');const h=document.querySelector('header');d.forEach(b=>b.style.display='none');if(h)h.style.display='none';s.forEach(sec=>{const e=document.getElementById('section-'+sec);const c=document.getElementById('filter-'+sec);if(e&&c)e.style.display=c.checked?'block':'none'});closeFilterModal();setTimeout(()=>{window.print();setTimeout(()=>{s.forEach(sec=>{const e=document.getElementById('section-'+sec);if(e)e.style.display='block'});d.forEach(b=>{if(usuarioActual && usuarioActual.tipo === 'admin') b.style.display='inline-block'});if(h)h.style.display='block'},100)},300)}
+// PRODUCTOS LABORALES
+function renderProductosLaborales(){const l=document.getElementById('productos-laborales-list');if(productosLaborales.length===0){l.innerHTML='<p class="text-gray-500 italic col-span-2">No hay productos laborales.</p>';return}l.innerHTML='';ordenar(productosLaborales).forEach((p,i)=>{const img=p.imagen?`<img src="${p.imagen}" alt="${p.nombre}" class="w-full h-48 object-cover rounded-lg mb-4">`:'<div class="w-full h-48 bg-gradient-to-br from-cyan-200 to-blue-300 rounded-lg mb-4 flex items-center justify-center"><span class="text-4xl">💻</span></div>';const url=p.url?`<a href="${p.url}" target="_blank" class="text-cyan-600 hover:underline text-sm">🔗 Ver proyecto</a>`:'';l.innerHTML+=`<div class="producto-card">${img}<div class="flex justify-between items-start mb-3"><h3 class="font-bold text-lg flex-1">${p.nombre}</h3><div class="flex items-center gap-2"><button onclick="editarProductoLaboral(${i})" class="btn-edit">✏️</button><button onclick="eliminarProductoLaboral(${i})" class="btn-delete">🗑️</button></div></div><p class="text-cyan-600 font-semibold mb-2">${p.empresa}</p><span class="px-3 py-1 bg-cyan-500 text-white rounded-full text-xs font-bold">${formatFecha(p.inicio)} - ${formatFecha(p.fin)}</span><p class="text-sm text-slate-600 mt-3 mb-2">${p.descripcion}</p><p class="text-xs text-slate-500 mb-2"><strong>Rol:</strong> ${p.rol}</p><p class="text-xs text-slate-500 mb-2"><strong>Tecnologías:</strong> ${p.tecnologias}</p>${url}</div>`})}
+
+function guardarProductoLaboral(){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const idx=parseInt(document.getElementById('laboral-edit-index').value);const p={nombre:document.getElementById('laboral-nombre').value,empresa:document.getElementById('laboral-empresa').value,inicio:document.getElementById('laboral-inicio').value,fin:document.getElementById('laboral-actual').checked?'':document.getElementById('laboral-fin').value,descripcion:document.getElementById('laboral-descripcion').value,tecnologias:document.getElementById('laboral-tecnologias').value,rol:document.getElementById('laboral-rol').value,url:document.getElementById('laboral-url').value,imagen:document.getElementById('laboral-imagen').value||''};if(!p.nombre||!p.empresa||!p.inicio||!p.descripcion){alert('❌ Completa los campos principales');return}if(idx>=0){productosLaborales[idx]=p;alert('✅ Actualizado')}else{productosLaborales.push(p);alert('✅ Agregado')}renderProductosLaborales();limpiarFormLaboral()}
+
+function editarProductoLaboral(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const p=productosLaborales[i];document.getElementById('laboral-edit-index').value=i;document.getElementById('laboral-nombre').value=p.nombre;document.getElementById('laboral-empresa').value=p.empresa;document.getElementById('laboral-inicio').value=p.inicio;document.getElementById('laboral-fin').value=p.fin||'';document.getElementById('laboral-actual').checked=!p.fin;document.getElementById('laboral-descripcion').value=p.descripcion;document.getElementById('laboral-tecnologias').value=p.tecnologias;document.getElementById('laboral-rol').value=p.rol;document.getElementById('laboral-url').value=p.url;document.getElementById('laboral-imagen').value=p.imagen||'';document.getElementById('btn-laboral').textContent='Actualizar';toggleFechaFinLaboral();openAdminModal()}
+
+function limpiarFormLaboral(){document.getElementById('laboral-edit-index').value='-1';document.getElementById('laboral-nombre').value='';document.getElementById('laboral-empresa').value='';document.getElementById('laboral-inicio').value='';document.getElementById('laboral-fin').value='';document.getElementById('laboral-actual').checked=false;document.getElementById('laboral-descripcion').value='';document.getElementById('laboral-tecnologias').value='';document.getElementById('laboral-rol').value='';document.getElementById('laboral-url').value='';document.getElementById('laboral-imagen').value='';document.getElementById('laboral-imagen-file').value='';document.getElementById('btn-laboral').textContent='Agregar';document.getElementById('laboral-fin').disabled=false}
+
+function eliminarProductoLaboral(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar?')){productosLaborales.splice(i,1);renderProductosLaborales()}}
+
+// PRODUCTOS ACADÉMICOS
+function renderProductosAcademicos(){const l=document.getElementById('productos-academicos-list');if(productosAcademicos.length===0){l.innerHTML='<p class="text-gray-500 italic">No hay productos académicos.</p>';return}l.innerHTML='';ordenar(productosAcademicos).forEach((p,i)=>{const img=p.imagen?`<img src="${p.imagen}" alt="${p.titulo}" class="w-full h-40 object-cover rounded-lg mb-3">`:'';const url=p.url?`<a href="${p.url}" target="_blank" class="text-purple-600 hover:underline text-sm mt-2 inline-block">🔗 Ver publicación</a>`:'';l.innerHTML+=`<div class="bg-purple-50 p-6 rounded-2xl border-2 border-purple-100">${img}<div class="flex justify-between items-start mb-3"><div class="flex-1"><span class="px-3 py-1 bg-purple-500 text-white rounded-full text-xs font-bold">${p.tipo}</span><h3 class="font-bold text-lg mt-2">${p.titulo}</h3><p class="text-purple-600 font-semibold text-sm">${p.institucion}</p><p class="text-xs text-slate-500">${formatFecha(p.fecha)}</p></div><div class="flex items-center gap-2"><button onclick="editarProductoAcademico(${i})" class="btn-edit">✏️</button><button onclick="eliminarProductoAcademico(${i})" class="btn-delete">🗑️</button></div></div><p class="text-sm text-slate-600 mb-2"><strong>Autores:</strong> ${p.autores}</p><p class="text-sm text-slate-700 mb-2">${p.resumen}</p><p class="text-xs text-purple-500"><strong>Palabras clave:</strong> ${p.palabras}</p>${url}</div>`})}
+
+function guardarProductoAcademico(){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const idx=parseInt(document.getElementById('academico-edit-index').value);const p={tipo:document.getElementById('academico-tipo').value,titulo:document.getElementById('academico-titulo').value,institucion:document.getElementById('academico-institucion').value,fecha:document.getElementById('academico-fecha').value,autores:document.getElementById('academico-autores').value,resumen:document.getElementById('academico-resumen').value,palabras:document.getElementById('academico-palabras').value,url:document.getElementById('academico-url').value,imagen:document.getElementById('academico-imagen').value||'',inicio:document.getElementById('academico-fecha').value};if(!p.titulo||!p.institucion||!p.fecha||!p.autores){alert('❌ Completa los campos principales');return}if(idx>=0){productosAcademicos[idx]=p;alert('✅ Actualizado')}else{productosAcademicos.push(p);alert('✅ Agregado')}renderProductosAcademicos();limpiarFormAcademico()}
+
+function editarProductoAcademico(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const p=productosAcademicos[i];document.getElementById('academico-edit-index').value=i;document.getElementById('academico-tipo').value=p.tipo;document.getElementById('academico-titulo').value=p.titulo;document.getElementById('academico-institucion').value=p.institucion;document.getElementById('academico-fecha').value=p.fecha;document.getElementById('academico-autores').value=p.autores;document.getElementById('academico-resumen').value=p.resumen;document.getElementById('academico-palabras').value=p.palabras;document.getElementById('academico-url').value=p.url;document.getElementById('academico-imagen').value=p.imagen||'';document.getElementById('btn-academico').textContent='Actualizar';openAdminModal()}
+
+function limpiarFormAcademico(){document.getElementById('academico-edit-index').value='-1';document.getElementById('academico-tipo').value='Tesis';document.getElementById('academico-titulo').value='';document.getElementById('academico-institucion').value='';document.getElementById('academico-fecha').value='';document.getElementById('academico-autores').value='';document.getElementById('academico-resumen').value='';document.getElementById('academico-palabras').value='';document.getElementById('academico-url').value='';document.getElementById('academico-imagen').value='';document.getElementById('academico-imagen-file').value='';document.getElementById('btn-academico').textContent='Agregar'}
+
+function eliminarProductoAcademico(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar?')){productosAcademicos.splice(i,1);renderProductosAcademicos()}}
+
+function imprimir(){const s=['header','resumen','experiencia','educacion','habilidades','cursos','reconocimientos','idiomas','productos-laborales','productos-academicos','garaje'];const d=document.querySelectorAll('.btn-delete,.btn-edit');const h=document.querySelector('header');d.forEach(b=>b.style.display='none');if(h)h.style.display='none';s.forEach(sec=>{const e=document.getElementById('section-'+sec);const c=document.getElementById('filter-'+sec);if(e&&c)e.style.display=c.checked?'block':'none'});closeFilterModal();setTimeout(()=>{window.print();setTimeout(()=>{s.forEach(sec=>{const e=document.getElementById('section-'+sec);if(e)e.style.display='block'});d.forEach(b=>{if(usuarioActual && usuarioActual.tipo === 'admin') b.style.display='inline-block'});if(h)h.style.display='block'},100)},300)}
 
 renderExperiencias();
 renderCursos();
 renderReconocimientos();
 renderProductos();
+renderProductosLaborales();
+renderProductosAcademicos();
 </script>
 </body>
+</html>
