@@ -1,581 +1,282 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CV - Marcos Luis Campozano Mendoza</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
-        .gradient-text { background: linear-gradient(135deg, #6366f1, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); overflow-y: auto; }
-        .modal.active { display: flex; align-items: center; justify-content: center; }
-        .floating { animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .btn-download { background: linear-gradient(135deg, #6366f1, #ec4899); transition: transform 0.2s; }
-        .btn-download:hover { transform: scale(1.05); }
-        .btn-delete { background: #ef4444; color: white; padding: 4px 12px; border-radius: 9999px; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-left: 8px; }
-        .btn-delete:hover { background: #dc2626; }
-        .nav-link { padding: 8px 16px; border-radius: 9999px; font-size: 0.875rem; font-weight: 600; transition: all 0.2s; cursor: pointer; }
-        .nav-link:hover { background: #f3f4f6; }
-        html { scroll-behavior: smooth; }
-        @media print {
-            body { background: white; }
-            header, .btn-delete { display: none !important; }
-            .modal { display: none !important; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV - Marcos Luis Campozano Mendoza</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh}
+.gradient-text{background:linear-gradient(135deg,#6366f1,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.modal{display:none;position:fixed;z-index:100;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.7);overflow-y:auto}
+.modal.active{display:flex;align-items:center;justify-content:center}
+.floating{animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.btn-download{background:linear-gradient(135deg,#6366f1,#ec4899);transition:transform .2s}
+.btn-download:hover{transform:scale(1.05)}
+.btn-delete{background:#ef4444;color:white;padding:4px 12px;border-radius:9999px;font-size:.75rem;font-weight:bold;cursor:pointer;margin-left:8px}
+.btn-delete:hover{background:#dc2626}
+.btn-edit{background:#3b82f6;color:white;padding:4px 12px;border-radius:9999px;font-size:.75rem;font-weight:bold;cursor:pointer;margin-left:8px}
+.btn-edit:hover{background:#2563eb}
+.nav-link{padding:8px 16px;border-radius:9999px;font-size:.875rem;font-weight:600;transition:all .2s;cursor:pointer}
+.nav-link:hover{background:#f3f4f6}
+html{scroll-behavior:smooth}
+@media print{body{background:white}header,.btn-delete,.btn-edit{display:none!important}.modal{display:none!important}}
+</style>
 </head>
 <body>
-    <div id="filterModal" class="modal">
-        <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-            <h2 class="text-2xl font-black gradient-text mb-6">🖨️ Seleccionar Secciones para Imprimir</h2>
-            <div class="space-y-3">
-                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="checkbox" id="filter-header" class="w-5 h-5" checked>
-                    <span class="font-semibold">Información Personal</span>
-                </label>
-                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="checkbox" id="filter-resumen" class="w-5 h-5" checked>
-                    <span class="font-semibold">Resumen Profesional</span>
-                </label>
-                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="checkbox" id="filter-experiencia" class="w-5 h-5" checked>
-                    <span class="font-semibold">Experiencia Laboral</span>
-                </label>
-                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="checkbox" id="filter-educacion" class="w-5 h-5" checked>
-                    <span class="font-semibold">Educación</span>
-                </label>
-                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="checkbox" id="filter-habilidades" class="w-5 h-5" checked>
-                    <span class="font-semibold">Habilidades</span>
-                </label>
-                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="checkbox" id="filter-cursos" class="w-5 h-5" checked>
-                    <span class="font-semibold">Cursos y Certificaciones</span>
-                </label>
-                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="checkbox" id="filter-reconocimientos" class="w-5 h-5" checked>
-                    <span class="font-semibold">Reconocimientos</span>
-                </label>
-                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="checkbox" id="filter-idiomas" class="w-5 h-5" checked>
-                    <span class="font-semibold">Idiomas</span>
-                </label>
-                <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
-                    <input type="checkbox" id="filter-garaje" class="w-5 h-5">
-                    <span class="font-semibold">Venta de Garaje</span>
-                </label>
-            </div>
-            <div class="mt-6 flex gap-3">
-                <button onclick="imprimirCV()" class="flex-1 btn-download text-white px-6 py-3 rounded-full font-bold">🖨️ Imprimir</button>
-                <button onclick="closeFilterModal()" class="px-6 py-3 border-2 rounded-full font-bold">Cancelar</button>
-            </div>
-        </div>
-    </div>
+<div id="filterModal" class="modal">
+<div class="bg-white rounded-3xl shadow-2xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+<h2 class="text-2xl font-black gradient-text mb-6">🖨️ Seleccionar Secciones</h2>
+<div class="space-y-3">
+<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-header" class="w-5 h-5" checked><span class="font-semibold">Info Personal</span></label>
+<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-resumen" class="w-5 h-5" checked><span class="font-semibold">Resumen</span></label>
+<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-experiencia" class="w-5 h-5" checked><span class="font-semibold">Experiencia</span></label>
+<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-educacion" class="w-5 h-5" checked><span class="font-semibold">Educación</span></label>
+<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-habilidades" class="w-5 h-5" checked><span class="font-semibold">Habilidades</span></label>
+<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-cursos" class="w-5 h-5" checked><span class="font-semibold">Cursos</span></label>
+<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-reconocimientos" class="w-5 h-5" checked><span class="font-semibold">Reconocimientos</span></label>
+<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-idiomas" class="w-5 h-5" checked><span class="font-semibold">Idiomas</span></label>
+<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-garaje" class="w-5 h-5"><span class="font-semibold">Venta de Garaje</span></label>
+</div>
+<div class="mt-6 flex gap-3">
+<button onclick="imprimir()" class="flex-1 btn-download text-white px-6 py-3 rounded-full font-bold">🖨️ Imprimir</button>
+<button onclick="closeFilterModal()" class="px-6 py-3 border-2 rounded-full font-bold">Cancelar</button>
+</div></div></div>
+<div id="adminModal" class="modal">
+<div class="bg-white rounded-3xl shadow-2xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto my-8">
+<h2 class="text-2xl font-black gradient-text mb-6">Panel de Administración</h2>
+<div class="mb-6 p-6 bg-indigo-50 rounded-2xl">
+<h3 class="text-lg font-bold mb-4">💼 Experiencia Laboral</h3>
+<input type="hidden" id="exp-edit-index" value="-1">
+<input type="text" id="exp-puesto" placeholder="Puesto" class="w-full p-3 border rounded-lg mb-3">
+<input type="text" id="exp-empresa" placeholder="Empresa" class="w-full p-3 border rounded-lg mb-3">
+<div class="grid grid-cols-2 gap-3 mb-3">
+<input type="date" id="exp-inicio" class="p-3 border rounded-lg">
+<input type="date" id="exp-fin" class="p-3 border rounded-lg">
+</div>
+<label class="flex items-center gap-2 mb-3 cursor-pointer">
+<input type="checkbox" id="exp-actual" class="w-4 h-4" onchange="toggleFechaFin()">
+<span class="text-sm font-semibold">✅ Trabajo actual (presente)</span>
+</label>
+<textarea id="exp-descripcion" placeholder="Descripción" class="w-full p-3 border rounded-lg mb-3" rows="3"></textarea>
+<button onclick="guardarExperiencia()" class="btn-download text-white px-6 py-2 rounded-full font-bold w-full" id="btn-exp">Agregar</button>
+</div>
+<div class="mb-6 p-6 bg-green-50 rounded-2xl">
+<h3 class="text-lg font-bold mb-4">📚 Curso/Certificación</h3>
+<input type="hidden" id="curso-edit-index" value="-1">
+<input type="text" id="curso-nombre" placeholder="Nombre" class="w-full p-3 border rounded-lg mb-3">
+<input type="text" id="curso-institucion" placeholder="Institución" class="w-full p-3 border rounded-lg mb-3">
+<input type="date" id="curso-fecha" class="w-full p-3 border rounded-lg mb-3">
+<input type="text" id="curso-duracion" placeholder="Duración" class="w-full p-3 border rounded-lg mb-3">
+<button onclick="guardarCurso()" class="bg-green-500 text-white px-6 py-2 rounded-full font-bold w-full" id="btn-curso">Agregar</button>
+</div>
+<div class="mb-6 p-6 bg-yellow-50 rounded-2xl">
+<h3 class="text-lg font-bold mb-4">🏆 Reconocimiento</h3>
+<input type="hidden" id="rec-edit-index" value="-1">
+<input type="text" id="rec-titulo" placeholder="Título" class="w-full p-3 border rounded-lg mb-3">
+<input type="text" id="rec-otorgado" placeholder="Otorgado por" class="w-full p-3 border rounded-lg mb-3">
+<input type="date" id="rec-fecha" class="w-full p-3 border rounded-lg mb-3">
+<input type="text" id="rec-imagen" placeholder="URL de imagen (opcional)" class="w-full p-3 border rounded-lg mb-3">
+<textarea id="rec-descripcion" placeholder="Descripción" class="w-full p-3 border rounded-lg mb-3" rows="2"></textarea>
+<button onclick="guardarReconocimiento()" class="bg-yellow-500 text-white px-6 py-2 rounded-full font-bold w-full" id="btn-rec">Agregar</button>
+</div>
+<div class="p-6 bg-orange-50 rounded-2xl">
+<h3 class="text-lg font-bold mb-4">🛒 Producto de Garaje</h3>
+<input type="hidden" id="prod-edit-index" value="-1">
+<input type="text" id="prod-nombre" placeholder="Nombre" class="w-full p-3 border rounded-lg mb-3">
+<input type="text" id="prod-imagen" placeholder="URL imagen" class="w-full p-3 border rounded-lg mb-3">
+<input type="number" id="prod-precio" placeholder="Precio" class="w-full p-3 border rounded-lg mb-3" step="0.01">
+<textarea id="prod-descripcion" placeholder="Descripción" class="w-full p-3 border rounded-lg mb-3" rows="2"></textarea>
+<input type="text" id="prod-estado" placeholder="Estado" class="w-full p-3 border rounded-lg mb-3">
+<input type="number" id="prod-cantidad" placeholder="Cantidad" class="w-full p-3 border rounded-lg mb-3" min="1" value="1">
+<button onclick="guardarProducto()" class="bg-orange-500 text-white px-6 py-2 rounded-full font-bold w-full" id="btn-prod">Agregar</button>
+</div>
+<button onclick="closeAdminModal()" class="mt-6 w-full px-6 py-3 border-2 rounded-full font-bold">Cerrar</button>
+</div></div>
+<header class="sticky top-0 bg-white shadow-lg z-50">
+<nav class="max-w-7xl mx-auto px-6 py-3">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-xl flex items-center justify-center text-white font-bold floating">MC</div>
+<span class="font-black text-xl gradient-text">PORTFOLIO</span>
+</div>
+<div class="flex items-center gap-3">
+<button onclick="openAdminModal()" class="px-4 py-2 border-2 border-indigo-500 text-indigo-600 rounded-full text-sm font-bold hover:bg-indigo-50">⚙️ Admin</button>
+<button onclick="openFilterModal()" class="btn-download text-white px-6 py-2.5 rounded-full text-sm font-bold">🖨️ Imprimir</button>
+</div>
+</div>
+<div class="flex flex-wrap gap-2 justify-center">
+<a href="#section-resumen" class="nav-link">✨ Resumen</a>
+<a href="#section-experiencia" class="nav-link">💼 Experiencia</a>
+<a href="#section-educacion" class="nav-link">🎓 Educación</a>
+<a href="#section-habilidades" class="nav-link">💻 Habilidades</a>
+<a href="#section-cursos" class="nav-link">📚 Cursos</a>
+<a href="#section-reconocimientos" class="nav-link">🏆 Reconocimientos</a>
+<a href="#section-idiomas" class="nav-link">🌍 Idiomas</a>
+<a href="#section-garaje" class="nav-link">🛒 Garaje</a>
+</div>
+</nav>
+</header>
+<main class="max-w-6xl mx-auto px-6 py-12" id="cv-content">
+<div class="bg-white rounded-3xl shadow-2xl p-12 mb-8 text-center" id="section-header">
+<div class="w-40 h-40 mx-auto rounded-3xl flex items-center justify-center border-4 border-white shadow-xl bg-gradient-to-br from-indigo-500 to-pink-500 mb-6">
+<span class="text-6xl font-black text-white">MC</span>
+</div>
+<h1 class="text-5xl font-black mb-2">
+<span class="gradient-text">CAMPOZANO MENDOZA</span><br>
+<span class="text-slate-900">MARCOS LUIS</span>
+</h1>
+<p class="text-lg text-slate-600 mb-4">Estudiante de Tecnología de la Información</p>
+<div class="flex flex-wrap justify-center gap-6 text-sm">
+<span>📧 campozanomendoza@gmail.com</span>
+<span>📱 +593 098 500 26 00</span>
+<span>📍 Jipijapa, Ecuador</span>
+</div>
+</div>
+<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-resumen">
+<h2 class="text-2xl font-black mb-4 flex items-center gap-3">
+<span class="text-3xl">✨</span> Resumen Profesional
+</h2>
+<p class="text-xl text-slate-700 leading-relaxed">
+Estudiante apasionado por la <span class="gradient-text font-bold">Tecnología de la Información</span>, 
+comprometido con el aprendizaje continuo y el desarrollo de soluciones innovadoras.
+</p>
+</div>
+<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-experiencia">
+<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
+<span class="text-3xl">💼</span> Experiencia Laboral
+</h2>
+<div class="space-y-6" id="experiencia-list"></div>
+</div>
+<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-educacion">
+<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
+<span class="text-3xl">🎓</span> Educación
+</h2>
+<div class="bg-purple-50 p-6 rounded-2xl border-2 border-purple-100">
+<h3 class="font-bold text-lg mb-2">Tecnología de la Información</h3>
+<p class="text-purple-600 font-semibold mb-2">Universidad Laica Eloy Alfaro de Manabí (ULEAM)</p>
+<span class="px-3 py-1 bg-purple-500 text-white rounded-full text-xs font-bold">2022 - Presente</span>
+</div>
+</div>
+<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-habilidades">
+<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
+<span class="text-3xl">💻</span> Habilidades Técnicas
+</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="p-4 bg-indigo-50 rounded-xl text-center border-2 border-indigo-100">
+<p class="font-bold">HTML & CSS</p>
+<p class="text-xs text-indigo-600 mt-1">85%</p>
+</div>
+<div class="p-4 bg-indigo-50 rounded-xl text-center border-2 border-indigo-100">
+<p class="font-bold">JavaScript</p>
+<p class="text-xs text-indigo-600 mt-1">70%</p>
+</div>
+<div class="p-4 bg-indigo-50 rounded-xl text-center border-2 border-indigo-100">
+<p class="font-bold">Git & GitHub</p>
+<p class="text-xs text-indigo-600 mt-1">75%</p>
+</div>
+<div class="p-4 bg-indigo-50 rounded-xl text-center border-2 border-indigo-100">
+<p class="font-bold">Python</p>
+<p class="text-xs text-indigo-600 mt-1">65%</p>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-cursos">
+<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
+<span class="text-3xl">📚</span> Cursos y Certificaciones
+</h2>
+<div class="space-y-4" id="cursos-list"></div>
+</div>
+<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-reconocimientos">
+<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
+<span class="text-3xl">🏆</span> Reconocimientos
+</h2>
+<div class="space-y-4" id="reconocimientos-list"></div>
+</div>
+<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-idiomas">
+<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
+<span class="text-3xl">🌍</span> Idiomas
+</h2>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-5 bg-rose-50 rounded-2xl border-2 border-rose-100">
+<h3 class="font-bold mb-2">Español</h3>
+<span class="px-3 py-1 bg-rose-500 text-white rounded-full text-xs font-bold">Nativo - 100%</span>
+</div>
+<div class="p-5 bg-blue-50 rounded-2xl border-2 border-blue-100">
+<h3 class="font-bold mb-2">Inglés</h3>
+<span class="px-3 py-1 bg-blue-500 text-white rounded-full text-xs font-bold">Básico - 40%</span>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-3xl shadow-2xl p-8" id="section-garaje">
+<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
+<span class="text-3xl">🛒</span> Venta de Garaje
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="productos-list"></div>
+</div>
+</main>
+<script>
+let experiencias=[{puesto:'Desarrollador Web Junior',empresa:'Proyectos Académicos • ULEAM',inicio:'2024-01-01',fin:'',descripcion:'Desarrollo de aplicaciones web responsivas.'},{puesto:'Asistente de Soporte Técnico',empresa:'Laboratorio de Computación • ULEAM',inicio:'2023-06-01',fin:'2023-12-31',descripcion:'Soporte técnico y mantenimiento de equipos.'},{puesto:'Practicante de Programación',empresa:'Centro de Innovación ULEAM',inicio:'2022-03-01',fin:'2022-08-31',descripcion:'Proyectos de automatización y scripts.'}];
+let cursos=[{nombre:'Desarrollo Web Full Stack',institucion:'Platzi',inicio:'2024-01-15',duracion:'120 horas'},{nombre:'JavaScript Avanzado',institucion:'Udemy',inicio:'2023-11-10',duracion:'40 horas'},{nombre:'Git y GitHub',institucion:'EDteam',inicio:'2023-09-05',duracion:'20 horas'},{nombre:'Python para Principiantes',institucion:'Coursera',inicio:'2023-06-20',duracion:'30 horas'}];
+let reconocimientos=[{titulo:'Mejor Proyecto de Programación',otorgado:'Universidad ULEAM',inicio:'2024-01-20',descripcion:'Reconocimiento por el mejor proyecto del semestre.',imagen:''},{titulo:'Hackathon 2023',otorgado:'ULEAM Tech Week',inicio:'2023-11-15',descripcion:'Segundo lugar con app móvil educativa.',imagen:''},{titulo:'Estudiante Sobresaliente',otorgado:'Decanato de Tecnología',inicio:'2023-12-05',descripcion:'Promedio superior a 9.0.',imagen:''}];
+let productos=[{nombre:'Monitor 24" Full HD',imagen:'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400',precio:180,descripcion:'Panel IPS, 75Hz, HDMI.',estado:'Usado - Excelente',cantidad:2},{nombre:'Teclado Mecánico RGB',imagen:'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400',precio:85,descripcion:'Switches azules, RGB.',estado:'Como nuevo',cantidad:1},{nombre:'Mouse Gamer',imagen:'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400',precio:35,descripcion:'DPI ajustable, 6 botones.',estado:'Usado',cantidad:1},{nombre:'Webcam Logitech',imagen:'https://images.unsplash.com/photo-1589739900243-c842bf25e79c?w=400',precio:65,descripcion:'1080p Full HD.',estado:'Como nuevo',cantidad:1},{nombre:'Hub USB-C',imagen:'https://images.unsplash.com/photo-1625948515291-69613efd103f?w=400',precio:28,descripcion:'7 en 1, HDMI, USB 3.0.',estado:'Nuevo',cantidad:2}];
 
-    <div id="adminModal" class="modal">
-        <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto my-8">
-            <h2 class="text-2xl font-black gradient-text mb-6">Panel de Administración</h2>
-            <div class="mb-6 p-6 bg-indigo-50 rounded-2xl">
-                <h3 class="text-lg font-bold mb-4">💼 Agregar Experiencia Laboral</h3>
-                <input type="text" id="exp-puesto" placeholder="Puesto" class="w-full p-3 border rounded-lg mb-3">
-                <input type="text" id="exp-empresa" placeholder="Empresa" class="w-full p-3 border rounded-lg mb-3">
-                <div class="grid grid-cols-2 gap-3 mb-3">
-                    <input type="date" id="exp-inicio" class="p-3 border rounded-lg">
-                    <input type="date" id="exp-fin" class="p-3 border rounded-lg">
-                </div>
-                <textarea id="exp-descripcion" placeholder="Descripción" class="w-full p-3 border rounded-lg mb-3" rows="3"></textarea>
-                <input type="text" id="exp-tecnologias" placeholder="Tecnologías (separadas por comas)" class="w-full p-3 border rounded-lg mb-3">
-                <button onclick="agregarExperiencia()" class="btn-download text-white px-6 py-2 rounded-full font-bold w-full">Agregar</button>
-            </div>
-            <div class="mb-6 p-6 bg-green-50 rounded-2xl">
-                <h3 class="text-lg font-bold mb-4">📚 Agregar Curso/Certificación</h3>
-                <input type="text" id="curso-nombre" placeholder="Nombre del curso" class="w-full p-3 border rounded-lg mb-3">
-                <input type="text" id="curso-institucion" placeholder="Institución" class="w-full p-3 border rounded-lg mb-3">
-                <input type="date" id="curso-fecha" class="w-full p-3 border rounded-lg mb-3">
-                <input type="text" id="curso-duracion" placeholder="Duración" class="w-full p-3 border rounded-lg mb-3">
-                <button onclick="agregarCurso()" class="bg-green-500 text-white px-6 py-2 rounded-full font-bold w-full">Agregar</button>
-            </div>
-            <div class="mb-6 p-6 bg-yellow-50 rounded-2xl">
-                <h3 class="text-lg font-bold mb-4">🏆 Agregar Reconocimiento</h3>
-                <input type="text" id="rec-titulo" placeholder="Título" class="w-full p-3 border rounded-lg mb-3">
-                <input type="text" id="rec-otorgado" placeholder="Otorgado por" class="w-full p-3 border rounded-lg mb-3">
-                <input type="date" id="rec-fecha" class="w-full p-3 border rounded-lg mb-3">
-                <textarea id="rec-descripcion" placeholder="Descripción" class="w-full p-3 border rounded-lg mb-3" rows="2"></textarea>
-                <button onclick="agregarReconocimiento()" class="bg-yellow-500 text-white px-6 py-2 rounded-full font-bold w-full">Agregar</button>
-            </div>
-            <div class="p-6 bg-orange-50 rounded-2xl">
-                <h3 class="text-lg font-bold mb-4">🛒 Agregar Producto de Garaje</h3>
-                <input type="text" id="prod-nombre" placeholder="Nombre del producto" class="w-full p-3 border rounded-lg mb-3">
-                <input type="text" id="prod-imagen" placeholder="URL de la imagen" class="w-full p-3 border rounded-lg mb-3">
-                <input type="number" id="prod-precio" placeholder="Precio" class="w-full p-3 border rounded-lg mb-3" step="0.01">
-                <textarea id="prod-descripcion" placeholder="Descripción" class="w-full p-3 border rounded-lg mb-3" rows="2"></textarea>
-                <input type="text" id="prod-estado" placeholder="Estado" class="w-full p-3 border rounded-lg mb-3">
-                <input type="number" id="prod-cantidad" placeholder="Cantidad" class="w-full p-3 border rounded-lg mb-3" min="1" value="1">
-                <button onclick="agregarProducto()" class="bg-orange-500 text-white px-6 py-2 rounded-full font-bold w-full">Agregar</button>
-            </div>
-            <button onclick="closeAdminModal()" class="mt-6 w-full px-6 py-3 border-2 rounded-full font-bold">Cerrar</button>
-        </div>
-    </div>
+function openFilterModal(){document.getElementById('filterModal').classList.add('active')}
+function closeFilterModal(){document.getElementById('filterModal').classList.remove('active')}
+function openAdminModal(){document.getElementById('adminModal').classList.add('active')}
+function closeAdminModal(){document.getElementById('adminModal').classList.remove('active')}
+function formatFecha(f){if(!f)return'Presente';const d=new Date(f+'T00:00:00');const m=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];return m[d.getMonth()]+' '+d.getFullYear()}
+function ordenar(arr){return arr.sort((a,b)=>{const fA=a.inicio?new Date(a.inicio):new Date();const fB=b.inicio?new Date(b.inicio):new Date();return fB-fA})}
+function toggleFechaFin(){const c=document.getElementById('exp-actual');const f=document.getElementById('exp-fin');if(c.checked){f.disabled=true;f.value=''}else{f.disabled=false}}
 
-    <header class="sticky top-0 bg-white shadow-lg z-50">
-        <nav class="max-w-7xl mx-auto px-6 py-3">
-            <div class="flex items-center justify-between mb-2">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-xl flex items-center justify-center text-white font-bold floating">MC</div>
-                    <span class="font-black text-xl gradient-text">PORTFOLIO</span>
-                </div>
-                <div class="flex items-center gap-3">
-                    <button onclick="openAdminModal()" class="px-4 py-2 border-2 border-indigo-500 text-indigo-600 rounded-full text-sm font-bold hover:bg-indigo-50">⚙️ Admin</button>
-                    <button onclick="openFilterModal()" class="btn-download text-white px-6 py-2.5 rounded-full text-sm font-bold">🖨️ Imprimir</button>
-                </div>
-            </div>
-            <div class="flex flex-wrap gap-2 justify-center">
-                <a href="#section-resumen" class="nav-link">✨ Resumen</a>
-                <a href="#section-experiencia" class="nav-link">💼 Experiencia</a>
-                <a href="#section-educacion" class="nav-link">🎓 Educación</a>
-                <a href="#section-habilidades" class="nav-link">💻 Habilidades</a>
-                <a href="#section-cursos" class="nav-link">📚 Cursos</a>
-                <a href="#section-reconocimientos" class="nav-link">🏆 Reconocimientos</a>
-                <a href="#section-idiomas" class="nav-link">🌍 Idiomas</a>
-                <a href="#section-garaje" class="nav-link">🛒 Garaje</a>
-            </div>
-        </nav>
-    </header>
+function renderExperiencias(){const l=document.getElementById('experiencia-list');if(experiencias.length===0){l.innerHTML='<p class="text-gray-500 italic">No hay experiencias.</p>';return}l.innerHTML='';ordenar(experiencias).forEach((e,i)=>{l.innerHTML+=`<div class="bg-indigo-50 p-6 rounded-2xl border-2 border-indigo-100"><div class="flex justify-between items-start mb-3"><h3 class="font-bold text-xl">${e.puesto}</h3><div class="flex items-center gap-2"><span class="px-3 py-1 bg-indigo-500 text-white rounded-full text-xs font-bold whitespace-nowrap">${formatFecha(e.inicio)} - ${formatFecha(e.fin)}</span><button onclick="editarExperiencia(${i})" class="btn-edit">✏️</button><button onclick="eliminarExperiencia(${i})" class="btn-delete">🗑️</button></div></div><p class="text-indigo-600 font-semibold mb-3">${e.empresa}</p><p class="text-slate-600">${e.descripcion}</p></div>`})}
 
-    <main class="max-w-6xl mx-auto px-6 py-12" id="cv-content">
-        <div class="bg-white rounded-3xl shadow-2xl p-12 mb-8 text-center" id="section-header">
-            <div class="w-40 h-40 mx-auto rounded-3xl flex items-center justify-center border-4 border-white shadow-xl bg-gradient-to-br from-indigo-500 to-pink-500 mb-6">
-                <span class="text-6xl font-black text-white">MC</span>
-            </div>
-            <h1 class="text-5xl font-black mb-2">
-                <span class="gradient-text">CAMPOZANO MENDOZA</span><br>
-                <span class="text-slate-900">MARCOS LUIS</span>
-            </h1>
-            <p class="text-lg text-slate-600 mb-4">Estudiante de Tecnología de la Información</p>
-            <div class="flex flex-wrap justify-center gap-6 text-sm">
-                <span>📧 campozanomendoza@gmail.com</span>
-                <span>📱 +593 098 500 26 00</span>
-                <span>📍 Jipijapa, Ecuador</span>
-            </div>
-        </div>
+function renderCursos(){const l=document.getElementById('cursos-list');if(cursos.length===0){l.innerHTML='<p class="text-gray-500 italic">No hay cursos.</p>';return}l.innerHTML='';ordenar(cursos).forEach((c,i)=>{l.innerHTML+=`<div class="bg-green-50 p-5 rounded-2xl border-2 border-green-100 flex justify-between items-start"><div class="flex-1"><h3 class="font-bold">${c.nombre}</h3><p class="text-green-600 font-semibold text-sm">${c.institucion}</p><p class="text-xs text-slate-500">${formatFecha(c.inicio)} • ${c.duracion}</p></div><div class="flex items-center"><button onclick="editarCurso(${i})" class="btn-edit">✏️</button><button onclick="eliminarCurso(${i})" class="btn-delete">🗑️</button></div></div>`})}
 
-        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-resumen">
-            <h2 class="text-2xl font-black mb-4 flex items-center gap-3">
-                <span class="text-3xl">✨</span> Resumen Profesional
-            </h2>
-            <p class="text-xl text-slate-700 leading-relaxed">
-                Estudiante apasionado por la <span class="gradient-text font-bold">Tecnología de la Información</span>, 
-                comprometido con el aprendizaje continuo y el desarrollo de soluciones innovadoras.
-            </p>
-        </div>
+function renderReconocimientos(){const l=document.getElementById('reconocimientos-list');if(reconocimientos.length===0){l.innerHTML='<p class="text-gray-500 italic">No hay reconocimientos.</p>';return}l.innerHTML='';ordenar(reconocimientos).forEach((r,i)=>{const img=r.imagen?`<img src="${r.imagen}" alt="${r.titulo}" class="w-full h-32 object-cover rounded-lg mb-3">`:'';l.innerHTML+=`<div class="bg-yellow-50 p-5 rounded-2xl border-2 border-yellow-100"><div class="flex justify-between items-start mb-3">${img}<div class="flex-1"><h3 class="font-bold">${r.titulo}</h3><p class="text-yellow-600 font-semibold text-sm">${r.otorgado}</p><p class="text-xs text-slate-500 mb-2">${formatFecha(r.inicio)}</p><p class="text-sm text-slate-600">${r.descripcion}</p></div><div class="flex items-center gap-2"><button onclick="editarReconocimiento(${i})" class="btn-edit">✏️</button><button onclick="eliminarReconocimiento(${i})" class="btn-delete">🗑️</button></div></div></div>`})}
 
-        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-experiencia">
-            <h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-                <span class="text-3xl">💼</span> Experiencia Laboral
-            </h2>
-            <div class="space-y-6" id="experiencia-list"></div>
-        </div>
+function renderProductos(){const l=document.getElementById('productos-list');if(productos.length===0){l.innerHTML='<p class="text-gray-500 italic col-span-3">No hay productos.</p>';return}l.innerHTML='';productos.forEach((p,i)=>{const b=p.cantidad>1?`<span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">x${p.cantidad}</span>`:'';l.innerHTML+=`<div class="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100 hover:shadow-xl transition-all"><div class="relative"><img src="${p.imagen}" alt="${p.nombre}" style="width:100%;height:200px;object-fit:cover">${b}</div><div class="p-4"><div class="flex justify-between items-start mb-2"><h3 class="font-bold text-lg flex-1">${p.nombre}</h3><span class="text-2xl font-black text-green-600 ml-2">$${p.precio.toFixed(2)}</span></div><p class="text-sm text-slate-600 mb-3">${p.descripcion}</p><div class="flex justify-between items-center"><span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold">${p.estado}</span><div class="flex items-center"><button onclick="editarProducto(${i})" class="btn-edit">✏️</button><button onclick="eliminarProducto(${i})" class="btn-delete">🗑️</button></div></div></div></div>`})}
 
-        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-educacion">
-            <h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-                <span class="text-3xl">🎓</span> Educación
-            </h2>
-            <div class="bg-purple-50 p-6 rounded-2xl border-2 border-purple-100">
-                <h3 class="font-bold text-lg mb-2">Tecnología de la Información</h3>
-                <p class="text-purple-600 font-semibold mb-2">Universidad Laica Eloy Alfaro de Manabí (ULEAM)</p>
-                <span class="px-3 py-1 bg-purple-500 text-white rounded-full text-xs font-bold">2022 - Presente</span>
-            </div>
-        </div>
+function guardarExperiencia(){const idx=parseInt(document.getElementById('exp-edit-index').value);const e={puesto:document.getElementById('exp-puesto').value,empresa:document.getElementById('exp-empresa').value,inicio:document.getElementById('exp-inicio').value,fin:document.getElementById('exp-actual').checked?'':document.getElementById('exp-fin').value,descripcion:document.getElementById('exp-descripcion').value};if(!e.puesto||!e.empresa||!e.inicio){alert('❌ Completa los campos');return}const fI=new Date(e.inicio);const fF=e.fin?new Date(e.fin):null;const fA=new Date();if(fI>fA){alert('❌ Fecha inicio futura');return}if(fF&&(fF>fA||fF<fI)){alert('❌ Fecha fin inválida');return}if(idx>=0){experiencias[idx]=e;alert('✅ Actualizado')}else{experiencias.push(e);alert('✅ Agregado')}renderExperiencias();limpiarFormExp()}
 
-        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-habilidades">
-            <h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-                <span class="text-3xl">💻</span> Habilidades Técnicas
-            </h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="p-4 bg-indigo-50 rounded-xl text-center border-2 border-indigo-100">
-                    <p class="font-bold">HTML & CSS</p>
-                    <p class="text-xs text-indigo-600 mt-1">85%</p>
-                </div>
-                <div class="p-4 bg-indigo-50 rounded-xl text-center border-2 border-indigo-100">
-                    <p class="font-bold">JavaScript</p>
-                    <p class="text-xs text-indigo-600 mt-1">70%</p>
-                </div>
-                <div class="p-4 bg-indigo-50 rounded-xl text-center border-2 border-indigo-100">
-                    <p class="font-bold">Git & GitHub</p>
-                    <p class="text-xs text-indigo-600 mt-1">75%</p>
-                </div>
-                <div class="p-4 bg-indigo-50 rounded-xl text-center border-2 border-indigo-100">
-                    <p class="font-bold">Python</p>
-                    <p class="text-xs text-indigo-600 mt-1">65%</p>
-                </div>
-            </div>
-        </div>
+function editarExperiencia(i){const e=experiencias[i];document.getElementById('exp-edit-index').value=i;document.getElementById('exp-puesto').value=e.puesto;document.getElementById('exp-empresa').value=e.empresa;document.getElementById('exp-inicio').value=e.inicio;document.getElementById('exp-fin').value=e.fin||'';document.getElementById('exp-actual').checked=!e.fin;document.getElementById('exp-descripcion').value=e.descripcion;document.getElementById('btn-exp').textContent='Actualizar';toggleFechaFin();openAdminModal()}
 
-        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-cursos">
-            <h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-                <span class="text-3xl">📚</span> Cursos y Certificaciones
-            </h2>
-            <div class="space-y-4" id="cursos-list"></div>
-        </div>
+function limpiarFormExp(){document.getElementById('exp-edit-index').value='-1';document.getElementById('exp-puesto').value='';document.getElementById('exp-empresa').value='';document.getElementById('exp-inicio').value='';document.getElementById('exp-fin').value='';document.getElementById('exp-actual').checked=false;document.getElementById('exp-descripcion').value='';document.getElementById('btn-exp').textContent='Agregar';document.getElementById('exp-fin').disabled=false}
 
-        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-reconocimientos">
-            <h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-                <span class="text-3xl">🏆</span> Reconocimientos
-            </h2>
-            <div class="space-y-4" id="reconocimientos-list"></div>
-        </div>
+function eliminarExperiencia(i){if(confirm('¿Eliminar?')){experiencias.splice(i,1);renderExperiencias()}}
 
-        <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-idiomas">
-            <h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-                <span class="text-3xl">🌍</span> Idiomas
-            </h2>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="p-5 bg-rose-50 rounded-2xl border-2 border-rose-100">
-                    <h3 class="font-bold mb-2">Español</h3>
-                    <span class="px-3 py-1 bg-rose-500 text-white rounded-full text-xs font-bold">Nativo - 100%</span>
-                </div>
-                <div class="p-5 bg-blue-50 rounded-2xl border-2 border-blue-100">
-                    <h3 class="font-bold mb-2">Inglés</h3>
-                    <span class="px-3 py-1 bg-blue-500 text-white rounded-full text-xs font-bold">Básico - 40%</span>
-                </div>
-            </div>
-        </div>
+function guardarCurso(){const idx=parseInt(document.getElementById('curso-edit-index').value);const c={nombre:document.getElementById('curso-nombre').value,institucion:document.getElementById('curso-institucion').value,inicio:document.getElementById('curso-fecha').value,duracion:document.getElementById('curso-duracion').value};if(!c.nombre||!c.institucion||!c.inicio){alert('❌ Completa campos');return}const fC=new Date(c.inicio);if(fC>new Date()){alert('❌ Fecha futura');return}if(idx>=0){cursos[idx]=c;alert('✅ Actualizado')}else{cursos.push(c);alert('✅ Agregado')}renderCursos();limpiarFormCurso()}
 
-        <div class="bg-white rounded-3xl shadow-2xl p-8" id="section-garaje">
-            <h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-                <span class="text-3xl">🛒</span> Venta de Garaje
-            </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="productos-list"></div>
-        </div>
-    </main>
+function editarCurso(i){const c=cursos[i];document.getElementById('curso-edit-index').value=i;document.getElementById('curso-nombre').value=c.nombre;document.getElementById('curso-institucion').value=c.institucion;document.getElementById('curso-fecha').value=c.inicio;document.getElementById('curso-duracion').value=c.duracion;document.getElementById('btn-curso').textContent='Actualizar';openAdminModal()}
 
-    <script>
-        let experiencias = [
-            {puesto: 'Desarrollador Web Junior', empresa: 'Proyectos Académicos • ULEAM', inicio: '2024-01-01', fin: '', descripcion: 'Desarrollo de aplicaciones web responsivas utilizando tecnologías modernas.', tecnologias: 'HTML/CSS,JavaScript,Git,Tailwind'},
-            {puesto: 'Asistente de Soporte Técnico', empresa: 'Laboratorio de Computación • ULEAM', inicio: '2023-06-01', fin: '2023-12-31', descripcion: 'Soporte técnico a estudiantes y profesores. Mantenimiento de equipos.', tecnologias: 'Windows,Linux,Hardware'},
-            {puesto: 'Practicante de Programación', empresa: 'Centro de Innovación ULEAM', inicio: '2022-03-01', fin: '2022-08-31', descripcion: 'Colaboración en proyectos de automatización y desarrollo de scripts.', tecnologias: 'Python,Bash,Git'}
-        ];
+function limpiarFormCurso(){document.getElementById('curso-edit-index').value='-1';document.getElementById('curso-nombre').value='';document.getElementById('curso-institucion').value='';document.getElementById('curso-fecha').value='';document.getElementById('curso-duracion').value='';document.getElementById('btn-curso').textContent='Agregar'}
 
-        let cursos = [
-            {nombre: 'Desarrollo Web Full Stack', institucion: 'Platzi', inicio: '2024-01-15', duracion: '120 horas'},
-            {nombre: 'JavaScript Avanzado', institucion: 'Udemy', inicio: '2023-11-10', duracion: '40 horas'},
-            {nombre: 'Git y GitHub desde Cero', institucion: 'EDteam', inicio: '2023-09-05', duracion: '20 horas'},
-            {nombre: 'Python para Principiantes', institucion: 'Coursera', inicio: '2023-06-20', duracion: '30 horas'}
-        ];
+function eliminarCurso(i){if(confirm('¿Eliminar?')){cursos.splice(i,1);renderCursos()}}
 
-        let reconocimientos = [
-            {titulo: 'Mejor Proyecto de Programación', otorgado: 'Universidad ULEAM', inicio: '2024-01-20', descripcion: 'Reconocimiento por el mejor proyecto del semestre.'},
-            {titulo: 'Hackathon Universitario 2023', otorgado: 'ULEAM Tech Week', inicio: '2023-11-15', descripcion: 'Segundo lugar en hackathon con app móvil educativa.'},
-            {titulo: 'Estudiante Sobresaliente', otorgado: 'Decanato de Tecnología', inicio: '2023-12-05', descripcion: 'Excelencia académica con promedio superior a 9.0.'}
-        ];
+function guardarReconocimiento(){const idx=parseInt(document.getElementById('rec-edit-index').value);const r={titulo:document.getElementById('rec-titulo').value,otorgado:document.getElementById('rec-otorgado').value,inicio:document.getElementById('rec-fecha').value,descripcion:document.getElementById('rec-descripcion').value,imagen:document.getElementById('rec-imagen').value||''};if(!r.titulo||!r.otorgado||!r.inicio){alert('❌ Completa campos');return}const fR=new Date(r.inicio);if(fR>new Date()){alert('❌ Fecha futura');return}if(idx>=0){reconocimientos[idx]=r;alert('✅ Actualizado')}else{reconocimientos.push(r);alert('✅ Agregado')}renderReconocimientos();limpiarFormRec()}
 
-        let productos = [
-            {nombre: 'Monitor 24" Full HD', imagen: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400', precio: 180.00, descripcion: 'Panel IPS, 75Hz, HDMI y DisplayPort.', estado: 'Usado - Excelente', cantidad: 2},
-            {nombre: 'Teclado Mecánico RGB', imagen: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400', precio: 85.00, descripcion: 'Switches azules, retroiluminación RGB.', estado: 'Como nuevo', cantidad: 1},
-            {nombre: 'Mouse Gamer Logitech', imagen: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400', precio: 35.00, descripcion: 'DPI ajustable, 6 botones programables.', estado: 'Usado', cantidad: 1},
-            {nombre: 'Webcam Logitech C920', imagen: 'https://images.unsplash.com/photo-1589739900243-c842bf25e79c?w=400', precio: 65.00, descripcion: '1080p Full HD, micrófono estéreo.', estado: 'Como nuevo', cantidad: 1},
-            {nombre: 'Hub USB-C 7 en 1', imagen: 'https://images.unsplash.com/photo-1625948515291-69613efd103f?w=400', precio: 28.00, descripcion: 'HDMI, USB 3.0, lector SD, ethernet.', estado: 'Nuevo', cantidad: 2}
-        ];
+function editarReconocimiento(i){const r=reconocimientos[i];document.getElementById('rec-edit-index').value=i;document.getElementById('rec-titulo').value=r.titulo;document.getElementById('rec-otorgado').value=r.otorgado;document.getElementById('rec-fecha').value=r.inicio;document.getElementById('rec-descripcion').value=r.descripcion;document.getElementById('rec-imagen').value=r.imagen||'';document.getElementById('btn-rec').textContent='Actualizar';openAdminModal()}
 
-        function openFilterModal() { document.getElementById('filterModal').classList.add('active'); }
-        function closeFilterModal() { document.getElementById('filterModal').classList.remove('active'); }
-        function openAdminModal() { document.getElementById('adminModal').classList.add('active'); }
-        function closeAdminModal() { document.getElementById('adminModal').classList.remove('active'); }
+function limpiarFormRec(){document.getElementById('rec-edit-index').value='-1';document.getElementById('rec-titulo').value='';document.getElementById('rec-otorgado').value='';document.getElementById('rec-fecha').value='';document.getElementById('rec-descripcion').value='';document.getElementById('rec-imagen').value='';document.getElementById('btn-rec').textContent='Agregar'}
 
-        function formatFecha(fecha) {
-            if (!fecha) return 'Presente';
-            const d = new Date(fecha + 'T00:00:00');
-            const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-            return meses[d.getMonth()] + ' ' + d.getFullYear();
-        }
+function eliminarReconocimiento(i){if(confirm('¿Eliminar?')){reconocimientos.splice(i,1);renderReconocimientos()}}
 
-        function ordenarPorFecha(arr) {
-            return arr.sort((a, b) => {
-                const fechaA = a.inicio ? new Date(a.inicio) : new Date();
-                const fechaB = b.inicio ? new Date(b.inicio) : new Date();
-                return fechaB - fechaA;
-            });
-        }
+function guardarProducto(){const idx=parseInt(document.getElementById('prod-edit-index').value);const p={nombre:document.getElementById('prod-nombre').value,imagen:document.getElementById('prod-imagen').value||'https://via.placeholder.com/400x200',precio:parseFloat(document.getElementById('prod-precio').value),descripcion:document.getElementById('prod-descripcion').value,estado:document.getElementById('prod-estado').value,cantidad:parseInt(document.getElementById('prod-cantidad').value)||1};if(!p.nombre||!p.precio||!p.descripcion||!p.estado){alert('❌ Completa campos');return}if(p.precio<=0||p.cantidad<1){alert('❌ Precio/cantidad inválidos');return}if(idx>=0){productos[idx]=p;alert('✅ Actualizado')}else{productos.push(p);alert('✅ Agregado')}renderProductos();limpiarFormProd()}
 
-        function renderExperiencias() {
-            const lista = document.getElementById('experiencia-list');
-            if (experiencias.length === 0) {
-                lista.innerHTML = '<p class="text-gray-500 italic">No hay experiencias.</p>';
-                return;
-            }
-            lista.innerHTML = '';
-            ordenarPorFecha(experiencias).forEach((exp, index) => {
-                lista.innerHTML += `
-                    <div class="bg-indigo-50 p-6 rounded-2xl border-2 border-indigo-100">
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="font-bold text-xl">${exp.puesto}</h3>
-                            <div class="flex items-center gap-2">
-                                <span class="px-3 py-1 bg-indigo-500 text-white rounded-full text-xs font-bold whitespace-nowrap">${formatFecha(exp.inicio)} - ${formatFecha(exp.fin)}</span>
-                                <button onclick="eliminarExperiencia(${index})" class="btn-delete">🗑️</button>
-                            </div>
-                        </div>
-                        <p class="text-indigo-600 font-semibold mb-3">${exp.empresa}</p>
-                        <p class="text-slate-600 mb-4">${exp.descripcion}</p>
-                        <div class="flex flex-wrap gap-2">
-                            ${exp.tecnologias.split(',').map(t => `<span class="px-3 py-1 bg-white text-indigo-600 rounded-full text-xs font-bold">${t.trim()}</span>`).join('')}
-                        </div>
-                    </div>
-                `;
-            });
-        }
+function editarProducto(i){const p=productos[i];document.getElementById('prod-edit-index').value=i;document.getElementById('prod-nombre').value=p.nombre;document.getElementById('prod-imagen').value=p.imagen;document.getElementById('prod-precio').value=p.precio;document.getElementById('prod-descripcion').value=p.descripcion;document.getElementById('prod-estado').value=p.estado;document.getElementById('prod-cantidad').value=p.cantidad;document.getElementById('btn-prod').textContent='Actualizar';openAdminModal()}
 
-        function renderCursos() {
-            const lista = document.getElementById('cursos-list');
-            if (cursos.length === 0) {
-                lista.innerHTML = '<p class="text-gray-500 italic">No hay cursos.</p>';
-                return;
-            }
-            lista.innerHTML = '';
-            ordenarPorFecha(cursos).forEach((c, index) => {
-                lista.innerHTML += `
-                    <div class="bg-green-50 p-5 rounded-2xl border-2 border-green-100 flex justify-between items-start">
-                        <div class="flex-1">
-                            <h3 class="font-bold">${c.nombre}</h3>
-                            <p class="text-green-600 font-semibold text-sm">${c.institucion}</p>
-                            <p class="text-xs text-slate-500">${formatFecha(c.inicio)} • ${c.duracion}</p>
-                        </div>
-                        <button onclick="eliminarCurso(${index})" class="btn-delete">🗑️</button>
-                    </div>
-                `;
-            });
-        }
+function limpiarFormProd(){document.getElementById('prod-edit-index').value='-1';document.getElementById('prod-nombre').value='';document.getElementById('prod-imagen').value='';document.getElementById('prod-precio').value='';document.getElementById('prod-descripcion').value='';document.getElementById('prod-estado').value='';document.getElementById('prod-cantidad').value='1';document.getElementById('btn-prod').textContent='Agregar'}
 
-        function renderReconocimientos() {
-            const lista = document.getElementById('reconocimientos-list');
-            if (reconocimientos.length === 0) {
-                lista.innerHTML = '<p class="text-gray-500 italic">No hay reconocimientos.</p>';
-                return;
-            }
-            lista.innerHTML = '';
-            ordenarPorFecha(reconocimientos).forEach((r, index) => {
-                lista.innerHTML += `
-                    <div class="bg-yellow-50 p-5 rounded-2xl border-2 border-yellow-100 flex justify-between items-start">
-                        <div class="flex-1">
-                            <h3 class="font-bold">${r.titulo}</h3>
-                            <p class="text-yellow-600 font-semibold text-sm">${r.otorgado}</p>
-                            <p class="text-xs text-slate-500 mb-2">${formatFecha(r.inicio)}</p>
-                            <p class="text-sm text-slate-600">${r.descripcion}</p>
-                        </div>
-                        <button onclick="eliminarReconocimiento(${index})" class="btn-delete">🗑️</button>
-                    </div>
-                `;
-            });
-        }
+function eliminarProducto(i){if(confirm('¿Eliminar?')){productos.splice(i,1);renderProductos()}}
 
-        function renderProductos() {
-            const lista = document.getElementById('productos-list');
-            if (productos.length === 0) {
-                lista.innerHTML = '<p class="text-gray-500 italic col-span-3">No hay productos.</p>';
-                return;
-            }
-            lista.innerHTML = '';
-            productos.forEach((p, index) => {
-                const cantidadBadge = p.cantidad > 1 ? `<span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">x${p.cantidad}</span>` : '';
-                lista.innerHTML += `
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100 hover:shadow-xl transition-all">
-                        <div class="relative">
-                            <img src="${p.imagen}" alt="${p.nombre}" style="width: 100%; height: 200px; object-fit: cover;">
-                            ${cantidadBadge}
-                        </div>
-                        <div class="p-4">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="font-bold text-lg flex-1">${p.nombre}</h3>
-                                <span class="text-2xl font-black text-green-600 ml-2">$${p.precio.toFixed(2)}</span>
-                            </div>
-                            <p class="text-sm text-slate-600 mb-3">${p.descripcion}</p>
-                            <div class="flex justify-between items-center">
-                                <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold">${p.estado}</span>
-                                <button onclick="eliminarProducto(${index})" class="btn-delete">🗑️</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
+function imprimir(){const s=['header','resumen','experiencia','educacion','habilidades','cursos','reconocimientos','idiomas','garaje'];const d=document.querySelectorAll('.btn-delete,.btn-edit');const h=document.querySelector('header');d.forEach(b=>b.style.display='none');if(h)h.style.display='none';s.forEach(sec=>{const e=document.getElementById('section-'+sec);const c=document.getElementById('filter-'+sec);if(e&&c)e.style.display=c.checked?'block':'none'});closeFilterModal();setTimeout(()=>{window.print();setTimeout(()=>{s.forEach(sec=>{const e=document.getElementById('section-'+sec);if(e)e.style.display='block'});d.forEach(b=>b.style.display='');if(h)h.style.display='block'},100)},300)}
 
-        function agregarExperiencia() {
-            const exp = {
-                puesto: document.getElementById('exp-puesto').value,
-                empresa: document.getElementById('exp-empresa').value,
-                inicio: document.getElementById('exp-inicio').value,
-                fin: document.getElementById('exp-fin').value,
-                descripcion: document.getElementById('exp-descripcion').value,
-                tecnologias: document.getElementById('exp-tecnologias').value
-            };
-            if (!exp.puesto || !exp.empresa || !exp.inicio) {
-                alert('❌ Completa los campos obligatorios');
-                return;
-            }
-            const fechaInicio = new Date(exp.inicio);
-            const fechaFin = exp.fin ? new Date(exp.fin) : null;
-            const fechaActual = new Date();
-            if (fechaInicio > fechaActual) {
-                alert('❌ La fecha de inicio no puede ser futura');
-                return;
-            }
-            if (fechaFin && (fechaFin > fechaActual || fechaFin < fechaInicio)) {
-                alert('❌ Fecha de fin inválida');
-                return;
-            }
-            experiencias.push(exp);
-            renderExperiencias();
-            document.getElementById('exp-puesto').value = '';
-            document.getElementById('exp-empresa').value = '';
-            document.getElementById('exp-inicio').value = '';
-            document.getElementById('exp-fin').value = '';
-            document.getElementById('exp-descripcion').value = '';
-            document.getElementById('exp-tecnologias').value = '';
-            alert('✅ Experiencia agregada');
-        }
-
-        function agregarCurso() {
-            const curso = {
-                nombre: document.getElementById('curso-nombre').value,
-                institucion: document.getElementById('curso-institucion').value,
-                inicio: document.getElementById('curso-fecha').value,
-                duracion: document.getElementById('curso-duracion').value
-            };
-            if (!curso.nombre || !curso.institucion || !curso.inicio) {
-                alert('❌ Completa los campos obligatorios');
-                return;
-            }
-            const fechaCurso = new Date(curso.inicio);
-            if (fechaCurso > new Date()) {
-                alert('❌ La fecha no puede ser futura');
-                return;
-            }
-            cursos.push(curso);
-            renderCursos();
-            document.getElementById('curso-nombre').value = '';
-            document.getElementById('curso-institucion').value = '';
-            document.getElementById('curso-fecha').value = '';
-            document.getElementById('curso-duracion').value = '';
-            alert('✅ Curso agregado');
-        }
-
-        function agregarReconocimiento() {
-            const rec = {
-                titulo: document.getElementById('rec-titulo').value,
-                otorgado: document.getElementById('rec-otorgado').value,
-                inicio: document.getElementById('rec-fecha').value,
-                descripcion: document.getElementById('rec-descripcion').value
-            };
-            if (!rec.titulo || !rec.otorgado || !rec.inicio) {
-                alert('❌ Completa los campos obligatorios');
-                return;
-            }
-            const fechaRec = new Date(rec.inicio);
-            if (fechaRec > new Date()) {
-                alert('❌ La fecha no puede ser futura');
-                return;
-            }
-            reconocimientos.push(rec);
-            renderReconocimientos();
-            document.getElementById('rec-titulo').value = '';
-            document.getElementById('rec-otorgado').value = '';
-            document.getElementById('rec-fecha').value = '';
-            document.getElementById('rec-descripcion').value = '';
-            alert('✅ Reconocimiento agregado');
-        }
-
-        function agregarProducto() {
-            const prod = {
-                nombre: document.getElementById('prod-nombre').value,
-                imagen: document.getElementById('prod-imagen').value || 'https://via.placeholder.com/400x200',
-                precio: parseFloat(document.getElementById('prod-precio').value),
-                descripcion: document.getElementById('prod-descripcion').value,
-                estado: document.getElementById('prod-estado').value,
-                cantidad: parseInt(document.getElementById('prod-cantidad').value) || 1
-            };
-            if (!prod.nombre || !prod.precio || !prod.descripcion || !prod.estado) {
-                alert('❌ Completa todos los campos');
-                return;
-            }
-            if (prod.precio <= 0 || prod.cantidad < 1) {
-                alert('❌ Precio y cantidad deben ser mayores a 0');
-                return;
-            }
-            productos.push(prod);
-            renderProductos();
-            document.getElementById('prod-nombre').value = '';
-            document.getElementById('prod-imagen').value = '';
-            document.getElementById('prod-precio').value = '';
-            document.getElementById('prod-descripcion').value = '';
-            document.getElementById('prod-estado').value = '';
-            document.getElementById('prod-cantidad').value = '1';
-            alert('✅ Producto agregado');
-        }
-
-        function eliminarExperiencia(index) {
-            if (confirm('¿Eliminar esta experiencia?')) {
-                experiencias.splice(index, 1);
-                renderExperiencias();
-            }
-        }
-
-        function eliminarCurso(index) {
-            if (confirm('¿Eliminar este curso?')) {
-                cursos.splice(index, 1);
-                renderCursos();
-            }
-        }
-
-        function eliminarReconocimiento(index) {
-            if (confirm('¿Eliminar este reconocimiento?')) {
-                reconocimientos.splice(index, 1);
-                renderReconocimientos();
-            }
-        }
-
-        function eliminarProducto(index) {
-            if (confirm('¿Eliminar este producto?')) {
-                productos.splice(index, 1);
-                renderProductos();
-            }
-        }
-
-        function imprimirCV() {
-            const sections = ['header', 'resumen', 'experiencia', 'educacion', 'habilidades', 'cursos', 'reconocimientos', 'idiomas', 'garaje'];
-            const deleteButtons = document.querySelectorAll('.btn-delete');
-            const header = document.querySelector('header');
-            
-            deleteButtons.forEach(btn => btn.style.display = 'none');
-            if (header) header.style.display = 'none';
-            
-            sections.forEach(sec => {
-                const el = document.getElementById(`section-${sec}`);
-                const check = document.getElementById(`filter-${sec}`);
-                if (el && check) el.style.display = check.checked ? 'block' : 'none';
-            });
-
-            closeFilterModal();
-
-            setTimeout(() => {
-                window.print();
-                setTimeout(() => {
-                    sections.forEach(sec => {
-                        const el = document.getElementById(`section-${sec}`);
-                        if (el) el.style.display = 'block';
-                    });
-                    deleteButtons.forEach(btn => btn.style.display = '');
-                    if (header) header.style.display = 'block';
-                }, 100);
-            }, 300);
-        }
-
-        renderExperiencias();
-        renderCursos();
-        renderReconocimientos();
-        renderProductos();
-    </script>
+renderExperiencias();
+renderCursos();
+renderReconocimientos();
+renderProductos();
+</script>
 </body>
 </html>
