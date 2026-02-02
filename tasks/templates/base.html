@@ -78,7 +78,12 @@ html{scroll-behavior:smooth}
 <input type="text" id="rec-titulo" placeholder="Título" class="w-full p-3 border rounded-lg mb-3">
 <input type="text" id="rec-otorgado" placeholder="Otorgado por" class="w-full p-3 border rounded-lg mb-3">
 <input type="date" id="rec-fecha" class="w-full p-3 border rounded-lg mb-3">
-<input type="text" id="rec-imagen" placeholder="URL de imagen (opcional)" class="w-full p-3 border rounded-lg mb-3">
+<div class="mb-3">
+<label class="block text-sm font-semibold mb-2">📷 Imagen (opcional)</label>
+<input type="file" id="rec-imagen-file" accept="image/*" class="w-full p-3 border rounded-lg" onchange="cargarImagen(this, 'rec')">
+<p class="text-xs text-gray-500 mt-1">Sube una imagen (JPG, PNG, etc.) o déjalo vacío</p>
+<input type="hidden" id="rec-imagen" value="">
+</div>
 <textarea id="rec-descripcion" placeholder="Descripción" class="w-full p-3 border rounded-lg mb-3" rows="2"></textarea>
 <button onclick="guardarReconocimiento()" class="bg-yellow-500 text-white px-6 py-2 rounded-full font-bold w-full" id="btn-rec">Agregar</button>
 </div>
@@ -86,7 +91,12 @@ html{scroll-behavior:smooth}
 <h3 class="text-lg font-bold mb-4">🛒 Producto de Garaje</h3>
 <input type="hidden" id="prod-edit-index" value="-1">
 <input type="text" id="prod-nombre" placeholder="Nombre" class="w-full p-3 border rounded-lg mb-3">
-<input type="text" id="prod-imagen" placeholder="URL imagen" class="w-full p-3 border rounded-lg mb-3">
+<div class="mb-3">
+<label class="block text-sm font-semibold mb-2">📷 Imagen del producto</label>
+<input type="file" id="prod-imagen-file" accept="image/*" class="w-full p-3 border rounded-lg" onchange="cargarImagen(this, 'prod')">
+<p class="text-xs text-gray-500 mt-1">Sube una imagen (JPG, PNG, etc.)</p>
+<input type="hidden" id="prod-imagen" value="">
+</div>
 <input type="number" id="prod-precio" placeholder="Precio" class="w-full p-3 border rounded-lg mb-3" step="0.01">
 <textarea id="prod-descripcion" placeholder="Descripción" class="w-full p-3 border rounded-lg mb-3" rows="2"></textarea>
 <input type="text" id="prod-estado" placeholder="Estado" class="w-full p-3 border rounded-lg mb-3">
@@ -100,7 +110,7 @@ html{scroll-behavior:smooth}
 <div class="flex items-center justify-between mb-2">
 <div class="flex items-center gap-3">
 <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-xl flex items-center justify-center text-white font-bold floating">MC</div>
-<span class="font-black text-xl gradient-text">PORTFOLIO</span>
+<span class="font-black text-xl gradient-text">PORTAFOLIO</span>
 </div>
 <div class="flex items-center gap-3">
 <button onclick="openAdminModal()" class="px-4 py-2 border-2 border-indigo-500 text-indigo-600 rounded-full text-sm font-bold hover:bg-indigo-50">⚙️ Admin</button>
@@ -230,6 +240,7 @@ function closeAdminModal(){document.getElementById('adminModal').classList.remov
 function formatFecha(f){if(!f)return'Presente';const d=new Date(f+'T00:00:00');const m=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];return m[d.getMonth()]+' '+d.getFullYear()}
 function ordenar(arr){return arr.sort((a,b)=>{const fA=a.inicio?new Date(a.inicio):new Date();const fB=b.inicio?new Date(b.inicio):new Date();return fB-fA})}
 function toggleFechaFin(){const c=document.getElementById('exp-actual');const f=document.getElementById('exp-fin');if(c.checked){f.disabled=true;f.value=''}else{f.disabled=false}}
+function cargarImagen(input,tipo){if(input.files&&input.files[0]){const reader=new FileReader();reader.onload=function(e){document.getElementById(tipo+'-imagen').value=e.target.result};reader.readAsDataURL(input.files[0])}}
 
 function renderExperiencias(){const l=document.getElementById('experiencia-list');if(experiencias.length===0){l.innerHTML='<p class="text-gray-500 italic">No hay experiencias.</p>';return}l.innerHTML='';ordenar(experiencias).forEach((e,i)=>{l.innerHTML+=`<div class="bg-indigo-50 p-6 rounded-2xl border-2 border-indigo-100"><div class="flex justify-between items-start mb-3"><h3 class="font-bold text-xl">${e.puesto}</h3><div class="flex items-center gap-2"><span class="px-3 py-1 bg-indigo-500 text-white rounded-full text-xs font-bold whitespace-nowrap">${formatFecha(e.inicio)} - ${formatFecha(e.fin)}</span><button onclick="editarExperiencia(${i})" class="btn-edit">✏️</button><button onclick="eliminarExperiencia(${i})" class="btn-delete">🗑️</button></div></div><p class="text-indigo-600 font-semibold mb-3">${e.empresa}</p><p class="text-slate-600">${e.descripcion}</p></div>`})}
 
@@ -259,15 +270,15 @@ function guardarReconocimiento(){const idx=parseInt(document.getElementById('rec
 
 function editarReconocimiento(i){const r=reconocimientos[i];document.getElementById('rec-edit-index').value=i;document.getElementById('rec-titulo').value=r.titulo;document.getElementById('rec-otorgado').value=r.otorgado;document.getElementById('rec-fecha').value=r.inicio;document.getElementById('rec-descripcion').value=r.descripcion;document.getElementById('rec-imagen').value=r.imagen||'';document.getElementById('btn-rec').textContent='Actualizar';openAdminModal()}
 
-function limpiarFormRec(){document.getElementById('rec-edit-index').value='-1';document.getElementById('rec-titulo').value='';document.getElementById('rec-otorgado').value='';document.getElementById('rec-fecha').value='';document.getElementById('rec-descripcion').value='';document.getElementById('rec-imagen').value='';document.getElementById('btn-rec').textContent='Agregar'}
+function limpiarFormRec(){document.getElementById('rec-edit-index').value='-1';document.getElementById('rec-titulo').value='';document.getElementById('rec-otorgado').value='';document.getElementById('rec-fecha').value='';document.getElementById('rec-descripcion').value='';document.getElementById('rec-imagen').value='';document.getElementById('rec-imagen-file').value='';document.getElementById('btn-rec').textContent='Agregar'}
 
 function eliminarReconocimiento(i){if(confirm('¿Eliminar?')){reconocimientos.splice(i,1);renderReconocimientos()}}
 
-function guardarProducto(){const idx=parseInt(document.getElementById('prod-edit-index').value);const p={nombre:document.getElementById('prod-nombre').value,imagen:document.getElementById('prod-imagen').value||'https://via.placeholder.com/400x200',precio:parseFloat(document.getElementById('prod-precio').value),descripcion:document.getElementById('prod-descripcion').value,estado:document.getElementById('prod-estado').value,cantidad:parseInt(document.getElementById('prod-cantidad').value)||1};if(!p.nombre||!p.precio||!p.descripcion||!p.estado){alert('❌ Completa campos');return}if(p.precio<=0||p.cantidad<1){alert('❌ Precio/cantidad inválidos');return}if(idx>=0){productos[idx]=p;alert('✅ Actualizado')}else{productos.push(p);alert('✅ Agregado')}renderProductos();limpiarFormProd()}
+function guardarProducto(){const idx=parseInt(document.getElementById('prod-edit-index').value);const imgValue=document.getElementById('prod-imagen').value;const p={nombre:document.getElementById('prod-nombre').value,imagen:imgValue||'https://via.placeholder.com/400x200?text=Sin+Imagen',precio:parseFloat(document.getElementById('prod-precio').value),descripcion:document.getElementById('prod-descripcion').value,estado:document.getElementById('prod-estado').value,cantidad:parseInt(document.getElementById('prod-cantidad').value)||1};if(!p.nombre||!p.precio||!p.descripcion||!p.estado){alert('❌ Completa campos');return}if(p.precio<=0||p.cantidad<1){alert('❌ Precio/cantidad inválidos');return}if(idx>=0){productos[idx]=p;alert('✅ Actualizado')}else{productos.push(p);alert('✅ Agregado')}renderProductos();limpiarFormProd()}
 
 function editarProducto(i){const p=productos[i];document.getElementById('prod-edit-index').value=i;document.getElementById('prod-nombre').value=p.nombre;document.getElementById('prod-imagen').value=p.imagen;document.getElementById('prod-precio').value=p.precio;document.getElementById('prod-descripcion').value=p.descripcion;document.getElementById('prod-estado').value=p.estado;document.getElementById('prod-cantidad').value=p.cantidad;document.getElementById('btn-prod').textContent='Actualizar';openAdminModal()}
 
-function limpiarFormProd(){document.getElementById('prod-edit-index').value='-1';document.getElementById('prod-nombre').value='';document.getElementById('prod-imagen').value='';document.getElementById('prod-precio').value='';document.getElementById('prod-descripcion').value='';document.getElementById('prod-estado').value='';document.getElementById('prod-cantidad').value='1';document.getElementById('btn-prod').textContent='Agregar'}
+function limpiarFormProd(){document.getElementById('prod-edit-index').value='-1';document.getElementById('prod-nombre').value='';document.getElementById('prod-imagen').value='';document.getElementById('prod-imagen-file').value='';document.getElementById('prod-precio').value='';document.getElementById('prod-descripcion').value='';document.getElementById('prod-estado').value='';document.getElementById('prod-cantidad').value='1';document.getElementById('btn-prod').textContent='Agregar'}
 
 function eliminarProducto(i){if(confirm('¿Eliminar?')){productos.splice(i,1);renderProductos()}}
 
