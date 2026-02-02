@@ -119,8 +119,9 @@ html{scroll-behavior:smooth}
 </div></div></div>
 
 <div id="adminModal" class="modal">
-<div class="bg-white rounded-3xl shadow-2xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto my-8">
-<h2 class="text-2xl font-black gradient-text mb-6">Panel de Administración</h2>
+<div class="bg-white rounded-3xl shadow-2xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto my-8 relative">
+<button onclick="closeAdminModal()" class="absolute top-4 right-4 w-10 h-10 bg-red-500 hover:bg-red-600 text-white rounded-full font-bold text-xl flex items-center justify-center transition-all hover:scale-110" title="Cerrar">✕</button>
+<h2 class="text-2xl font-black gradient-text mb-6 pr-12">Panel de Administración</h2>
 
 <!-- DATOS PERSONALES -->
 <div class="mb-6 p-6 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl border-2 border-indigo-200">
@@ -327,7 +328,7 @@ html{scroll-behavior:smooth}
 </h1>
 <p class="text-lg text-slate-600 mb-4" id="display-titulo">Estudiante de Tecnología de la Información</p>
 <div class="flex flex-wrap justify-center gap-6 text-sm">
-<span>📧 <span id="display-email">campozanomendoza@gmail.com</span></span>
+<span>📧 <span id="display-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0e6d6f637e61746f6061636b606a61746f4e69636f6762206d6163">[email&#160;protected]</a></span></span>
 <span>📱 <span id="display-telefono">+593 098 500 26 00</span></span>
 <span>📍 <span id="display-ciudad">Jipijapa</span>, <span id="display-pais">Ecuador</span></span>
 </div>
@@ -431,7 +432,7 @@ comprometido con el aprendizaje continuo y el desarrollo de soluciones innovador
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="productos-list"></div>
 </div>
 </main>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Datos personales
 let perfil = JSON.parse(localStorage.getItem('perfil')) || {
   nombres: 'MARCOS LUIS',
@@ -461,10 +462,20 @@ let productosAcademicos = [
 ];
 
 // Sistema de usuarios
-let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [
-  {usuario: 'admin', password: '1234', nombre: 'Administrador', tipo: 'admin'},
-  {usuario: 'usuario', password: 'usuario', nombre: 'Usuario Común', tipo: 'comun'}
-];
+let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+// Asegurar que el usuario admin siempre exista
+if (!usuarios.find(u => u.usuario === 'admin')) {
+  usuarios.push({usuario: 'admin', password: '1234', nombre: 'Administrador', tipo: 'admin'});
+  localStorage.setItem('usuarios', JSON.stringify(usuarios));
+}
+
+// Asegurar que el usuario común exista (opcional)
+if (!usuarios.find(u => u.usuario === 'usuario')) {
+  usuarios.push({usuario: 'usuario', password: 'usuario', nombre: 'Usuario Común', tipo: 'comun'});
+  localStorage.setItem('usuarios', JSON.stringify(usuarios));
+}
+
 let usuarioActual = null;
 
 function calcularEdad(fechaNacimiento) {
