@@ -117,9 +117,61 @@ html{scroll-behavior:smooth}
 <button onclick="imprimir()" class="flex-1 btn-download text-white px-6 py-3 rounded-full font-bold">🖨️ Imprimir</button>
 <button onclick="closeFilterModal()" class="px-6 py-3 border-2 rounded-full font-bold">Cancelar</button>
 </div></div></div>
+
 <div id="adminModal" class="modal">
 <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto my-8">
 <h2 class="text-2xl font-black gradient-text mb-6">Panel de Administración</h2>
+
+<!-- DATOS PERSONALES -->
+<div class="mb-6 p-6 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl border-2 border-indigo-200">
+<h3 class="text-lg font-bold mb-4">👤 Información Personal</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<div>
+<label class="block text-sm font-semibold mb-2">Nombres</label>
+<input type="text" id="perfil-nombres" placeholder="Marcos Luis" class="w-full p-3 border rounded-lg">
+</div>
+<div>
+<label class="block text-sm font-semibold mb-2">Apellidos</label>
+<input type="text" id="perfil-apellidos" placeholder="Campozano Mendoza" class="w-full p-3 border rounded-lg">
+</div>
+<div>
+<label class="block text-sm font-semibold mb-2">Fecha de Nacimiento</label>
+<input type="date" id="perfil-fecha-nacimiento" class="w-full p-3 border rounded-lg">
+</div>
+<div>
+<label class="block text-sm font-semibold mb-2">Estado Civil</label>
+<select id="perfil-estado-civil" class="w-full p-3 border rounded-lg">
+<option value="Soltero/a">Soltero/a</option>
+<option value="Casado/a">Casado/a</option>
+<option value="Divorciado/a">Divorciado/a</option>
+<option value="Viudo/a">Viudo/a</option>
+<option value="Unión libre">Unión libre</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-semibold mb-2">Teléfono</label>
+<input type="tel" id="perfil-telefono" placeholder="+593 098 500 26 00" class="w-full p-3 border rounded-lg">
+</div>
+<div>
+<label class="block text-sm font-semibold mb-2">Correo Electrónico</label>
+<input type="email" id="perfil-email" placeholder="campozanomendoza@gmail.com" class="w-full p-3 border rounded-lg">
+</div>
+<div>
+<label class="block text-sm font-semibold mb-2">Ciudad</label>
+<input type="text" id="perfil-ciudad" placeholder="Jipijapa" class="w-full p-3 border rounded-lg">
+</div>
+<div>
+<label class="block text-sm font-semibold mb-2">País</label>
+<input type="text" id="perfil-pais" placeholder="Ecuador" class="w-full p-3 border rounded-lg">
+</div>
+<div class="md:col-span-2">
+<label class="block text-sm font-semibold mb-2">Título Profesional</label>
+<input type="text" id="perfil-titulo" placeholder="Estudiante de Tecnología de la Información" class="w-full p-3 border rounded-lg">
+</div>
+</div>
+<button onclick="guardarPerfil()" class="btn-download text-white px-6 py-2 rounded-full font-bold w-full mt-4">💾 Guardar Perfil</button>
+</div>
+
 <div class="mb-6 p-6 bg-indigo-50 rounded-2xl">
 <h3 class="text-lg font-bold mb-4">💼 Experiencia Laboral</h3>
 <input type="hidden" id="exp-edit-index" value="-1">
@@ -142,7 +194,7 @@ html{scroll-behavior:smooth}
 <input type="text" id="curso-nombre" placeholder="Nombre" class="w-full p-3 border rounded-lg mb-3">
 <input type="text" id="curso-institucion" placeholder="Institución" class="w-full p-3 border rounded-lg mb-3">
 <input type="date" id="curso-fecha" class="w-full p-3 border rounded-lg mb-3">
-<input type="text" id="curso-duracion" placeholder="Duración" class="w-full p-3 border rounded-lg mb-3">
+<input type="text" id="curso-duracion" placeholder="Duración (ej: 120 horas)" class="w-full p-3 border rounded-lg mb-3">
 <div class="mb-3">
 <label class="block text-sm font-semibold mb-2">📷 Certificado/Imagen (opcional)</label>
 <input type="file" id="curso-imagen-file" accept="image/*" class="w-full p-3 border rounded-lg" onchange="cargarImagen(this, 'curso')">
@@ -176,7 +228,7 @@ html{scroll-behavior:smooth}
 <p class="text-xs text-gray-500 mt-1">Sube una imagen (JPG, PNG, etc.)</p>
 <input type="hidden" id="prod-imagen" value="">
 </div>
-<input type="number" id="prod-precio" placeholder="Precio" class="w-full p-3 border rounded-lg mb-3" step="0.01">
+<input type="number" id="prod-precio" placeholder="Precio" class="w-full p-3 border rounded-lg mb-3" step="0.01" min="0">
 <textarea id="prod-descripcion" placeholder="Descripción" class="w-full p-3 border rounded-lg mb-3" rows="2"></textarea>
 <input type="text" id="prod-estado" placeholder="Estado" class="w-full p-3 border rounded-lg mb-3">
 <input type="number" id="prod-cantidad" placeholder="Cantidad" class="w-full p-3 border rounded-lg mb-3" min="1" value="1">
@@ -270,15 +322,20 @@ html{scroll-behavior:smooth}
 <span class="text-6xl font-black text-white">MC</span>
 </div>
 <h1 class="text-5xl font-black mb-2">
-<span class="gradient-text">CAMPOZANO MENDOZA</span><br>
-<span class="text-slate-900">MARCOS LUIS</span>
+<span class="gradient-text" id="display-apellidos">CAMPOZANO MENDOZA</span><br>
+<span class="text-slate-900" id="display-nombres">MARCOS LUIS</span>
 </h1>
-<p class="text-lg text-slate-600 mb-4">Estudiante de Tecnología de la Información</p>
+<p class="text-lg text-slate-600 mb-4" id="display-titulo">Estudiante de Tecnología de la Información</p>
 <div class="flex flex-wrap justify-center gap-6 text-sm">
-<span>📧 campozanomendoza@gmail.com</span>
-<span>📱 +593 098 500 26 00</span>
-<span>📍 Jipijapa, Ecuador</span>
+<span>📧 <span id="display-email">campozanomendoza@gmail.com</span></span>
+<span>📱 <span id="display-telefono">+593 098 500 26 00</span></span>
+<span>📍 <span id="display-ciudad">Jipijapa</span>, <span id="display-pais">Ecuador</span></span>
 </div>
+<div class="flex flex-wrap justify-center gap-6 text-sm mt-3">
+<span>🎂 <span id="display-edad"></span></span>
+<span>💍 <span id="display-estado-civil">Soltero</span></span>
+</div>
+<button onclick="editarPerfil()" class="btn-edit mt-4">✏️ Editar Perfil</button>
 </div>
 <div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-resumen">
 <h2 class="text-2xl font-black mb-4 flex items-center gap-3">
@@ -375,6 +432,19 @@ comprometido con el aprendizaje continuo y el desarrollo de soluciones innovador
 </div>
 </main>
 <script>
+// Datos personales
+let perfil = JSON.parse(localStorage.getItem('perfil')) || {
+  nombres: 'MARCOS LUIS',
+  apellidos: 'CAMPOZANO MENDOZA',
+  fechaNacimiento: '2005-03-11',
+  estadoCivil: 'Soltero',
+  telefono: '+593 098 500 26 00',
+  email: 'campozanomendoza@gmail.com',
+  ciudad: 'Jipijapa',
+  pais: 'Ecuador',
+  titulo: 'Estudiante de Tecnología de la Información'
+};
+
 let experiencias=[{puesto:'Desarrollador Web Junior',empresa:'Proyectos Académicos • ULEAM',inicio:'2024-01-01',fin:'',descripcion:'Desarrollo de aplicaciones web responsivas.'},{puesto:'Asistente de Soporte Técnico',empresa:'Laboratorio de Computación • ULEAM',inicio:'2023-06-01',fin:'2023-12-31',descripcion:'Soporte técnico y mantenimiento de equipos.'},{puesto:'Practicante de Programación',empresa:'Centro de Innovación ULEAM',inicio:'2022-03-01',fin:'2022-08-31',descripcion:'Proyectos de automatización y scripts.'}];
 let cursos=[{nombre:'Desarrollo Web Full Stack',institucion:'Platzi',inicio:'2024-01-15',duracion:'120 horas',imagen:''},{nombre:'JavaScript Avanzado',institucion:'Udemy',inicio:'2023-11-10',duracion:'40 horas',imagen:''},{nombre:'Git y GitHub',institucion:'EDteam',inicio:'2023-09-05',duracion:'20 horas',imagen:''},{nombre:'Python para Principiantes',institucion:'Coursera',inicio:'2023-06-20',duracion:'30 horas',imagen:''}];
 let reconocimientos=[{titulo:'Mejor Proyecto de Programación',otorgado:'Universidad ULEAM',inicio:'2024-01-20',descripcion:'Reconocimiento por el mejor proyecto del semestre.',imagen:''},{titulo:'Hackathon 2023',otorgado:'ULEAM Tech Week',inicio:'2023-11-15',descripcion:'Segundo lugar con app móvil educativa.',imagen:''},{titulo:'Estudiante Sobresaliente',otorgado:'Decanato de Tecnología',inicio:'2023-12-05',descripcion:'Promedio superior a 9.0.',imagen:''}];
@@ -386,8 +456,8 @@ let productosLaborales = [
 ];
 
 let productosAcademicos = [
-  {tipo:'Tesis',titulo:'Implementación de IA en Sistemas Educativos',institucion:'ULEAM',fecha:'2024-06-15',autores:'Marcos Campozano, Dr. Juan Pérez',resumen:'Investigación sobre la aplicación de inteligencia artificial para personalizar el aprendizaje en entornos educativos.',palabras:'IA, Educación, Machine Learning, Personalización',url:'',imagen:''},
-  {tipo:'Artículo',titulo:'Optimización de Algoritmos de Búsqueda',institucion:'ULEAM',fecha:'2023-11-20',autores:'Marcos Campozano, Dra. María González',resumen:'Análisis comparativo de algoritmos de búsqueda y propuesta de optimización para grandes volúmenes de datos.',palabras:'Algoritmos, Optimización, Big Data, Complejidad',url:'',imagen:''}
+  {tipo:'Tesis',titulo:'Implementación de IA en Sistemas Educativos',institucion:'ULEAM',fecha:'2024-06-15',autores:'Marcos Campozano, Dr. Juan Pérez',resumen:'Investigación sobre la aplicación de inteligencia artificial para personalizar el aprendizaje en entornos educativos.',palabras:'IA, Educación, Machine Learning, Personalización',url:'',imagen:'',inicio:'2024-06-15'},
+  {tipo:'Artículo',titulo:'Optimización de Algoritmos de Búsqueda',institucion:'ULEAM',fecha:'2023-11-20',autores:'Marcos Campozano, Dra. María González',resumen:'Análisis comparativo de algoritmos de búsqueda y propuesta de optimización para grandes volúmenes de datos.',palabras:'Algoritmos, Optimización, Big Data, Complejidad',url:'',imagen:'',inicio:'2023-11-20'}
 ];
 
 // Sistema de usuarios
@@ -396,6 +466,96 @@ let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [
   {usuario: 'usuario', password: 'usuario', nombre: 'Usuario Común', tipo: 'comun'}
 ];
 let usuarioActual = null;
+
+function calcularEdad(fechaNacimiento) {
+  if (!fechaNacimiento) return '';
+  const hoy = new Date();
+  const nacimiento = new Date(fechaNacimiento);
+  let edad = hoy.getFullYear() - nacimiento.getFullYear();
+  const mes = hoy.getMonth() - nacimiento.getMonth();
+  if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+    edad--;
+  }
+  return edad + ' años';
+}
+
+function actualizarDisplayPerfil() {
+  document.getElementById('display-nombres').textContent = perfil.nombres;
+  document.getElementById('display-apellidos').textContent = perfil.apellidos;
+  document.getElementById('display-titulo').textContent = perfil.titulo;
+  document.getElementById('display-email').textContent = perfil.email;
+  document.getElementById('display-telefono').textContent = perfil.telefono;
+  document.getElementById('display-ciudad').textContent = perfil.ciudad;
+  document.getElementById('display-pais').textContent = perfil.pais;
+  document.getElementById('display-estado-civil').textContent = perfil.estadoCivil;
+  document.getElementById('display-edad').textContent = calcularEdad(perfil.fechaNacimiento);
+}
+
+function editarPerfil() {
+  if (!verificarSesion()) {
+    alert('❌ Solo administradores pueden editar el perfil');
+    return;
+  }
+  document.getElementById('perfil-nombres').value = perfil.nombres;
+  document.getElementById('perfil-apellidos').value = perfil.apellidos;
+  document.getElementById('perfil-fecha-nacimiento').value = perfil.fechaNacimiento;
+  document.getElementById('perfil-estado-civil').value = perfil.estadoCivil;
+  document.getElementById('perfil-telefono').value = perfil.telefono;
+  document.getElementById('perfil-email').value = perfil.email;
+  document.getElementById('perfil-ciudad').value = perfil.ciudad;
+  document.getElementById('perfil-pais').value = perfil.pais;
+  document.getElementById('perfil-titulo').value = perfil.titulo;
+  openAdminModal();
+}
+
+function guardarPerfil() {
+  if (!verificarSesion()) {
+    alert('❌ Debes iniciar sesión como admin');
+    return;
+  }
+  
+  const nombres = document.getElementById('perfil-nombres').value.trim();
+  const apellidos = document.getElementById('perfil-apellidos').value.trim();
+  const fechaNacimiento = document.getElementById('perfil-fecha-nacimiento').value;
+  const telefono = document.getElementById('perfil-telefono').value.trim();
+  const email = document.getElementById('perfil-email').value.trim();
+  const ciudad = document.getElementById('perfil-ciudad').value.trim();
+  const pais = document.getElementById('perfil-pais').value.trim();
+  const titulo = document.getElementById('perfil-titulo').value.trim();
+  
+  if (!nombres || !apellidos || !fechaNacimiento || !telefono || !email) {
+    alert('❌ Completa los campos obligatorios (nombres, apellidos, fecha de nacimiento, teléfono, email)');
+    return;
+  }
+  
+  const fechaNac = new Date(fechaNacimiento);
+  const hoy = new Date();
+  if (fechaNac > hoy) {
+    alert('❌ La fecha de nacimiento no puede ser futura');
+    return;
+  }
+  
+  if (email && !email.includes('@')) {
+    alert('❌ Ingresa un email válido');
+    return;
+  }
+  
+  perfil = {
+    nombres,
+    apellidos,
+    fechaNacimiento,
+    estadoCivil: document.getElementById('perfil-estado-civil').value,
+    telefono,
+    email,
+    ciudad,
+    pais,
+    titulo
+  };
+  
+  localStorage.setItem('perfil', JSON.stringify(perfil));
+  actualizarDisplayPerfil();
+  alert('✅ Perfil actualizado correctamente');
+}
 
 function guardarUsuarios() {
   localStorage.setItem('usuarios', JSON.stringify(usuarios));
@@ -452,13 +612,11 @@ function registrarUsuario() {
   guardarUsuarios();
   alert('✅ Cuenta creada exitosamente. Ya puedes iniciar sesión.');
   
-  // Limpiar campos
   document.getElementById('reg-nombre').value = '';
   document.getElementById('reg-usuario').value = '';
   document.getElementById('reg-password').value = '';
   document.getElementById('reg-password2').value = '';
   
-  // Volver al tab de login
   mostrarTab('login');
 }
 
@@ -553,50 +711,270 @@ function renderReconocimientos(){const l=document.getElementById('reconocimiento
 
 function renderProductos(){const l=document.getElementById('productos-list');if(productos.length===0){l.innerHTML='<p class="text-gray-500 italic col-span-3">No hay productos.</p>';return}l.innerHTML='';productos.forEach((p,i)=>{const b=p.cantidad>1?`<span class="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">x${p.cantidad}</span>`:'';l.innerHTML+=`<div class="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100 hover:shadow-xl transition-all"><div class="relative"><img src="${p.imagen}" alt="${p.nombre}" style="width:100%;height:200px;object-fit:cover">${b}</div><div class="p-4"><div class="flex justify-between items-start mb-2"><h3 class="font-bold text-lg flex-1">${p.nombre}</h3><span class="text-2xl font-black text-green-600 ml-2">$${p.precio.toFixed(2)}</span></div><p class="text-sm text-slate-600 mb-3">${p.descripcion}</p><div class="flex justify-between items-center"><span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold">${p.estado}</span><div class="flex items-center"><button onclick="editarProducto(${i})" class="btn-edit">✏️</button><button onclick="eliminarProducto(${i})" class="btn-delete">🗑️</button></div></div></div></div>`})}
 
-function guardarExperiencia(){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const idx=parseInt(document.getElementById('exp-edit-index').value);const e={puesto:document.getElementById('exp-puesto').value,empresa:document.getElementById('exp-empresa').value,inicio:document.getElementById('exp-inicio').value,fin:document.getElementById('exp-actual').checked?'':document.getElementById('exp-fin').value,descripcion:document.getElementById('exp-descripcion').value};if(!e.puesto||!e.empresa||!e.inicio){alert('❌ Completa los campos');return}const fI=new Date(e.inicio);const fF=e.fin?new Date(e.fin):null;const fA=new Date();if(fI>fA){alert('❌ Fecha inicio futura');return}if(fF&&(fF>fA||fF<fI)){alert('❌ Fecha fin inválida');return}if(idx>=0){experiencias[idx]=e;alert('✅ Actualizado')}else{experiencias.push(e);alert('✅ Agregado')}renderExperiencias();limpiarFormExp()}
+function guardarExperiencia(){
+  if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}
+  const idx=parseInt(document.getElementById('exp-edit-index').value);
+  const puesto = document.getElementById('exp-puesto').value.trim();
+  const empresa = document.getElementById('exp-empresa').value.trim();
+  const inicio = document.getElementById('exp-inicio').value;
+  const fin = document.getElementById('exp-actual').checked?'':document.getElementById('exp-fin').value;
+  const descripcion = document.getElementById('exp-descripcion').value.trim();
+  
+  if(!puesto||!empresa||!inicio||!descripcion){
+    alert('❌ Completa todos los campos obligatorios');
+    return;
+  }
+  
+  const fI=new Date(inicio);
+  const fF=fin?new Date(fin):null;
+  const fA=new Date();
+  if(fI>fA){
+    alert('❌ La fecha de inicio no puede ser futura');
+    return;
+  }
+  if(fF&&(fF>fA||fF<fI)){
+    alert('❌ La fecha de fin es inválida');
+    return;
+  }
+  
+  const e = {puesto,empresa,inicio,fin,descripcion};
+  
+  if(idx>=0){
+    experiencias[idx]=e;
+    alert('✅ Experiencia actualizada');
+  }else{
+    experiencias.push(e);
+    alert('✅ Experiencia agregada');
+  }
+  renderExperiencias();
+  limpiarFormExp();
+}
+
 function editarExperiencia(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const e=experiencias[i];document.getElementById('exp-edit-index').value=i;document.getElementById('exp-puesto').value=e.puesto;document.getElementById('exp-empresa').value=e.empresa;document.getElementById('exp-inicio').value=e.inicio;document.getElementById('exp-fin').value=e.fin||'';document.getElementById('exp-actual').checked=!e.fin;document.getElementById('exp-descripcion').value=e.descripcion;document.getElementById('btn-exp').textContent='Actualizar';toggleFechaFin();openAdminModal()}
 function limpiarFormExp(){document.getElementById('exp-edit-index').value='-1';document.getElementById('exp-puesto').value='';document.getElementById('exp-empresa').value='';document.getElementById('exp-inicio').value='';document.getElementById('exp-fin').value='';document.getElementById('exp-actual').checked=false;document.getElementById('exp-descripcion').value='';document.getElementById('btn-exp').textContent='Agregar';document.getElementById('exp-fin').disabled=false}
-function eliminarExperiencia(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar?')){experiencias.splice(i,1);renderExperiencias()}}
+function eliminarExperiencia(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar esta experiencia?')){experiencias.splice(i,1);renderExperiencias()}}
 
-function guardarCurso(){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const idx=parseInt(document.getElementById('curso-edit-index').value);const c={nombre:document.getElementById('curso-nombre').value,institucion:document.getElementById('curso-institucion').value,inicio:document.getElementById('curso-fecha').value,duracion:document.getElementById('curso-duracion').value,imagen:document.getElementById('curso-imagen').value||''};if(!c.nombre||!c.institucion||!c.inicio){alert('❌ Completa campos');return}const fC=new Date(c.inicio);if(fC>new Date()){alert('❌ Fecha futura');return}if(idx>=0){cursos[idx]=c;alert('✅ Actualizado')}else{cursos.push(c);alert('✅ Agregado')}renderCursos();limpiarFormCurso()}
+function guardarCurso(){
+  if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}
+  const idx=parseInt(document.getElementById('curso-edit-index').value);
+  const nombre = document.getElementById('curso-nombre').value.trim();
+  const institucion = document.getElementById('curso-institucion').value.trim();
+  const inicio = document.getElementById('curso-fecha').value;
+  const duracion = document.getElementById('curso-duracion').value.trim();
+  const imagen = document.getElementById('curso-imagen').value||'';
+  
+  if(!nombre||!institucion||!inicio||!duracion){
+    alert('❌ Completa todos los campos obligatorios');
+    return;
+  }
+  
+  const fC=new Date(inicio);
+  if(fC>new Date()){
+    alert('❌ La fecha del curso no puede ser futura');
+    return;
+  }
+  
+  const c = {nombre,institucion,inicio,duracion,imagen};
+  
+  if(idx>=0){
+    cursos[idx]=c;
+    alert('✅ Curso actualizado');
+  }else{
+    cursos.push(c);
+    alert('✅ Curso agregado');
+  }
+  renderCursos();
+  limpiarFormCurso();
+}
+
 function editarCurso(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const c=cursos[i];document.getElementById('curso-edit-index').value=i;document.getElementById('curso-nombre').value=c.nombre;document.getElementById('curso-institucion').value=c.institucion;document.getElementById('curso-fecha').value=c.inicio;document.getElementById('curso-duracion').value=c.duracion;document.getElementById('curso-imagen').value=c.imagen||'';document.getElementById('btn-curso').textContent='Actualizar';openAdminModal()}
 function limpiarFormCurso(){document.getElementById('curso-edit-index').value='-1';document.getElementById('curso-nombre').value='';document.getElementById('curso-institucion').value='';document.getElementById('curso-fecha').value='';document.getElementById('curso-duracion').value='';document.getElementById('curso-imagen').value='';document.getElementById('curso-imagen-file').value='';document.getElementById('btn-curso').textContent='Agregar'}
-function eliminarCurso(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar?')){cursos.splice(i,1);renderCursos()}}
+function eliminarCurso(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar este curso?')){cursos.splice(i,1);renderCursos()}}
 
-function guardarReconocimiento(){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const idx=parseInt(document.getElementById('rec-edit-index').value);const r={titulo:document.getElementById('rec-titulo').value,otorgado:document.getElementById('rec-otorgado').value,inicio:document.getElementById('rec-fecha').value,descripcion:document.getElementById('rec-descripcion').value,imagen:document.getElementById('rec-imagen').value||''};if(!r.titulo||!r.otorgado||!r.inicio){alert('❌ Completa campos');return}const fR=new Date(r.inicio);if(fR>new Date()){alert('❌ Fecha futura');return}if(idx>=0){reconocimientos[idx]=r;alert('✅ Actualizado')}else{reconocimientos.push(r);alert('✅ Agregado')}renderReconocimientos();limpiarFormRec()}
+function guardarReconocimiento(){
+  if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}
+  const idx=parseInt(document.getElementById('rec-edit-index').value);
+  const titulo = document.getElementById('rec-titulo').value.trim();
+  const otorgado = document.getElementById('rec-otorgado').value.trim();
+  const inicio = document.getElementById('rec-fecha').value;
+  const descripcion = document.getElementById('rec-descripcion').value.trim();
+  const imagen = document.getElementById('rec-imagen').value||'';
+  
+  if(!titulo||!otorgado||!inicio||!descripcion){
+    alert('❌ Completa todos los campos obligatorios');
+    return;
+  }
+  
+  const fR=new Date(inicio);
+  if(fR>new Date()){
+    alert('❌ La fecha del reconocimiento no puede ser futura');
+    return;
+  }
+  
+  const r = {titulo,otorgado,inicio,descripcion,imagen};
+  
+  if(idx>=0){
+    reconocimientos[idx]=r;
+    alert('✅ Reconocimiento actualizado');
+  }else{
+    reconocimientos.push(r);
+    alert('✅ Reconocimiento agregado');
+  }
+  renderReconocimientos();
+  limpiarFormRec();
+}
+
 function editarReconocimiento(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const r=reconocimientos[i];document.getElementById('rec-edit-index').value=i;document.getElementById('rec-titulo').value=r.titulo;document.getElementById('rec-otorgado').value=r.otorgado;document.getElementById('rec-fecha').value=r.inicio;document.getElementById('rec-descripcion').value=r.descripcion;document.getElementById('rec-imagen').value=r.imagen||'';document.getElementById('btn-rec').textContent='Actualizar';openAdminModal()}
 function limpiarFormRec(){document.getElementById('rec-edit-index').value='-1';document.getElementById('rec-titulo').value='';document.getElementById('rec-otorgado').value='';document.getElementById('rec-fecha').value='';document.getElementById('rec-descripcion').value='';document.getElementById('rec-imagen').value='';document.getElementById('rec-imagen-file').value='';document.getElementById('btn-rec').textContent='Agregar'}
-function eliminarReconocimiento(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar?')){reconocimientos.splice(i,1);renderReconocimientos()}}
+function eliminarReconocimiento(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar este reconocimiento?')){reconocimientos.splice(i,1);renderReconocimientos()}}
 
-function guardarProducto(){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const idx=parseInt(document.getElementById('prod-edit-index').value);const imgValue=document.getElementById('prod-imagen').value;const p={nombre:document.getElementById('prod-nombre').value,imagen:imgValue||'https://via.placeholder.com/400x200?text=Sin+Imagen',precio:parseFloat(document.getElementById('prod-precio').value),descripcion:document.getElementById('prod-descripcion').value,estado:document.getElementById('prod-estado').value,cantidad:parseInt(document.getElementById('prod-cantidad').value)||1};if(!p.nombre||!p.precio||!p.descripcion||!p.estado){alert('❌ Completa campos');return}if(p.precio<=0||p.cantidad<1){alert('❌ Precio/cantidad inválidos');return}if(idx>=0){productos[idx]=p;alert('✅ Actualizado')}else{productos.push(p);alert('✅ Agregado')}renderProductos();limpiarFormProd()}
+function guardarProducto(){
+  if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}
+  const idx=parseInt(document.getElementById('prod-edit-index').value);
+  const nombre = document.getElementById('prod-nombre').value.trim();
+  const imgValue=document.getElementById('prod-imagen').value;
+  const imagen = imgValue||'https://via.placeholder.com/400x200?text=Sin+Imagen';
+  const precioVal = parseFloat(document.getElementById('prod-precio').value);
+  const descripcion = document.getElementById('prod-descripcion').value.trim();
+  const estado = document.getElementById('prod-estado').value.trim();
+  const cantidadVal = parseInt(document.getElementById('prod-cantidad').value);
+  
+  if(!nombre||!descripcion||!estado){
+    alert('❌ Completa todos los campos obligatorios');
+    return;
+  }
+  
+  if(isNaN(precioVal) || precioVal <= 0){
+    alert('❌ El precio debe ser mayor a 0');
+    return;
+  }
+  
+  if(isNaN(cantidadVal) || cantidadVal < 1){
+    alert('❌ La cantidad debe ser al menos 1');
+    return;
+  }
+  
+  const p = {nombre,imagen,precio:precioVal,descripcion,estado,cantidad:cantidadVal};
+  
+  if(idx>=0){
+    productos[idx]=p;
+    alert('✅ Producto actualizado');
+  }else{
+    productos.push(p);
+    alert('✅ Producto agregado');
+  }
+  renderProductos();
+  limpiarFormProd();
+}
+
 function editarProducto(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const p=productos[i];document.getElementById('prod-edit-index').value=i;document.getElementById('prod-nombre').value=p.nombre;document.getElementById('prod-imagen').value=p.imagen;document.getElementById('prod-precio').value=p.precio;document.getElementById('prod-descripcion').value=p.descripcion;document.getElementById('prod-estado').value=p.estado;document.getElementById('prod-cantidad').value=p.cantidad;document.getElementById('btn-prod').textContent='Actualizar';openAdminModal()}
 function limpiarFormProd(){document.getElementById('prod-edit-index').value='-1';document.getElementById('prod-nombre').value='';document.getElementById('prod-imagen').value='';document.getElementById('prod-imagen-file').value='';document.getElementById('prod-precio').value='';document.getElementById('prod-descripcion').value='';document.getElementById('prod-estado').value='';document.getElementById('prod-cantidad').value='1';document.getElementById('btn-prod').textContent='Agregar'}
-function eliminarProducto(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar?')){productos.splice(i,1);renderProductos()}}
+function eliminarProducto(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar este producto?')){productos.splice(i,1);renderProductos()}}
 
 // PRODUCTOS LABORALES
 function renderProductosLaborales(){const l=document.getElementById('productos-laborales-list');if(productosLaborales.length===0){l.innerHTML='<p class="text-gray-500 italic col-span-2">No hay productos laborales.</p>';return}l.innerHTML='';ordenar(productosLaborales).forEach((p,i)=>{const img=p.imagen?`<img src="${p.imagen}" alt="${p.nombre}" class="w-full h-48 object-cover rounded-lg mb-4">`:'<div class="w-full h-48 bg-gradient-to-br from-cyan-200 to-blue-300 rounded-lg mb-4 flex items-center justify-center"><span class="text-4xl">💻</span></div>';const url=p.url?`<a href="${p.url}" target="_blank" class="text-cyan-600 hover:underline text-sm">🔗 Ver proyecto</a>`:'';l.innerHTML+=`<div class="producto-card">${img}<div class="flex justify-between items-start mb-3"><h3 class="font-bold text-lg flex-1">${p.nombre}</h3><div class="flex items-center gap-2"><button onclick="editarProductoLaboral(${i})" class="btn-edit">✏️</button><button onclick="eliminarProductoLaboral(${i})" class="btn-delete">🗑️</button></div></div><p class="text-cyan-600 font-semibold mb-2">${p.empresa}</p><span class="px-3 py-1 bg-cyan-500 text-white rounded-full text-xs font-bold">${formatFecha(p.inicio)} - ${formatFecha(p.fin)}</span><p class="text-sm text-slate-600 mt-3 mb-2">${p.descripcion}</p><p class="text-xs text-slate-500 mb-2"><strong>Rol:</strong> ${p.rol}</p><p class="text-xs text-slate-500 mb-2"><strong>Tecnologías:</strong> ${p.tecnologias}</p>${url}</div>`})}
 
-function guardarProductoLaboral(){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const idx=parseInt(document.getElementById('laboral-edit-index').value);const p={nombre:document.getElementById('laboral-nombre').value,empresa:document.getElementById('laboral-empresa').value,inicio:document.getElementById('laboral-inicio').value,fin:document.getElementById('laboral-actual').checked?'':document.getElementById('laboral-fin').value,descripcion:document.getElementById('laboral-descripcion').value,tecnologias:document.getElementById('laboral-tecnologias').value,rol:document.getElementById('laboral-rol').value,url:document.getElementById('laboral-url').value,imagen:document.getElementById('laboral-imagen').value||''};if(!p.nombre||!p.empresa||!p.inicio||!p.descripcion){alert('❌ Completa los campos principales');return}if(idx>=0){productosLaborales[idx]=p;alert('✅ Actualizado')}else{productosLaborales.push(p);alert('✅ Agregado')}renderProductosLaborales();limpiarFormLaboral()}
+function guardarProductoLaboral(){
+  if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}
+  const idx=parseInt(document.getElementById('laboral-edit-index').value);
+  const nombre = document.getElementById('laboral-nombre').value.trim();
+  const empresa = document.getElementById('laboral-empresa').value.trim();
+  const inicio = document.getElementById('laboral-inicio').value;
+  const fin = document.getElementById('laboral-actual').checked?'':document.getElementById('laboral-fin').value;
+  const descripcion = document.getElementById('laboral-descripcion').value.trim();
+  const tecnologias = document.getElementById('laboral-tecnologias').value.trim();
+  const rol = document.getElementById('laboral-rol').value.trim();
+  const url = document.getElementById('laboral-url').value.trim();
+  const imagen = document.getElementById('laboral-imagen').value||'';
+  
+  if(!nombre||!empresa||!inicio||!descripcion||!tecnologias||!rol){
+    alert('❌ Completa todos los campos obligatorios');
+    return;
+  }
+  
+  const fI = new Date(inicio);
+  const fF = fin ? new Date(fin) : null;
+  const fA = new Date();
+  
+  if(fI > fA){
+    alert('❌ La fecha de inicio no puede ser futura');
+    return;
+  }
+  
+  if(fF && (fF > fA || fF < fI)){
+    alert('❌ La fecha de fin es inválida');
+    return;
+  }
+  
+  const p = {nombre,empresa,inicio,fin,descripcion,tecnologias,rol,url,imagen};
+  
+  if(idx>=0){
+    productosLaborales[idx]=p;
+    alert('✅ Producto laboral actualizado');
+  }else{
+    productosLaborales.push(p);
+    alert('✅ Producto laboral agregado');
+  }
+  renderProductosLaborales();
+  limpiarFormLaboral();
+}
 
 function editarProductoLaboral(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const p=productosLaborales[i];document.getElementById('laboral-edit-index').value=i;document.getElementById('laboral-nombre').value=p.nombre;document.getElementById('laboral-empresa').value=p.empresa;document.getElementById('laboral-inicio').value=p.inicio;document.getElementById('laboral-fin').value=p.fin||'';document.getElementById('laboral-actual').checked=!p.fin;document.getElementById('laboral-descripcion').value=p.descripcion;document.getElementById('laboral-tecnologias').value=p.tecnologias;document.getElementById('laboral-rol').value=p.rol;document.getElementById('laboral-url').value=p.url;document.getElementById('laboral-imagen').value=p.imagen||'';document.getElementById('btn-laboral').textContent='Actualizar';toggleFechaFinLaboral();openAdminModal()}
 
 function limpiarFormLaboral(){document.getElementById('laboral-edit-index').value='-1';document.getElementById('laboral-nombre').value='';document.getElementById('laboral-empresa').value='';document.getElementById('laboral-inicio').value='';document.getElementById('laboral-fin').value='';document.getElementById('laboral-actual').checked=false;document.getElementById('laboral-descripcion').value='';document.getElementById('laboral-tecnologias').value='';document.getElementById('laboral-rol').value='';document.getElementById('laboral-url').value='';document.getElementById('laboral-imagen').value='';document.getElementById('laboral-imagen-file').value='';document.getElementById('btn-laboral').textContent='Agregar';document.getElementById('laboral-fin').disabled=false}
 
-function eliminarProductoLaboral(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar?')){productosLaborales.splice(i,1);renderProductosLaborales()}}
+function eliminarProductoLaboral(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar este producto laboral?')){productosLaborales.splice(i,1);renderProductosLaborales()}}
 
 // PRODUCTOS ACADÉMICOS
 function renderProductosAcademicos(){const l=document.getElementById('productos-academicos-list');if(productosAcademicos.length===0){l.innerHTML='<p class="text-gray-500 italic">No hay productos académicos.</p>';return}l.innerHTML='';ordenar(productosAcademicos).forEach((p,i)=>{const img=p.imagen?`<img src="${p.imagen}" alt="${p.titulo}" class="w-full h-40 object-cover rounded-lg mb-3">`:'';const url=p.url?`<a href="${p.url}" target="_blank" class="text-purple-600 hover:underline text-sm mt-2 inline-block">🔗 Ver publicación</a>`:'';l.innerHTML+=`<div class="bg-purple-50 p-6 rounded-2xl border-2 border-purple-100">${img}<div class="flex justify-between items-start mb-3"><div class="flex-1"><span class="px-3 py-1 bg-purple-500 text-white rounded-full text-xs font-bold">${p.tipo}</span><h3 class="font-bold text-lg mt-2">${p.titulo}</h3><p class="text-purple-600 font-semibold text-sm">${p.institucion}</p><p class="text-xs text-slate-500">${formatFecha(p.fecha)}</p></div><div class="flex items-center gap-2"><button onclick="editarProductoAcademico(${i})" class="btn-edit">✏️</button><button onclick="eliminarProductoAcademico(${i})" class="btn-delete">🗑️</button></div></div><p class="text-sm text-slate-600 mb-2"><strong>Autores:</strong> ${p.autores}</p><p class="text-sm text-slate-700 mb-2">${p.resumen}</p><p class="text-xs text-purple-500"><strong>Palabras clave:</strong> ${p.palabras}</p>${url}</div>`})}
 
-function guardarProductoAcademico(){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const idx=parseInt(document.getElementById('academico-edit-index').value);const p={tipo:document.getElementById('academico-tipo').value,titulo:document.getElementById('academico-titulo').value,institucion:document.getElementById('academico-institucion').value,fecha:document.getElementById('academico-fecha').value,autores:document.getElementById('academico-autores').value,resumen:document.getElementById('academico-resumen').value,palabras:document.getElementById('academico-palabras').value,url:document.getElementById('academico-url').value,imagen:document.getElementById('academico-imagen').value||'',inicio:document.getElementById('academico-fecha').value};if(!p.titulo||!p.institucion||!p.fecha||!p.autores){alert('❌ Completa los campos principales');return}if(idx>=0){productosAcademicos[idx]=p;alert('✅ Actualizado')}else{productosAcademicos.push(p);alert('✅ Agregado')}renderProductosAcademicos();limpiarFormAcademico()}
+function guardarProductoAcademico(){
+  if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}
+  const idx=parseInt(document.getElementById('academico-edit-index').value);
+  const tipo = document.getElementById('academico-tipo').value;
+  const titulo = document.getElementById('academico-titulo').value.trim();
+  const institucion = document.getElementById('academico-institucion').value.trim();
+  const fecha = document.getElementById('academico-fecha').value;
+  const autores = document.getElementById('academico-autores').value.trim();
+  const resumen = document.getElementById('academico-resumen').value.trim();
+  const palabras = document.getElementById('academico-palabras').value.trim();
+  const url = document.getElementById('academico-url').value.trim();
+  const imagen = document.getElementById('academico-imagen').value||'';
+  
+  if(!titulo||!institucion||!fecha||!autores||!resumen){
+    alert('❌ Completa todos los campos obligatorios');
+    return;
+  }
+  
+  const fP = new Date(fecha);
+  if(fP > new Date()){
+    alert('❌ La fecha de publicación no puede ser futura');
+    return;
+  }
+  
+  const p = {tipo,titulo,institucion,fecha,autores,resumen,palabras,url,imagen,inicio:fecha};
+  
+  if(idx>=0){
+    productosAcademicos[idx]=p;
+    alert('✅ Producto académico actualizado');
+  }else{
+    productosAcademicos.push(p);
+    alert('✅ Producto académico agregado');
+  }
+  renderProductosAcademicos();
+  limpiarFormAcademico();
+}
 
 function editarProductoAcademico(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const p=productosAcademicos[i];document.getElementById('academico-edit-index').value=i;document.getElementById('academico-tipo').value=p.tipo;document.getElementById('academico-titulo').value=p.titulo;document.getElementById('academico-institucion').value=p.institucion;document.getElementById('academico-fecha').value=p.fecha;document.getElementById('academico-autores').value=p.autores;document.getElementById('academico-resumen').value=p.resumen;document.getElementById('academico-palabras').value=p.palabras;document.getElementById('academico-url').value=p.url;document.getElementById('academico-imagen').value=p.imagen||'';document.getElementById('btn-academico').textContent='Actualizar';openAdminModal()}
 
 function limpiarFormAcademico(){document.getElementById('academico-edit-index').value='-1';document.getElementById('academico-tipo').value='Tesis';document.getElementById('academico-titulo').value='';document.getElementById('academico-institucion').value='';document.getElementById('academico-fecha').value='';document.getElementById('academico-autores').value='';document.getElementById('academico-resumen').value='';document.getElementById('academico-palabras').value='';document.getElementById('academico-url').value='';document.getElementById('academico-imagen').value='';document.getElementById('academico-imagen-file').value='';document.getElementById('btn-academico').textContent='Agregar'}
 
-function eliminarProductoAcademico(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar?')){productosAcademicos.splice(i,1);renderProductosAcademicos()}}
+function eliminarProductoAcademico(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar este producto académico?')){productosAcademicos.splice(i,1);renderProductosAcademicos()}}
 
 function imprimir(){const s=['header','resumen','experiencia','educacion','habilidades','cursos','reconocimientos','idiomas','productos-laborales','productos-academicos','garaje'];const d=document.querySelectorAll('.btn-delete,.btn-edit');const h=document.querySelector('header');d.forEach(b=>b.style.display='none');if(h)h.style.display='none';s.forEach(sec=>{const e=document.getElementById('section-'+sec);const c=document.getElementById('filter-'+sec);if(e&&c)e.style.display=c.checked?'block':'none'});closeFilterModal();setTimeout(()=>{window.print();setTimeout(()=>{s.forEach(sec=>{const e=document.getElementById('section-'+sec);if(e)e.style.display='block'});d.forEach(b=>{if(usuarioActual && usuarioActual.tipo === 'admin') b.style.display='inline-block'});if(h)h.style.display='block'},100)},300)}
 
+// Inicialización
+actualizarDisplayPerfil();
 renderExperiencias();
 renderCursos();
 renderReconocimientos();
