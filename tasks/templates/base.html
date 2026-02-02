@@ -138,6 +138,7 @@ html{scroll-behavior:smooth}
 <div>
 <label class="block text-sm font-semibold mb-2">Fecha de Nacimiento</label>
 <input type="date" id="perfil-fecha-nacimiento" class="w-full p-3 border rounded-lg">
+<p class="text-xs text-gray-500 mt-1">Edad mínima: 10 años</p>
 </div>
 <div>
 <label class="block text-sm font-semibold mb-2">Estado Civil</label>
@@ -195,7 +196,8 @@ html{scroll-behavior:smooth}
 <input type="text" id="curso-nombre" placeholder="Nombre" class="w-full p-3 border rounded-lg mb-3">
 <input type="text" id="curso-institucion" placeholder="Institución" class="w-full p-3 border rounded-lg mb-3">
 <input type="date" id="curso-fecha" class="w-full p-3 border rounded-lg mb-3">
-<input type="text" id="curso-duracion" placeholder="Duración (ej: 120 horas)" class="w-full p-3 border rounded-lg mb-3" oninput="this.value = this.value.replace(/[^0-9a-zA-Záéíóúñ ]/g, '')">
+<input type="number" id="curso-duracion" placeholder="Duración en horas (ej: 120)" class="w-full p-3 border rounded-lg mb-3" min="1" step="1" oninput="validarHorasCurso(this)">
+<p class="text-xs text-gray-500 mb-3">Ingresa solo el número de horas (valor positivo)</p>
 <div class="mb-3">
 <label class="block text-sm font-semibold mb-2">📷 Certificado/Imagen (opcional)</label>
 <input type="file" id="curso-imagen-file" accept="image/*" class="w-full p-3 border rounded-lg" onchange="cargarImagen(this, 'curso')">
@@ -328,7 +330,7 @@ html{scroll-behavior:smooth}
 </h1>
 <p class="text-lg text-slate-600 mb-4" id="display-titulo">Estudiante de Tecnología de la Información</p>
 <div class="flex flex-wrap justify-center gap-6 text-sm">
-<span>📧 <span id="display-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0e6d6f637e61746f6061636b606a61746f4e69636f6762206d6163">[email&#160;protected]</a></span></span>
+<span>📧 <span id="display-email">campozanomendoza@gmail.com</span></span>
 <span>📱 <span id="display-telefono">+593 098 500 26 00</span></span>
 <span>📍 <span id="display-ciudad">Jipijapa</span>, <span id="display-pais">Ecuador</span></span>
 </div>
@@ -432,7 +434,7 @@ comprometido con el aprendizaje continuo y el desarrollo de soluciones innovador
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="productos-list"></div>
 </div>
 </main>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // Datos personales
 let perfil = JSON.parse(localStorage.getItem('perfil')) || {
   nombres: 'MARCOS LUIS',
@@ -477,6 +479,18 @@ if (!usuarios.find(u => u.usuario === 'usuario')) {
 }
 
 let usuarioActual = null;
+
+// NUEVA FUNCIÓN: Validar horas de curso
+function validarHorasCurso(input) {
+  // Eliminar valores negativos
+  if (input.value < 0) {
+    input.value = '';
+  }
+  // Asegurar que sea un número entero
+  if (input.value && input.value.includes('.')) {
+    input.value = Math.floor(input.value);
+  }
+}
 
 function calcularEdad(fechaNacimiento) {
   if (!fechaNacimiento) return '';
@@ -541,8 +555,18 @@ function guardarPerfil() {
   
   const fechaNac = new Date(fechaNacimiento);
   const hoy = new Date();
+  
+  // NUEVA VALIDACIÓN: Edad mínima de 10 años
+  const edadMinima = new Date();
+  edadMinima.setFullYear(hoy.getFullYear() - 10);
+  
   if (fechaNac > hoy) {
     alert('❌ La fecha de nacimiento no puede ser futura');
+    return;
+  }
+  
+  if (fechaNac > edadMinima) {
+    alert('❌ La edad mínima es de 10 años');
     return;
   }
   
@@ -771,13 +795,21 @@ function guardarCurso(){
   const nombre = document.getElementById('curso-nombre').value.trim();
   const institucion = document.getElementById('curso-institucion').value.trim();
   const inicio = document.getElementById('curso-fecha').value;
-  const duracion = document.getElementById('curso-duracion').value.trim();
+  const duracionNum = parseInt(document.getElementById('curso-duracion').value);
   const imagen = document.getElementById('curso-imagen').value||'';
   
-  if(!nombre||!institucion||!inicio||!duracion){
+  if(!nombre||!institucion||!inicio){
     alert('❌ Completa todos los campos obligatorios');
     return;
   }
+  
+  // NUEVA VALIDACIÓN: Verificar que las horas sean válidas
+  if(!duracionNum || duracionNum < 1){
+    alert('❌ La duración debe ser al menos 1 hora');
+    return;
+  }
+  
+  const duracion = duracionNum + ' horas';
   
   const fC=new Date(inicio);
   if(fC>new Date()){
@@ -798,7 +830,7 @@ function guardarCurso(){
   limpiarFormCurso();
 }
 
-function editarCurso(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const c=cursos[i];document.getElementById('curso-edit-index').value=i;document.getElementById('curso-nombre').value=c.nombre;document.getElementById('curso-institucion').value=c.institucion;document.getElementById('curso-fecha').value=c.inicio;document.getElementById('curso-duracion').value=c.duracion;document.getElementById('curso-imagen').value=c.imagen||'';document.getElementById('btn-curso').textContent='Actualizar';openAdminModal()}
+function editarCurso(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}const c=cursos[i];document.getElementById('curso-edit-index').value=i;document.getElementById('curso-nombre').value=c.nombre;document.getElementById('curso-institucion').value=c.institucion;document.getElementById('curso-fecha').value=c.inicio;const horasMatch=c.duracion.match(/\d+/);document.getElementById('curso-duracion').value=horasMatch?horasMatch[0]:'';document.getElementById('curso-imagen').value=c.imagen||'';document.getElementById('btn-curso').textContent='Actualizar';openAdminModal()}
 function limpiarFormCurso(){document.getElementById('curso-edit-index').value='-1';document.getElementById('curso-nombre').value='';document.getElementById('curso-institucion').value='';document.getElementById('curso-fecha').value='';document.getElementById('curso-duracion').value='';document.getElementById('curso-imagen').value='';document.getElementById('curso-imagen-file').value='';document.getElementById('btn-curso').textContent='Agregar'}
 function eliminarCurso(i){if(!verificarSesion()){alert('❌ Debes iniciar sesión como admin');return}if(confirm('¿Eliminar este curso?')){cursos.splice(i,1);renderCursos()}}
 
