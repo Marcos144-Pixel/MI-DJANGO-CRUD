@@ -1,18 +1,17 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import (
     Task, Perfil, Experiencia, Curso,
-    Reconocimiento, Producto, ProductoLaboral, ProductoAcademico
+    Reconocimiento, Producto, ProductoLaboral, ProductoAcademico, VentaGaraje
 )
 from .serializers import (
     TaskSerializer, PerfilSerializer, ExperienciaSerializer,
     CursoSerializer, ReconocimientoSerializer, ProductoSerializer,
-    ProductoLaboralSerializer, ProductoAcademicoSerializer
+    ProductoLaboralSerializer, ProductoAcademicoSerializer, VentaGarajeSerializer
 )
 
 
-# ViewSets para cada modelo (CRUD completo)
 class PerfilViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint para ver perfiles
@@ -23,7 +22,7 @@ class PerfilViewSet(viewsets.ReadOnlyModelViewSet):
 
 class ExperienciaViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    API endpoint para ver experiencias laborales
+    API endpoint para ver experiencias
     """
     queryset = Experiencia.objects.all().order_by('-inicio')
     serializer_class = ExperienciaSerializer
@@ -49,7 +48,7 @@ class ProductoViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint para ver productos
     """
-    queryset = Producto.objects.all().order_by('-created_at')
+    queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
 
 
@@ -73,44 +72,62 @@ class TaskViewSet(viewsets.ReadOnlyModelViewSet):
     """
     API endpoint para ver tareas
     """
-    queryset = Task.objects.all().order_by('-created')
+    queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
 
-# Vista especial para obtener todo el CV de una vez
+class VentaGarajeViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint para ver ventas de garaje
+    """
+    queryset = VentaGaraje.objects.all().order_by('-fecha_publicacion')
+    serializer_class = VentaGarajeSerializer
+
+
 @api_view(['GET'])
 def cv_completo(request):
     """
-    Devuelve todos los datos del CV en una sola respuesta
+    Endpoint que devuelve todos los datos del CV en una sola respuesta
     """
-    perfil = Perfil.objects.first()  # Obtener el primer (y único) perfil
+    try:
+        perfil = Perfil.objects.first()
+        
+        data = {
+            'perfil': PerfilSerializer(perfil).data if perfil else None,
+            'experiencias': ExperienciaSerializer(
+                Experiencia.objects.all().order_by('-inicio'), 
+                many=True
+            ).data,
+            'cursos': CursoSerializer(
+                Curso.objects.all().order_by('-inicio'), 
+                many=True
+            ).data,
+            'reconocimientos': ReconocimientoSerializer(
+                Reconocimiento.objects.all().order_by('-fecha'), 
+                many=True
+            ).data,
+            'productos': ProductoSerializer(
+                Producto.objects.all(), 
+                many=True
+            ).data,
+            'productos_laborales': ProductoLaboralSerializer(
+                ProductoLaboral.objects.all().order_by('-inicio'), 
+                many=True
+            ).data,
+            'productos_academicos': ProductoAcademicoSerializer(
+                ProductoAcademico.objects.all().order_by('-fecha'), 
+                many=True
+            ).data,
+            'ventas_garaje': VentaGarajeSerializer(
+                VentaGaraje.objects.all().order_by('-fecha_publicacion'),
+                many=True
+            ).data,
+        }
+        
+        return Response(data, status=status.HTTP_200_OK)
     
-    data = {
-        'perfil': PerfilSerializer(perfil).data if perfil else None,
-        'experiencias': ExperienciaSerializer(
-            Experiencia.objects.all().order_by('-inicio'), 
-            many=True
-        ).data,
-        'cursos': CursoSerializer(
-            Curso.objects.all().order_by('-inicio'), 
-            many=True
-        ).data,
-        'reconocimientos': ReconocimientoSerializer(
-            Reconocimiento.objects.all().order_by('-fecha'), 
-            many=True
-        ).data,
-        'productos': ProductoSerializer(
-            Producto.objects.all().order_by('-created_at'), 
-            many=True
-        ).data,
-        'productos_laborales': ProductoLaboralSerializer(
-            ProductoLaboral.objects.all().order_by('-inicio'), 
-            many=True
-        ).data,
-        'productos_academicos': ProductoAcademicoSerializer(
-            ProductoAcademico.objects.all().order_by('-fecha'), 
-            many=True
-        ).data,
-    }
-    
-    return Response(data)
+    except Exception as e:
+        return Response(
+            {'error': str(e)}, 
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )

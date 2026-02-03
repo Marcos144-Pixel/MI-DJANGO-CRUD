@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Task, Perfil, Experiencia, Curso, Reconocimiento, Producto, ProductoLaboral, ProductoAcademico
+from .models import Task, Perfil, Experiencia, Curso, Reconocimiento, Producto, ProductoLaboral, ProductoAcademico, VentaGaraje
 
 # Configuración para Task (tu modelo original)
 class TaskAdmin(admin.ModelAdmin):
@@ -148,3 +148,29 @@ class ProductoAcademicoAdmin(admin.ModelAdmin):
     )
 
 admin.site.register(ProductoAcademico, ProductoAcademicoAdmin)
+
+
+# Configuración para VentaGaraje
+@admin.register(VentaGaraje)
+class VentaGarajeAdmin(admin.ModelAdmin):
+    list_display = ['nombre', 'precio', 'estado', 'categoria', 'vendido', 'fecha_publicacion']
+    list_filter = ['vendido', 'estado', 'categoria', 'fecha_publicacion']
+    search_fields = ['nombre', 'descripcion', 'categoria']
+    list_editable = ['vendido']
+    readonly_fields = ('fecha_publicacion', 'created_at')
+    
+    fieldsets = (
+        ('Información del Producto', {
+            'fields': ('nombre', 'descripcion', 'precio')
+        }),
+        ('Clasificación', {
+            'fields': ('estado', 'categoria', 'vendido')
+        }),
+        ('Multimedia', {
+            'fields': ('imagen',)
+        }),
+        ('Fechas', {
+            'fields': ('fecha_publicacion', 'created_at'),
+            'classes': ('collapse',)
+        }),
+    )

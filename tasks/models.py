@@ -135,3 +135,28 @@ class ProductoAcademico(models.Model):
 
     def __str__(self):
         return self.titulo
+
+
+class VentaGaraje(models.Model):
+    nombre = models.CharField(max_length=200, verbose_name="Nombre del producto")
+    descripcion = models.TextField(verbose_name="Descripción")
+    precio = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Precio")
+    imagen = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL de la imagen")
+    estado = models.CharField(max_length=50, choices=[
+        ('nuevo', 'Nuevo'),
+        ('como_nuevo', 'Como nuevo'),
+        ('usado_bueno', 'Usado - Buen estado'),
+        ('usado_regular', 'Usado - Regular'),
+    ], default='usado_bueno', verbose_name="Estado")
+    categoria = models.CharField(max_length=100, blank=True, verbose_name="Categoría")
+    vendido = models.BooleanField(default=False, verbose_name="¿Vendido?")
+    fecha_publicacion = models.DateField(auto_now_add=True, verbose_name="Fecha de publicación")
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        verbose_name = "Venta de Garaje"
+        verbose_name_plural = "Ventas de Garaje"
+        ordering = ['-fecha_publicacion']
+    
+    def __str__(self):
+        return f"{self.nombre} - ${self.precio}"
