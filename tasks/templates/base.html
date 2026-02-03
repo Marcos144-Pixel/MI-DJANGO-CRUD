@@ -1,712 +1,1094 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CV - Marcos Luis Campozano Mendoza</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh}
-.gradient-text{background:linear-gradient(135deg,#6366f1,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.modal{display:none;position:fixed;z-index:100;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,0.7);overflow-y:auto}
-.modal.active{display:flex;align-items:center;justify-content:center}
-.floating{animation:float 3s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.btn-download{background:linear-gradient(135deg,#6366f1,#ec4899);transition:transform .2s}
-.btn-download:hover{transform:scale(1.05)}
-.btn-delete{background:#ef4444;color:white;padding:4px 12px;border-radius:9999px;font-size:.75rem;font-weight:bold;cursor:pointer;margin-left:8px;display:none}
-.btn-delete:hover{background:#dc2626}
-.btn-edit{background:#3b82f6;color:white;padding:4px 12px;border-radius:9999px;font-size:.75rem;font-weight:bold;cursor:pointer;margin-left:8px;display:none}
-.btn-edit:hover{background:#2563eb}
-.nav-link{padding:8px 16px;border-radius:9999px;font-size:.875rem;font-weight:600;transition:all .2s;cursor:pointer}
-.nav-link:hover{background:#f3f4f6}
-html{scroll-behavior:smooth}
-.tab-btn{padding:12px 24px;border-radius:12px 12px 0 0;font-weight:700;cursor:pointer;transition:all .3s;border:2px solid white}
-.tab-btn.active{background:white;color:#6366f1}
-.tab-btn:not(.active){background:rgba(255,255,255,0.3);color:#1f2937}
-.producto-card{background:#f0f9ff;padding:20px;border-radius:16px;border:2px solid #bfdbfe;transition:all .3s}
-.producto-card:hover{transform:translateY(-5px);box-shadow:0 10px 25px rgba(0,0,0,0.1)}
-.loading{text-align:center;padding:40px;color:#6366f1;font-size:18px}
-@media print{body{background:white}header,.btn-delete,.btn-edit{display:none!important}.modal{display:none!important}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcos Luis Campozano Mendoza - CV Profesional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --light: #eaeaea;
+            --dark: #0f3460;
+        }
+
+        body {
+            font-family: 'Manrope', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--dark) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Botón de Login Flotante */
+        #loginBtn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(233, 69, 96, 0.9);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+        }
+
+        #loginBtn:hover {
+            background: rgba(233, 69, 96, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(233, 69, 96, 0.6);
+        }
+
+        /* Banner de Modo Admin */
+        .admin-banner {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 15px;
+            font-weight: 600;
+            z-index: 999;
+            display: none;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        /* Modal de Login */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+            margin: 10% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .close {
+            color: var(--light);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: var(--accent);
+        }
+
+        .login-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-option:hover {
+            background: rgba(233, 69, 96, 0.2);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .admin-login-form {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .admin-login-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            font-size: 16px;
+        }
+
+        .admin-login-form button {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .admin-login-form button:hover {
+            background: #d63850;
+            transform: translateY(-2px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 80px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(233, 69, 96, 0.1) 0%, rgba(15, 52, 96, 0.2) 100%);
+            border-radius: 30px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--accent) 0%, #ff6b9d 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: rgba(234, 234, 234, 0.8);
+        }
+
+        /* Navegación */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .tab:hover, .tab.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+
+        /* Secciones */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: var(--accent);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+            border-color: var(--accent);
+        }
+
+        .card h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .card p {
+            color: rgba(234, 234, 234, 0.8);
+            margin-bottom: 10px;
+        }
+
+        /* Grid para productos */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .product-content {
+            padding: 20px;
+        }
+
+        .product-price {
+            font-size: 1.5em;
+            color: var(--accent);
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin: 5px 5px 5px 0;
+        }
+
+        .badge-nuevo { background: rgba(76, 175, 80, 0.3); color: #81C784; }
+        .badge-como-nuevo { background: rgba(33, 150, 243, 0.3); color: #64B5F6; }
+        .badge-usado-bueno { background: rgba(255, 193, 7, 0.3); color: #FFD54F; }
+        .badge-usado-regular { background: rgba(255, 152, 0, 0.3); color: #FFB74D; }
+        .badge-vendido { background: rgba(244, 67, 54, 0.3); color: #E57373; }
+
+        /* Botones de Admin */
+        .admin-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        .admin-btn:hover {
+            background: #d63850;
+            transform: translateY(-2px);
+        }
+
+        .admin-btn-small {
+            padding: 8px 16px;
+            font-size: 0.9em;
+        }
+
+        .admin-controls {
+            display: none;
+            margin-top: 15px;
+        }
+
+        /* Notificaciones Toast */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(76, 175, 80, 0.95);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            z-index: 3000;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(400px); }
+            to { transform: translateX(0); }
+        }
+
+        .toast.error {
+            background: rgba(244, 67, 54, 0.95);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2em;
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+            .nav-tabs { flex-direction: column; }
+            .grid { grid-template-columns: 1fr; }
+            #loginBtn { padding: 10px 16px; font-size: 0.9em; }
+        }
+
+        /* Formularios en modales */
+        .form-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            overflow-y: auto;
+        }
+
+        .form-modal-content {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--dark) 100%);
+            margin: 50px auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--light);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            font-size: 16px;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .btn-cancel {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .info-item strong {
+            color: var(--accent);
+        }
+    </style>
 </head>
 <body>
-<!-- Modal de Login/Registro -->
-<div id="loginModal" class="modal active">
-<div class="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full mx-4">
-<div class="flex gap-2 mb-6">
-<button onclick="mostrarTab('login')" id="tab-login" class="tab-btn active flex-1">🔐 Iniciar Sesión</button>
-<button onclick="mostrarTab('registro')" id="tab-registro" class="tab-btn flex-1">📝 Registrarse</button>
-</div>
+    <!-- Botón de Login -->
+    <button id="loginBtn" onclick="openLoginModal()">👤 Iniciar Sesión</button>
 
-<!-- Tab Login -->
-<div id="content-login" class="tab-content">
-<h2 class="text-2xl font-black gradient-text mb-6 text-center">Acceso al Portafolio</h2>
-<div class="mb-4">
-<label class="block text-sm font-semibold mb-2">Usuario</label>
-<input type="text" id="login-usuario" placeholder="Ingresa el usuario" class="w-full p-3 border rounded-lg">
-</div>
-<div class="mb-6">
-<label class="block text-sm font-semibold mb-2">Contraseña</label>
-<input type="password" id="login-password" placeholder="Ingresa la contraseña" class="w-full p-3 border rounded-lg" onkeypress="if(event.key==='Enter')iniciarSesion()">
-</div>
-<button onclick="iniciarSesion()" class="w-full btn-download text-white px-6 py-3 rounded-full font-bold mb-3">Iniciar Sesión</button>
-<button onclick="entrarComoVisitante()" class="w-full px-6 py-3 border-2 border-gray-300 rounded-full font-bold hover:bg-gray-50">👁️ Entrar como Visitante</button>
-</div>
+    <!-- Banner de Admin -->
+    <div class="admin-banner" id="adminBanner">
+        ✏️ MODO ADMINISTRADOR ACTIVADO
+    </div>
 
-<!-- Tab Registro -->
-<div id="content-registro" class="tab-content" style="display:none">
-<h2 class="text-2xl font-black gradient-text mb-6 text-center">Crear Cuenta</h2>
-<div class="mb-4">
-<label class="block text-sm font-semibold mb-2">Nombre Completo</label>
-<input type="text" id="reg-nombre" placeholder="Ej: Juan Pérez" class="w-full p-3 border rounded-lg">
-</div>
-<div class="mb-4">
-<label class="block text-sm font-semibold mb-2">Usuario</label>
-<input type="text" id="reg-usuario" placeholder="Elige un nombre de usuario" class="w-full p-3 border rounded-lg">
-</div>
-<div class="mb-4">
-<label class="block text-sm font-semibold mb-2">Contraseña</label>
-<input type="password" id="reg-password" placeholder="Mínimo 6 caracteres" class="w-full p-3 border rounded-lg">
-</div>
-<div class="mb-6">
-<label class="block text-sm font-semibold mb-2">Confirmar Contraseña</label>
-<input type="password" id="reg-password2" placeholder="Repite la contraseña" class="w-full p-3 border rounded-lg" onkeypress="if(event.key==='Enter')registrarUsuario()">
-</div>
-<button onclick="registrarUsuario()" class="w-full bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-full font-bold mb-3">📝 Crear Cuenta</button>
-<button onclick="mostrarTab('login')" class="w-full px-6 py-3 border-2 border-gray-300 rounded-full font-bold hover:bg-gray-50">← Volver al Login</button>
-</div>
-</div>
-</div>
+    <!-- Modal de Login -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLoginModal()">&times;</span>
+            <h2 style="text-align: center; margin-bottom: 30px;">Iniciar Sesión</h2>
+            
+            <div class="login-option" onclick="loginAsVisitor()">
+                <h3>👁️ Entrar como Visitante</h3>
+                <p style="font-size: 0.9em; color: rgba(234, 234, 234, 0.6);">Solo visualización</p>
+            </div>
 
-<!-- Modal Login Visitante -->
-<div id="visitanteModal" class="modal">
-<div class="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full mx-4">
-<h2 class="text-2xl font-black gradient-text mb-6 text-center">🔓 Acceso como Visitante</h2>
-<div class="mb-4">
-<label class="block text-sm font-semibold mb-2">Nombre (opcional)</label>
-<input type="text" id="visitante-nombre" placeholder="¿Cómo te llamas?" class="w-full p-3 border rounded-lg">
-</div>
-<div class="mb-6">
-<label class="block text-sm font-semibold mb-2">Email (opcional)</label>
-<input type="email" id="visitante-email" placeholder="tu@email.com" class="w-full p-3 border rounded-lg" onkeypress="if(event.key==='Enter')confirmarVisitante()">
-</div>
-<button onclick="confirmarVisitante()" class="w-full btn-download text-white px-6 py-3 rounded-full font-bold mb-3">✅ Continuar</button>
-<button onclick="cancelarVisitante()" class="w-full px-6 py-3 border-2 border-gray-300 rounded-full font-bold hover:bg-gray-50">← Volver</button>
-<p class="text-xs text-gray-400 mt-4 text-center">Como visitante solo podrás visualizar el contenido, sin opciones de edición</p>
-</div>
-</div>
+            <div style="text-align: center; margin: 20px 0; color: rgba(234, 234, 234, 0.4);">o</div>
 
-<div id="filterModal" class="modal">
-<div class="bg-white rounded-3xl shadow-2xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-<h2 class="text-2xl font-black gradient-text mb-6">🖨️ Seleccionar Secciones</h2>
-<div class="space-y-3">
-<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-header" class="w-5 h-5" checked><span class="font-semibold">Info Personal</span></label>
-<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-resumen" class="w-5 h-5" checked><span class="font-semibold">Resumen</span></label>
-<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-experiencia" class="w-5 h-5" checked><span class="font-semibold">Experiencia</span></label>
-<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-educacion" class="w-5 h-5" checked><span class="font-semibold">Educación</span></label>
-<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-habilidades" class="w-5 h-5" checked><span class="font-semibold">Habilidades</span></label>
-<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-cursos" class="w-5 h-5" checked><span class="font-semibold">Cursos</span></label>
-<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-reconocimientos" class="w-5 h-5" checked><span class="font-semibold">Reconocimientos</span></label>
-<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-idiomas" class="w-5 h-5" checked><span class="font-semibold">Idiomas</span></label>
-<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-productos-laborales" class="w-5 h-5" checked><span class="font-semibold">Productos Laborales</span></label>
-<label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50"><input type="checkbox" id="filter-productos-academicos" class="w-5 h-5" checked><span class="font-semibold">Productos Académicos</span></label>
-</div>
-<div class="mt-6 flex gap-3">
-<button onclick="imprimir()" class="flex-1 btn-download text-white px-6 py-3 rounded-full font-bold">🖨️ Imprimir</button>
-<button onclick="closeFilterModal()" class="px-6 py-3 border-2 rounded-full font-bold">Cancelar</button>
-</div></div></div>
+            <div class="login-option" onclick="showAdminForm()">
+                <h3>🔐 Entrar como Admin</h3>
+                <p style="font-size: 0.9em; color: rgba(234, 234, 234, 0.6);">Editar y agregar contenido</p>
+            </div>
 
-<header class="sticky top-0 bg-white shadow-lg z-50">
-<nav class="max-w-7xl mx-auto px-6 py-3">
-<div class="flex items-center justify-between mb-2">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-pink-500 rounded-xl flex items-center justify-center text-white font-bold floating">MC</div>
-<span class="font-black text-xl gradient-text">PORTAFOLIO</span>
-<span id="usuario-nombre" class="text-sm text-gray-600 ml-2"></span>
-</div>
-<div class="flex items-center gap-3">
-<button onclick="cerrarSesion()" class="px-4 py-2 border-2 border-red-500 text-red-600 rounded-full text-sm font-bold hover:bg-red-50" id="btn-logout" style="display:none">🚪 Salir</button>
-<button onclick="openFilterModal()" class="btn-download text-white px-6 py-2.5 rounded-full text-sm font-bold">🖨️ Imprimir</button>
-</div>
-</div>
-<div class="flex flex-wrap gap-2 justify-center">
-<a href="#section-resumen" class="nav-link">✨ Resumen</a>
-<a href="#section-experiencia" class="nav-link">💼 Experiencia</a>
-<a href="#section-educacion" class="nav-link">🎓 Educación</a>
-<a href="#section-habilidades" class="nav-link">💻 Habilidades</a>
-<a href="#section-cursos" class="nav-link">📚 Cursos</a>
-<a href="#section-reconocimientos" class="nav-link">🏆 Reconocimientos</a>
-<a href="#section-idiomas" class="nav-link">🌍 Idiomas</a>
-<a href="#section-productos-laborales" class="nav-link">💼 Proyectos</a>
-<a href="#section-productos-academicos" class="nav-link">🎓 Académico</a>
-</div>
-</nav>
-</header>
-
-<main class="max-w-6xl mx-auto px-6 py-12" id="cv-content">
-<div class="loading" id="loading">
-<div class="text-4xl mb-4">⏳</div>
-<p>Cargando datos desde la base de datos...</p>
-</div>
-
-<div id="main-content" style="display:none">
-<div class="bg-white rounded-3xl shadow-2xl p-12 mb-8 text-center" id="section-header">
-<div class="w-40 h-40 mx-auto rounded-3xl flex items-center justify-center border-4 border-white shadow-xl bg-gradient-to-br from-indigo-500 to-pink-500 mb-6">
-<span class="text-6xl font-black text-white">MC</span>
-</div>
-<h1 class="text-5xl font-black mb-2">
-<span class="gradient-text" id="display-apellidos">CAMPOZANO MENDOZA</span><br>
-<span class="text-slate-900" id="display-nombres">MARCOS LUIS</span>
-</h1>
-<p class="text-lg text-slate-600 mb-4" id="display-titulo">Estudiante de Tecnología de la Información</p>
-<div class="flex flex-wrap justify-center gap-6 text-sm">
-<span>📧 <span id="display-email">campozanomendoza@gmail.com</span></span>
-<span>📱 <span id="display-telefono">+593 098 500 26 00</span></span>
-<span>📍 <span id="display-ciudad">Jipijapa</span>, <span id="display-pais">Ecuador</span></span>
-</div>
-<div class="flex flex-wrap justify-center gap-6 text-sm mt-3">
-<span>🎂 <span id="display-edad"></span></span>
-<span>💍 <span id="display-estado-civil">Soltero</span></span>
-</div>
-</div>
-
-<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-resumen">
-<h2 class="text-2xl font-black mb-4 flex items-center gap-3">
-<span class="text-3xl">✨</span> Resumen Profesional
-</h2>
-<p class="text-xl text-slate-700 leading-relaxed">
-Estudiante apasionado por la <span class="gradient-text font-bold">Tecnología de la Información</span>, 
-comprometido con el aprendizaje continuo y el desarrollo de soluciones innovadoras.
-</p>
-</div>
-
-<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-experiencia">
-<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-<span class="text-3xl">💼</span> Experiencia Laboral
-</h2>
-<div class="space-y-6" id="experiencia-list"></div>
-</div>
-
-<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-educacion">
-<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-<span class="text-3xl">🎓</span> Educación
-</h2>
-<div class="bg-purple-50 p-6 rounded-2xl border-2 border-purple-100">
-<h3 class="font-bold text-lg mb-2">Tecnología de la Información</h3>
-<p class="text-purple-600 font-semibold mb-2">Universidad Laica Eloy Alfaro de Manabí (ULEAM)</p>
-<span class="px-3 py-1 bg-purple-500 text-white rounded-full text-xs font-bold">2022 - Presente</span>
-</div>
-</div>
-
-<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-habilidades">
-<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-<span class="text-3xl">💻</span> Habilidades Técnicas
-</h2>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-<div class="p-4 bg-indigo-50 rounded-xl text-center border-2 border-indigo-100">
-<p class="font-bold">HTML & CSS</p>
-<p class="text-xs text-indigo-600 mt-1">85%</p>
-</div>
-<div class="p-4 bg-indigo-50 rounded-xl text-center border-2 border-indigo-100">
-<p class="font-bold">JavaScript</p>
-<p class="text-xs text-indigo-600 mt-1">70%</p>
-</div>
-<div class="p-4 bg-indigo-50 rounded-xl text-center border-2 border-indigo-100">
-<p class="font-bold">Git & GitHub</p>
-<p class="text-xs text-indigo-600 mt-1">75%</p>
-</div>
-<div class="p-4 bg-indigo-50 rounded-xl text-center border-2 border-indigo-100">
-<p class="font-bold">Python</p>
-<p class="text-xs text-indigo-600 mt-1">65%</p>
-</div>
-</div>
-</div>
-
-<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-cursos">
-<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-<span class="text-3xl">📚</span> Cursos y Certificaciones
-</h2>
-<div class="space-y-4" id="cursos-list"></div>
-</div>
-
-<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-reconocimientos">
-<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-<span class="text-3xl">🏆</span> Reconocimientos
-</h2>
-<div class="space-y-4" id="reconocimientos-list"></div>
-</div>
-
-<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-idiomas">
-<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-<span class="text-3xl">🌍</span> Idiomas
-</h2>
-<div class="grid grid-cols-2 gap-4">
-<div class="p-5 bg-rose-50 rounded-2xl border-2 border-rose-100">
-<h3 class="font-bold mb-2">Español</h3>
-<span class="px-3 py-1 bg-rose-500 text-white rounded-full text-xs font-bold">Nativo - 100%</span>
-</div>
-<div class="p-5 bg-blue-50 rounded-2xl border-2 border-blue-100">
-<h3 class="font-bold mb-2">Inglés</h3>
-<span class="px-3 py-1 bg-blue-500 text-white rounded-full text-xs font-bold">Básico - 40%</span>
-</div>
-</div>
-</div>
-
-<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-productos-laborales">
-<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-<span class="text-3xl">💼</span> Productos Laborales
-</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="productos-laborales-list"></div>
-</div>
-
-<div class="bg-white rounded-3xl shadow-2xl p-8 mb-8" id="section-productos-academicos">
-<h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-<span class="text-3xl">🎓</span> Productos Académicos
-</h2>
-<div class="space-y-6" id="productos-academicos-list"></div>
-</div>
-</div>
-</main>
-
-<script>
-// ========================================
-// CONFIGURACIÓN DE LA API
-// ========================================
-const API_URL = '/api/cv-completo/';
-
-// Variables globales
-let perfil = null;
-let experiencias = [];
-let cursos = [];
-let reconocimientos = [];
-let productosLaborales = [];
-let productosAcademicos = [];
-
-// Sistema de usuarios (localStorage para login)
-let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-
-// Asegurar que el usuario admin siempre exista
-if (!usuarios.find(u => u.usuario === 'admin')) {
-  usuarios.push({usuario: 'admin', password: '1234', nombre: 'Administrador', tipo: 'admin'});
-  localStorage.setItem('usuarios', JSON.stringify(usuarios));
-}
-
-let usuarioActual = null;
-
-// ========================================
-// FUNCIONES PARA CARGAR DATOS DESDE LA API
-// ========================================
-
-async function cargarDatosDesdeAPI() {
-  try {
-    const response = await fetch(API_URL);
-    
-    if (!response.ok) {
-      throw new Error('Error al cargar los datos');
-    }
-    
-    const data = await response.json();
-    
-    // Asignar datos a las variables globales
-    perfil = data.perfil;
-    experiencias = data.experiencias || [];
-    cursos = data.cursos || [];
-    reconocimientos = data.reconocimientos || [];
-    productosLaborales = data.productos_laborales || [];
-    productosAcademicos = data.productos_academicos || [];
-    
-    // Actualizar la interfaz
-    actualizarDisplayPerfil();
-    renderExperiencias();
-    renderCursos();
-    renderReconocimientos();
-    renderProductosLaborales();
-    renderProductosAcademicos();
-    
-    // Ocultar loading y mostrar contenido
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('main-content').style.display = 'block';
-    
-    console.log('✅ Datos cargados correctamente desde la API');
-    
-  } catch (error) {
-    console.error('❌ Error al cargar datos:', error);
-    document.getElementById('loading').innerHTML = `
-      <div class="text-4xl mb-4">❌</div>
-      <p class="text-red-600">Error al cargar los datos</p>
-      <p class="text-sm text-gray-600 mt-2">${error.message}</p>
-      <button onclick="cargarDatosDesdeAPI()" class="mt-4 px-6 py-2 bg-indigo-500 text-white rounded-full font-bold hover:bg-indigo-600">
-        🔄 Reintentar
-      </button>
-    `;
-  }
-}
-
-// ========================================
-// FUNCIONES DE UTILIDAD
-// ========================================
-
-function calcularEdad(fechaNacimiento) {
-  if (!fechaNacimiento) return '';
-  const hoy = new Date();
-  const nacimiento = new Date(fechaNacimiento);
-  let edad = hoy.getFullYear() - nacimiento.getFullYear();
-  const mes = hoy.getMonth() - nacimiento.getMonth();
-  if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-    edad--;
-  }
-  return edad + ' años';
-}
-
-function formatFecha(f) {
-  if (!f) return 'Presente';
-  const d = new Date(f + 'T00:00:00');
-  const m = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-  return m[d.getMonth()] + ' ' + d.getFullYear();
-}
-
-function ordenar(arr) {
-  return arr.sort((a, b) => {
-    const fA = a.inicio ? new Date(a.inicio) : new Date();
-    const fB = b.inicio ? new Date(b.inicio) : new Date();
-    return fB - fA;
-  });
-}
-
-// ========================================
-// FUNCIONES DE VISUALIZACIÓN
-// ========================================
-
-function actualizarDisplayPerfil() {
-  if (!perfil) return;
-  
-  document.getElementById('display-nombres').textContent = perfil.nombres || 'MARCOS LUIS';
-  document.getElementById('display-apellidos').textContent = perfil.apellidos || 'CAMPOZANO MENDOZA';
-  document.getElementById('display-titulo').textContent = perfil.titulo || 'Estudiante de Tecnología de la Información';
-  document.getElementById('display-email').textContent = perfil.email || 'campozanomendoza@gmail.com';
-  document.getElementById('display-telefono').textContent = perfil.telefono || '+593 098 500 26 00';
-  document.getElementById('display-ciudad').textContent = perfil.ciudad || 'Jipijapa';
-  document.getElementById('display-pais').textContent = perfil.pais || 'Ecuador';
-  document.getElementById('display-estado-civil').textContent = perfil.estado_civil || 'Soltero';
-  document.getElementById('display-edad').textContent = calcularEdad(perfil.fecha_nacimiento);
-}
-
-function renderExperiencias() {
-  const l = document.getElementById('experiencia-list');
-  
-  if (experiencias.length === 0) {
-    l.innerHTML = '<p class="text-gray-500 italic">No hay experiencias laborales registradas.</p>';
-    return;
-  }
-  
-  l.innerHTML = '';
-  ordenar(experiencias).forEach((e) => {
-    l.innerHTML += `
-      <div class="bg-indigo-50 p-6 rounded-2xl border-2 border-indigo-100">
-        <div class="flex justify-between items-start mb-3">
-          <h3 class="font-bold text-xl">${e.puesto}</h3>
-          <span class="px-3 py-1 bg-indigo-500 text-white rounded-full text-xs font-bold whitespace-nowrap">
-            ${formatFecha(e.inicio)} - ${formatFecha(e.fin)}
-          </span>
+            <div id="adminForm" class="admin-login-form">
+                <input type="text" id="adminUser" placeholder="Usuario" value="admin">
+                <input type="password" id="adminPass" placeholder="Contraseña">
+                <button onclick="loginAsAdmin()">Entrar</button>
+            </div>
         </div>
-        <p class="text-indigo-600 font-semibold mb-3">${e.empresa}</p>
-        <p class="text-slate-600">${e.descripcion}</p>
-      </div>
-    `;
-  });
-}
+    </div>
 
-function renderCursos() {
-  const l = document.getElementById('cursos-list');
-  
-  if (cursos.length === 0) {
-    l.innerHTML = '<p class="text-gray-500 italic">No hay cursos registrados.</p>';
-    return;
-  }
-  
-  l.innerHTML = '';
-  ordenar(cursos).forEach((c) => {
-    const img = c.imagen ? `<img src="${c.imagen}" alt="${c.nombre}" class="w-full h-32 object-cover rounded-lg mb-3">` : '';
-    l.innerHTML += `
-      <div class="bg-green-50 p-5 rounded-2xl border-2 border-green-100">
-        <div class="flex justify-between items-start gap-4">
-          <div class="flex-1">
-            ${img}
-            <h3 class="font-bold">${c.nombre}</h3>
-            <p class="text-green-600 font-semibold text-sm">${c.institucion}</p>
-            <p class="text-xs text-slate-500">${formatFecha(c.inicio)} • ${c.duracion}</p>
-          </div>
+    <!-- Modal para agregar/editar Venta de Garaje -->
+    <div id="ventaGarajeModal" class="form-modal">
+        <div class="form-modal-content">
+            <span class="close" onclick="closeVentaGarajeModal()">&times;</span>
+            <h2 id="ventaGarajeModalTitle">Agregar Producto</h2>
+            
+            <form id="ventaGarajeForm">
+                <input type="hidden" id="ventaGarajeId">
+                
+                <div class="form-group">
+                    <label>Nombre del Producto *</label>
+                    <input type="text" id="ventaNombre" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Precio (USD) *</label>
+                    <input type="number" id="ventaPrecio" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Estado *</label>
+                    <select id="ventaEstado" required>
+                        <option value="nuevo">Nuevo</option>
+                        <option value="como_nuevo">Como nuevo</option>
+                        <option value="usado_bueno">Usado - Buen estado</option>
+                        <option value="usado_regular">Usado - Regular</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Categoría</label>
+                    <input type="text" id="ventaCategoria" placeholder="Ej: Electrónica, Ropa, Muebles">
+                </div>
+
+                <div class="form-group">
+                    <label>URL de la Imagen</label>
+                    <input type="url" id="ventaImagen" placeholder="https://ejemplo.com/imagen.jpg">
+                </div>
+
+                <div class="form-group">
+                    <label>Descripción *</label>
+                    <textarea id="ventaDescripcion" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="ventaVendido" style="width: auto; margin-right: 10px;">
+                        ¿Producto vendido?
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="admin-btn btn-cancel" onclick="closeVentaGarajeModal()">Cancelar</button>
+                    <button type="submit" class="admin-btn">💾 Guardar</button>
+                </div>
+            </form>
         </div>
-      </div>
-    `;
-  });
-}
+    </div>
 
-function renderReconocimientos() {
-  const l = document.getElementById('reconocimientos-list');
-  
-  if (reconocimientos.length === 0) {
-    l.innerHTML = '<p class="text-gray-500 italic">No hay reconocimientos registrados.</p>';
-    return;
-  }
-  
-  l.innerHTML = '';
-  ordenar(reconocimientos).forEach((r) => {
-    const img = r.imagen ? `<img src="${r.imagen}" alt="${r.titulo}" class="w-full h-32 object-cover rounded-lg mb-3">` : '';
-    l.innerHTML += `
-      <div class="bg-yellow-50 p-5 rounded-2xl border-2 border-yellow-100">
-        <div class="flex justify-between items-start mb-3">
-          ${img}
-          <div class="flex-1">
-            <h3 class="font-bold">${r.titulo}</h3>
-            <p class="text-yellow-600 font-semibold text-sm">${r.otorgado_por}</p>
-            <p class="text-xs text-slate-500 mb-2">${formatFecha(r.fecha)}</p>
-            <p class="text-sm text-slate-600">${r.descripcion}</p>
-          </div>
+    <!-- Toast de Notificaciones -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Container Principal -->
+    <div class="container">
+        <div class="header">
+            <h1 id="nombreCompleto">Cargando...</h1>
+            <p id="tituloProfesional">Cargando información...</p>
         </div>
-      </div>
-    `;
-  });
-}
 
-function renderProductosLaborales() {
-  const l = document.getElementById('productos-laborales-list');
-  
-  if (productosLaborales.length === 0) {
-    l.innerHTML = '<p class="text-gray-500 italic col-span-2">No hay productos laborales registrados.</p>';
-    return;
-  }
-  
-  l.innerHTML = '';
-  ordenar(productosLaborales).forEach((p) => {
-    const img = p.imagen ? `<img src="${p.imagen}" alt="${p.nombre}" class="w-full h-48 object-cover rounded-lg mb-4">` : '<div class="w-full h-48 bg-gradient-to-br from-cyan-200 to-blue-300 rounded-lg mb-4 flex items-center justify-center"><span class="text-4xl">💻</span></div>';
-    const url = p.url ? `<a href="${p.url}" target="_blank" class="text-cyan-600 hover:underline text-sm">🔗 Ver proyecto</a>` : '';
-    
-    l.innerHTML += `
-      <div class="producto-card">
-        ${img}
-        <div class="flex justify-between items-start mb-3">
-          <h3 class="font-bold text-lg flex-1">${p.nombre}</h3>
+        <!-- Navegación por pestañas -->
+        <div class="nav-tabs">
+            <div class="tab active" onclick="showSection('perfil')">📋 Perfil</div>
+            <div class="tab" onclick="showSection('experiencia')">💼 Experiencia</div>
+            <div class="tab" onclick="showSection('cursos')">📚 Cursos</div>
+            <div class="tab" onclick="showSection('reconocimientos')">🏆 Reconocimientos</div>
+            <div class="tab" onclick="showSection('productos-laborales')">💻 Productos Laborales</div>
+            <div class="tab" onclick="showSection('productos-academicos')">🎓 Productos Académicos</div>
+            <div class="tab" onclick="showSection('venta-garaje')">🏷️ Venta de Garaje</div>
         </div>
-        <p class="text-cyan-600 font-semibold mb-2">${p.empresa}</p>
-        <span class="px-3 py-1 bg-cyan-500 text-white rounded-full text-xs font-bold">
-          ${formatFecha(p.inicio)} - ${formatFecha(p.fin)}
-        </span>
-        <p class="text-sm text-slate-600 mt-3 mb-2">${p.descripcion}</p>
-        <p class="text-xs text-slate-500 mb-2"><strong>Rol:</strong> ${p.rol}</p>
-        <p class="text-xs text-slate-500 mb-2"><strong>Tecnologías:</strong> ${p.tecnologias}</p>
-        ${url}
-      </div>
-    `;
-  });
-}
 
-function renderProductosAcademicos() {
-  const l = document.getElementById('productos-academicos-list');
-  
-  if (productosAcademicos.length === 0) {
-    l.innerHTML = '<p class="text-gray-500 italic">No hay productos académicos registrados.</p>';
-    return;
-  }
-  
-  l.innerHTML = '';
-  ordenar(productosAcademicos).forEach((p) => {
-    const img = p.imagen ? `<img src="${p.imagen}" alt="${p.titulo}" class="w-full h-40 object-cover rounded-lg mb-3">` : '';
-    const url = p.url ? `<a href="${p.url}" target="_blank" class="text-purple-600 hover:underline text-sm mt-2 inline-block">🔗 Ver publicación</a>` : '';
-    
-    l.innerHTML += `
-      <div class="bg-purple-50 p-6 rounded-2xl border-2 border-purple-100">
-        ${img}
-        <div class="flex justify-between items-start mb-3">
-          <div class="flex-1">
-            <span class="px-3 py-1 bg-purple-500 text-white rounded-full text-xs font-bold">${p.tipo}</span>
-            <h3 class="font-bold text-lg mt-2">${p.titulo}</h3>
-            <p class="text-purple-600 font-semibold text-sm">${p.institucion}</p>
-            <p class="text-xs text-slate-500">${formatFecha(p.fecha)}</p>
-          </div>
+        <!-- Loading -->
+        <div id="loading" class="loading">
+            ⏳ Cargando datos desde la base de datos...
         </div>
-        <p class="text-sm text-slate-600 mb-2"><strong>Autores:</strong> ${p.autores}</p>
-        <p class="text-sm text-slate-700 mb-2">${p.resumen}</p>
-        <p class="text-xs text-purple-500"><strong>Palabras clave:</strong> ${p.palabras_clave}</p>
-        ${url}
-      </div>
-    `;
-  });
-}
 
-// ========================================
-// SISTEMA DE LOGIN
-// ========================================
+        <!-- Sección: Perfil -->
+        <div id="perfil" class="section active">
+            <h2 class="section-title">Información Personal</h2>
+            <div class="card">
+                <div class="info-grid" id="perfilContent">
+                    <!-- Se llenará con JavaScript -->
+                </div>
+            </div>
+        </div>
 
-function guardarUsuarios() {
-  localStorage.setItem('usuarios', JSON.stringify(usuarios));
-}
+        <!-- Sección: Experiencia -->
+        <div id="experiencia" class="section">
+            <h2 class="section-title">
+                Experiencia Laboral
+                <button class="admin-btn admin-controls" onclick="alert('Ir a /admin/ para agregar')">+ Agregar</button>
+            </h2>
+            <div id="experienciaContent">
+                <!-- Se llenará con JavaScript -->
+            </div>
+        </div>
 
-function mostrarTab(tab) {
-  document.getElementById('tab-login').classList.remove('active');
-  document.getElementById('tab-registro').classList.remove('active');
-  document.getElementById('content-login').style.display = 'none';
-  document.getElementById('content-registro').style.display = 'none';
-  
-  if (tab === 'login') {
-    document.getElementById('tab-login').classList.add('active');
-    document.getElementById('content-login').style.display = 'block';
-  } else {
-    document.getElementById('tab-registro').classList.add('active');
-    document.getElementById('content-registro').style.display = 'block';
-  }
-}
+        <!-- Sección: Cursos -->
+        <div id="cursos" class="section">
+            <h2 class="section-title">
+                Cursos y Certificaciones
+                <button class="admin-btn admin-controls" onclick="alert('Ir a /admin/ para agregar')">+ Agregar</button>
+            </h2>
+            <div class="grid" id="cursosContent">
+                <!-- Se llenará con JavaScript -->
+            </div>
+        </div>
 
-function registrarUsuario() {
-  const nombre = document.getElementById('reg-nombre').value.trim();
-  const usuario = document.getElementById('reg-usuario').value.trim();
-  const password = document.getElementById('reg-password').value;
-  const password2 = document.getElementById('reg-password2').value;
-  
-  if (!nombre || !usuario || !password || !password2) {
-    alert('❌ Completa todos los campos');
-    return;
-  }
-  
-  if (password.length < 6) {
-    alert('❌ La contraseña debe tener al menos 6 caracteres');
-    return;
-  }
-  
-  if (password !== password2) {
-    alert('❌ Las contraseñas no coinciden');
-    return;
-  }
-  
-  if (usuarios.find(u => u.usuario === usuario)) {
-    alert('❌ El nombre de usuario ya existe');
-    return;
-  }
-  
-  usuarios.push({
-    usuario: usuario,
-    password: password,
-    nombre: nombre,
-    tipo: 'comun'
-  });
-  
-  guardarUsuarios();
-  alert('✅ Cuenta creada exitosamente. Ya puedes iniciar sesión.');
-  
-  document.getElementById('reg-nombre').value = '';
-  document.getElementById('reg-usuario').value = '';
-  document.getElementById('reg-password').value = '';
-  document.getElementById('reg-password2').value = '';
-  
-  mostrarTab('login');
-}
+        <!-- Sección: Reconocimientos -->
+        <div id="reconocimientos" class="section">
+            <h2 class="section-title">
+                Reconocimientos
+                <button class="admin-btn admin-controls" onclick="alert('Ir a /admin/ para agregar')">+ Agregar</button>
+            </h2>
+            <div class="grid" id="reconocimientosContent">
+                <!-- Se llenará con JavaScript -->
+            </div>
+        </div>
 
-function iniciarSesion() {
-  const usuario = document.getElementById('login-usuario').value.trim();
-  const password = document.getElementById('login-password').value;
-  
-  const user = usuarios.find(u => u.usuario === usuario && u.password === password);
-  
-  if (user) {
-    usuarioActual = user;
-    document.getElementById('loginModal').classList.remove('active');
-    document.getElementById('btn-logout').style.display = 'inline-block';
-    document.getElementById('usuario-nombre').textContent = `👤 ${user.nombre}`;
-    
-    alert('✅ Bienvenido ' + user.nombre);
-    
-    document.getElementById('login-usuario').value = '';
-    document.getElementById('login-password').value = '';
-  } else {
-    alert('❌ Usuario o contraseña incorrectos');
-  }
-}
+        <!-- Sección: Productos Laborales -->
+        <div id="productos-laborales" class="section">
+            <h2 class="section-title">
+                Productos Laborales
+                <button class="admin-btn admin-controls" onclick="alert('Ir a /admin/ para agregar')">+ Agregar</button>
+            </h2>
+            <div class="grid" id="productosLaboralesContent">
+                <!-- Se llenará con JavaScript -->
+            </div>
+        </div>
 
-function cerrarSesion() {
-  if (confirm('¿Cerrar sesión?')) {
-    usuarioActual = null;
-    document.getElementById('btn-logout').style.display = 'none';
-    document.getElementById('usuario-nombre').textContent = '';
-    document.getElementById('loginModal').classList.add('active');
-    mostrarTab('login');
-    alert('👋 Sesión cerrada');
-  }
-}
+        <!-- Sección: Productos Académicos -->
+        <div id="productos-academicos" class="section">
+            <h2 class="section-title">
+                Productos Académicos
+                <button class="admin-btn admin-controls" onclick="alert('Ir a /admin/ para agregar')">+ Agregar</button>
+            </h2>
+            <div class="grid" id="productosAcademicosContent">
+                <!-- Se llenará con JavaScript -->
+            </div>
+        </div>
 
-function entrarComoVisitante() {
-  document.getElementById('loginModal').classList.remove('active');
-  document.getElementById('visitanteModal').classList.add('active');
-}
+        <!-- Sección: Venta de Garaje -->
+        <div id="venta-garaje" class="section">
+            <h2 class="section-title">
+                🏷️ Venta de Garaje
+                <button class="admin-btn admin-controls" onclick="openVentaGarajeModal()">+ Agregar Producto</button>
+            </h2>
+            <div class="grid" id="ventaGarajeContent">
+                <!-- Se llenará con JavaScript -->
+            </div>
+        </div>
+    </div>
 
-function confirmarVisitante() {
-  const nombre = document.getElementById('visitante-nombre').value.trim() || 'Visitante';
-  usuarioActual = {
-    usuario: 'visitante',
-    nombre: nombre,
-    tipo: 'visitante'
-  };
-  
-  document.getElementById('visitanteModal').classList.remove('active');
-  document.getElementById('usuario-nombre').textContent = `👁️ ${nombre}`;
-  document.getElementById('btn-logout').style.display = 'inline-block';
-  document.getElementById('visitante-nombre').value = '';
-  document.getElementById('visitante-email').value = '';
-  alert('👁️ Bienvenido como visitante');
-}
+    <script>
+        let currentUser = null;
+        let cvData = null;
 
-function cancelarVisitante() {
-  document.getElementById('visitanteModal').classList.remove('active');
-  document.getElementById('loginModal').classList.add('active');
-}
+        // Cargar datos al iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+        });
 
-// ========================================
-// FUNCIONES DE MODAL
-// ========================================
+        // Cargar datos desde la API
+        async function loadData() {
+            try {
+                const response = await fetch('/api/cv-completo/');
+                if (!response.ok) throw new Error('Error HTTP: ' + response.status);
+                
+                cvData = await response.json();
+                console.log('Datos cargados:', cvData);
+                
+                document.getElementById('loading').style.display = 'none';
+                renderAllSections();
+            } catch (error) {
+                console.error('Error al cargar datos:', error);
+                document.getElementById('loading').innerHTML = '❌ Error al cargar datos: ' + error.message;
+                showToast('Error al cargar datos', 'error');
+            }
+        }
 
-function openFilterModal() {
-  document.getElementById('filterModal').classList.add('active');
-}
+        // Renderizar todas las secciones
+        function renderAllSections() {
+            if (!cvData) return;
 
-function closeFilterModal() {
-  document.getElementById('filterModal').classList.remove('active');
-}
+            // Header
+            document.getElementById('nombreCompleto').textContent = cvData.perfil.nombre_completo || 'Sin nombre';
+            document.getElementById('tituloProfesional').textContent = cvData.perfil.resumen_profesional || 'Sin título';
 
-function imprimir() {
-  const s = ['header', 'resumen', 'experiencia', 'educacion', 'habilidades', 'cursos', 'reconocimientos', 'idiomas', 'productos-laborales', 'productos-academicos'];
-  const h = document.querySelector('header');
-  
-  if (h) h.style.display = 'none';
-  
-  s.forEach(sec => {
-    const e = document.getElementById('section-' + sec);
-    const c = document.getElementById('filter-' + sec);
-    if (e && c) e.style.display = c.checked ? 'block' : 'none';
-  });
-  
-  closeFilterModal();
-  
-  setTimeout(() => {
-    window.print();
-    setTimeout(() => {
-      s.forEach(sec => {
-        const e = document.getElementById('section-' + sec);
-        if (e) e.style.display = 'block';
-      });
-      if (h) h.style.display = 'block';
-    }, 100);
-  }, 300);
-}
+            // Perfil
+            renderPerfil();
+            
+            // Experiencia
+            renderExperiencia();
+            
+            // Cursos
+            renderCursos();
+            
+            // Reconocimientos
+            renderReconocimientos();
+            
+            // Productos Laborales
+            renderProductosLaborales();
+            
+            // Productos Académicos
+            renderProductosAcademicos();
+            
+            // Venta de Garaje
+            renderVentaGaraje();
+        }
 
-// ========================================
-// INICIALIZACIÓN
-// ========================================
+        // Renderizar Perfil
+        function renderPerfil() {
+            const perfil = cvData.perfil;
+            const html = `
+                <div class="info-item">
+                    <strong>📧 Email:</strong><br>
+                    ${perfil.email || 'No especificado'}
+                </div>
+                <div class="info-item">
+                    <strong>📱 Teléfono:</strong><br>
+                    ${perfil.telefono || 'No especificado'}
+                </div>
+                <div class="info-item">
+                    <strong>📍 Ubicación:</strong><br>
+                    ${perfil.ubicacion || 'No especificado'}
+                </div>
+                <div class="info-item">
+                    <strong>🎂 Edad:</strong><br>
+                    ${perfil.edad ? perfil.edad + ' años' : 'No especificado'}
+                </div>
+            `;
+            document.getElementById('perfilContent').innerHTML = html;
+        }
 
-// Cargar datos cuando la página termine de cargar
-window.addEventListener('DOMContentLoaded', () => {
-  cargarDatosDesdeAPI();
-});
-</script>
+        // Renderizar Experiencia
+        function renderExperiencia() {
+            const container = document.getElementById('experienciaContent');
+            if (!cvData.experiencias || cvData.experiencias.length === 0) {
+                container.innerHTML = '<p style="text-align:center; opacity: 0.6;">No hay experiencias registradas</p>';
+                return;
+            }
+
+            container.innerHTML = cvData.experiencias.map(exp => `
+                <div class="card">
+                    <h3>${exp.cargo || 'Sin cargo'}</h3>
+                    <p><strong>🏢 ${exp.empresa || 'Sin empresa'}</strong></p>
+                    <p>📅 ${exp.fecha_inicio || ''} - ${exp.fecha_fin || 'Actualidad'}</p>
+                    <p>${exp.descripcion || 'Sin descripción'}</p>
+                </div>
+            `).join('');
+        }
+
+        // Renderizar Cursos
+        function renderCursos() {
+            const container = document.getElementById('cursosContent');
+            if (!cvData.cursos || cvData.cursos.length === 0) {
+                container.innerHTML = '<p style="text-align:center; opacity: 0.6;">No hay cursos registrados</p>';
+                return;
+            }
+
+            container.innerHTML = cvData.cursos.map(curso => `
+                <div class="product-card">
+                    ${curso.imagen ? `<img src="${curso.imagen}" alt="${curso.nombre}" class="product-image">` : '<div class="product-image"></div>'}
+                    <div class="product-content">
+                        <h3>${curso.nombre || 'Sin nombre'}</h3>
+                        <p>🏫 ${curso.institucion || 'Sin institución'}</p>
+                        <p>📅 ${curso.fecha_finalizacion || 'Sin fecha'}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Renderizar Reconocimientos
+        function renderReconocimientos() {
+            const container = document.getElementById('reconocimientosContent');
+            if (!cvData.reconocimientos || cvData.reconocimientos.length === 0) {
+                container.innerHTML = '<p style="text-align:center; opacity: 0.6;">No hay reconocimientos registrados</p>';
+                return;
+            }
+
+            container.innerHTML = cvData.reconocimientos.map(rec => `
+                <div class="product-card">
+                    ${rec.imagen ? `<img src="${rec.imagen}" alt="${rec.titulo}" class="product-image">` : '<div class="product-image"></div>'}
+                    <div class="product-content">
+                        <h3>🏆 ${rec.titulo || 'Sin título'}</h3>
+                        <p><strong>${rec.organizacion || 'Sin organización'}</strong></p>
+                        <p>📅 ${rec.fecha || 'Sin fecha'}</p>
+                        <p>${rec.descripcion || ''}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Renderizar Productos Laborales
+        function renderProductosLaborales() {
+            const container = document.getElementById('productosLaboralesContent');
+            if (!cvData.productos_laborales || cvData.productos_laborales.length === 0) {
+                container.innerHTML = '<p style="text-align:center; opacity: 0.6;">No hay productos laborales registrados</p>';
+                return;
+            }
+
+            container.innerHTML = cvData.productos_laborales.map(prod => `
+                <div class="product-card">
+                    ${prod.imagen ? `<img src="${prod.imagen}" alt="${prod.nombre}" class="product-image">` : '<div class="product-image"></div>'}
+                    <div class="product-content">
+                        <h3>${prod.nombre || 'Sin nombre'}</h3>
+                        <p><strong>🏢 ${prod.empresa || 'Sin empresa'}</strong></p>
+                        <p>👔 ${prod.rol || 'Sin rol'}</p>
+                        <p>📅 ${prod.fecha || 'Sin fecha'}</p>
+                        ${prod.tecnologias ? `<p>🛠️ ${prod.tecnologias}</p>` : ''}
+                        <p>${prod.descripcion || ''}</p>
+                        ${prod.url ? `<p><a href="${prod.url}" target="_blank" style="color: var(--accent);">🔗 Ver proyecto</a></p>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Renderizar Productos Académicos
+        function renderProductosAcademicos() {
+            const container = document.getElementById('productosAcademicosContent');
+            if (!cvData.productos_academicos || cvData.productos_academicos.length === 0) {
+                container.innerHTML = '<p style="text-align:center; opacity: 0.6;">No hay productos académicos registrados</p>';
+                return;
+            }
+
+            container.innerHTML = cvData.productos_academicos.map(prod => `
+                <div class="product-card">
+                    ${prod.imagen ? `<img src="${prod.imagen}" alt="${prod.nombre}" class="product-image">` : '<div class="product-image"></div>'}
+                    <div class="product-content">
+                        <h3>${prod.nombre || 'Sin nombre'}</h3>
+                        <p><strong>📚 ${prod.tipo || 'Sin tipo'}</strong></p>
+                        <p>🏫 ${prod.institucion || 'Sin institución'}</p>
+                        <p>📅 ${prod.fecha || 'Sin fecha'}</p>
+                        ${prod.autores ? `<p>✍️ ${prod.autores}</p>` : ''}
+                        <p>${prod.resumen || ''}</p>
+                        ${prod.url ? `<p><a href="${prod.url}" target="_blank" style="color: var(--accent);">🔗 Ver publicación</a></p>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Renderizar Venta de Garaje
+        function renderVentaGaraje() {
+            const container = document.getElementById('ventaGarajeContent');
+            if (!cvData.ventas_garaje || cvData.ventas_garaje.length === 0) {
+                container.innerHTML = '<p style="text-align:center; opacity: 0.6;">No hay productos en venta</p>';
+                return;
+            }
+
+            container.innerHTML = cvData.ventas_garaje.map(venta => {
+                const estadoBadge = getEstadoBadge(venta.estado);
+                return `
+                    <div class="product-card">
+                        ${venta.imagen ? `<img src="${venta.imagen}" alt="${venta.nombre}" class="product-image">` : '<div class="product-image"></div>'}
+                        <div class="product-content">
+                            <h3>${venta.nombre || 'Sin nombre'}</h3>
+                            <div class="product-price">$${parseFloat(venta.precio || 0).toFixed(2)}</div>
+                            <div>
+                                ${estadoBadge}
+                                ${venta.vendido ? '<span class="badge badge-vendido">VENDIDO</span>' : ''}
+                            </div>
+                            ${venta.categoria ? `<p>📁 ${venta.categoria}</p>` : ''}
+                            <p>${venta.descripcion || 'Sin descripción'}</p>
+                            
+                            <div class="admin-controls">
+                                <button class="admin-btn admin-btn-small" onclick="editVentaGaraje(${venta.id})">✏️ Editar</button>
+                                <button class="admin-btn admin-btn-small" onclick="deleteVentaGaraje(${venta.id})">🗑️ Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Obtener badge de estado
+        function getEstadoBadge(estado) {
+            const badges = {
+                'nuevo': '<span class="badge badge-nuevo">🟢 Nuevo</span>',
+                'como_nuevo': '<span class="badge badge-como-nuevo">🔵 Como nuevo</span>',
+                'usado_bueno': '<span class="badge badge-usado-bueno">🟡 Usado - Buen estado</span>',
+                'usado_regular': '<span class="badge badge-usado-regular">🟠 Usado - Regular</span>'
+            };
+            return badges[estado] || '';
+        }
+
+        // Cambiar de sección
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // === SISTEMA DE LOGIN ===
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('adminForm').style.display = 'none';
+        }
+
+        function showAdminForm() {
+            document.getElementById('adminForm').style.display = 'block';
+        }
+
+        function loginAsVisitor() {
+            currentUser = 'visitor';
+            document.getElementById('loginBtn').innerHTML = '👁️ Visitante';
+            closeLoginModal();
+            showToast('Sesión iniciada como Visitante');
+        }
+
+        function loginAsAdmin() {
+            const user = document.getElementById('adminUser').value;
+            const pass = document.getElementById('adminPass').value;
+
+            if (user === 'admin' && pass === '1234') {
+                currentUser = 'admin';
+                document.getElementById('loginBtn').innerHTML = '🔐 Admin';
+                document.getElementById('adminBanner').style.display = 'block';
+                
+                // Mostrar todos los controles de admin
+                document.querySelectorAll('.admin-controls').forEach(el => {
+                    el.style.display = 'inline-block';
+                });
+                
+                closeLoginModal();
+                showToast('Sesión iniciada como Administrador');
+            } else {
+                showToast('Usuario o contraseña incorrectos', 'error');
+            }
+        }
+
+        // === VENTA DE GARAJE CRUD ===
+        function openVentaGarajeModal(ventaId = null) {
+            if (currentUser !== 'admin') {
+                showToast('Debes iniciar sesión como Admin', 'error');
+                return;
+            }
+
+            const modal = document.getElementById('ventaGarajeModal');
+            const form = document.getElementById('ventaGarajeForm');
+            
+            if (ventaId) {
+                // Editar
+                const venta = cvData.ventas_garaje.find(v => v.id === ventaId);
+                if (venta) {
+                    document.getElementById('ventaGarajeModalTitle').textContent = 'Editar Producto';
+                    document.getElementById('ventaGarajeId').value = venta.id;
+                    document.getElementById('ventaNombre').value = venta.nombre;
+                    document.getElementById('ventaPrecio').value = venta.precio;
+                    document.getElementById('ventaEstado').value = venta.estado;
+                    document.getElementById('ventaCategoria').value = venta.categoria || '';
+                    document.getElementById('ventaImagen').value = venta.imagen || '';
+                    document.getElementById('ventaDescripcion').value = venta.descripcion;
+                    document.getElementById('ventaVendido').checked = venta.vendido;
+                }
+            } else {
+                // Agregar nuevo
+                document.getElementById('ventaGarajeModalTitle').textContent = 'Agregar Producto';
+                form.reset();
+                document.getElementById('ventaGarajeId').value = '';
+            }
+            
+            modal.style.display = 'block';
+        }
+
+        function closeVentaGarajeModal() {
+            document.getElementById('ventaGarajeModal').style.display = 'none';
+        }
+
+        function editVentaGaraje(id) {
+            openVentaGarajeModal(id);
+        }
+
+        async function deleteVentaGaraje(id) {
+            if (currentUser !== 'admin') {
+                showToast('Debes iniciar sesión como Admin', 'error');
+                return;
+            }
+
+            if (!confirm('¿Estás seguro de eliminar este producto?')) return;
+
+            try {
+                const response = await fetch(`/api/ventas-garaje/${id}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                if (!response.ok) throw new Error('Error al eliminar');
+                
+                showToast('Producto eliminado correctamente');
+                loadData(); // Recargar datos
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Error al eliminar el producto', 'error');
+            }
+        }
+
+        // Manejar envío del formulario de Venta de Garaje
+        document.getElementById('ventaGarajeForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('ventaGarajeId').value;
+            const data = {
+                nombre: document.getElementById('ventaNombre').value,
+                precio: parseFloat(document.getElementById('ventaPrecio').value),
+                estado: document.getElementById('ventaEstado').value,
+                categoria: document.getElementById('ventaCategoria').value,
+                imagen: document.getElementById('ventaImagen').value,
+                descripcion: document.getElementById('ventaDescripcion').value,
+                vendido: document.getElementById('ventaVendido').checked
+            };
+
+            try {
+                const url = id ? `/api/ventas-garaje/${id}/` : '/api/ventas-garaje/';
+                const method = id ? 'PUT' : 'POST';
+
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) throw new Error('Error al guardar');
+                
+                showToast(id ? 'Producto actualizado' : 'Producto agregado');
+                closeVentaGarajeModal();
+                loadData(); // Recargar datos
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('Error al guardar el producto', 'error');
+            }
+        });
+
+        // Mostrar notificación toast
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type;
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // Cerrar modales al hacer clic fuera
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal') || event.target.classList.contains('form-modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
