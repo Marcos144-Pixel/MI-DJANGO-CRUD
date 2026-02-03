@@ -12,73 +12,73 @@ from .serializers import (
 )
 
 
-class PerfilViewSet(viewsets.ReadOnlyModelViewSet):
+class PerfilViewSet(viewsets.ModelViewSet):
     """
-    API endpoint para ver perfiles
+    API endpoint para gestionar perfiles (CRUD completo)
     """
     queryset = Perfil.objects.all()
     serializer_class = PerfilSerializer
 
 
-class ExperienciaViewSet(viewsets.ReadOnlyModelViewSet):
+class ExperienciaViewSet(viewsets.ModelViewSet):
     """
-    API endpoint para ver experiencias
+    API endpoint para gestionar experiencias (CRUD completo)
     """
     queryset = Experiencia.objects.all().order_by('-inicio')
     serializer_class = ExperienciaSerializer
 
 
-class CursoViewSet(viewsets.ReadOnlyModelViewSet):
+class CursoViewSet(viewsets.ModelViewSet):
     """
-    API endpoint para ver cursos
+    API endpoint para gestionar cursos (CRUD completo)
     """
     queryset = Curso.objects.all().order_by('-inicio')
     serializer_class = CursoSerializer
 
 
-class ReconocimientoViewSet(viewsets.ReadOnlyModelViewSet):
+class ReconocimientoViewSet(viewsets.ModelViewSet):
     """
-    API endpoint para ver reconocimientos
+    API endpoint para gestionar reconocimientos (CRUD completo)
     """
     queryset = Reconocimiento.objects.all().order_by('-fecha')
     serializer_class = ReconocimientoSerializer
 
 
-class ProductoViewSet(viewsets.ReadOnlyModelViewSet):
+class ProductoViewSet(viewsets.ModelViewSet):
     """
-    API endpoint para ver productos
+    API endpoint para gestionar productos (CRUD completo)
     """
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
 
 
-class ProductoLaboralViewSet(viewsets.ReadOnlyModelViewSet):
+class ProductoLaboralViewSet(viewsets.ModelViewSet):
     """
-    API endpoint para ver productos laborales
+    API endpoint para gestionar productos laborales (CRUD completo)
     """
     queryset = ProductoLaboral.objects.all().order_by('-inicio')
     serializer_class = ProductoLaboralSerializer
 
 
-class ProductoAcademicoViewSet(viewsets.ReadOnlyModelViewSet):
+class ProductoAcademicoViewSet(viewsets.ModelViewSet):
     """
-    API endpoint para ver productos académicos
+    API endpoint para gestionar productos académicos (CRUD completo)
     """
     queryset = ProductoAcademico.objects.all().order_by('-fecha')
     serializer_class = ProductoAcademicoSerializer
 
 
-class TaskViewSet(viewsets.ReadOnlyModelViewSet):
+class TaskViewSet(viewsets.ModelViewSet):
     """
-    API endpoint para ver tareas
+    API endpoint para gestionar tareas (CRUD completo)
     """
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
 
 
-class VentaGarajeViewSet(viewsets.ReadOnlyModelViewSet):
+class VentaGarajeViewSet(viewsets.ModelViewSet):
     """
-    API endpoint para ver ventas de garaje
+    API endpoint para gestionar ventas de garaje (CRUD completo)
     """
     queryset = VentaGaraje.objects.all().order_by('-fecha_publicacion')
     serializer_class = VentaGarajeSerializer
